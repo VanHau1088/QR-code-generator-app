@@ -1,0 +1,440 @@
+/* img.template-preview-content-wrapper_image{
+    display: none;
+    } */
+
+canvas{
+     /* position: absolute; */
+ 
+     text-align: center;
+     justify-content: center;
+     overflow: hidden;
+     display: flex;
+     /* left: 71.17%; */
+     /* left: 7%; */
+     /* top: 10.4%; */
+     width: 220px;
+     margin: 13px 0px 0px 13px;
+     border-radius: 15px;
+  }
+
+
+.card-section_container{
+    display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: var(--form-container-padding, 10px 6px 0 0);
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+}
+
+.card-section_container{
+    /* padding: 0px 35px 70px; */
+    /* padding: 14px 35px 70px; */
+      padding: 14px 35px 0px;
+}
+.card-section_styled{
+    padding: 0px 35px 10px;
+}
+
+
+.card-section-url_title{
+    padding: 30px 40px;
+    box-shadow: rgba(12, 37, 54, 0.15) 0px 1px 15px;
+    border-radius: 10px;
+    background: rgb(255, 255, 255)
+}
+
+
+
+/* Logo */
+
+.card-section-logo_title{
+    padding: 30px 40px;
+    box-shadow: rgba(12, 37, 54, 0.15) 0px 1px 15px;
+    border-radius: 10px;
+    background: rgb(255, 255, 255);
+    margin-top: 20px
+}
+
+
+.card-section-url_title-text{
+    display: flex
+    ;
+        flex-direction: column;
+        gap: 6px;
+        /* margin-right: 15%; */
+        
+}
+
+.mui-styled-title{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.3;
+        margin: 0px 0px 0px;
+}
+
+.mui-styled-title_children{
+    color: rgb(66, 74, 92);
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 400;
+}
+
+
+
+.mui-styled-content_text{
+    display: grid;
+    width: 100%;
+    box-sizing: border-box;
+    align-content: start;
+}
+
+.mui-styled-content-text_inputPage{
+    min-height: 50px;
+    height: unset;
+    padding: 0px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+
+.mui-styled-content-text_inputPage_muiInputBase{
+    padding: 15px 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    box-sizing: border-box;
+    height: 50px;
+    border-radius: 6px;
+    width: 100%;
+    border: 1px solid #D9DCE1;
+    background-color: #FFFFFF;
+    color: black;
+}
+
+
+.mui-styled-content-inputPage_muiInputBase::placeholder{
+    color:#8e9296;
+}
+
+
+@media (min-width: 1263px) {
+    .mui-style-1i4prwf {
+        padding: 9px 35px 70px;
+    }
+}
+
+/* URL */
+.mui-styled-content_handleInput{
+    display: grid;
+    width: 100%;
+    box-sizing: border-box;
+    align-content: start;
+}
+
+.mui-styled-content_handleInput_Page{
+    min-height: 50px;
+    height: unset;
+    padding: 0px;
+    width: 100%;
+    border-radius: 6px;
+}
+.mui-styled-title_URL{
+    margin-bottom: 10px;
+    color: #1E1D20;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 130%;
+}
+
+hr{
+    background: #ccc;
+    margin-bottom: 35px;
+
+}
+
+.mui-styled-content_handleInput_Page-URL{
+    padding: 15px 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    box-sizing: border-box;
+    /* height: 50px; */
+    border-radius: 6px;
+    width: 100%;
+    border: 1px solid #D9DCE1;
+    background-color: #FFFFFF;
+    color: black;
+}
+
+
+
+/* dotstype */
+.dotType-button { 
+    border-radius: 10px;
+    margin: 10px;
+    padding: 26px;
+    border: 1px solid #ccc;
+    background-color: #fff; 
+    cursor: pointer; 
+} 
+.dotType-button.selected { 
+    border: 2px solid #5d82d5;
+}
+.dotType-image { 
+    width: 50px; 
+    height: 50px;
+}
+
+/* Logo */
+
+
+.cornerSquareType-button{
+    border-radius: 10px;
+    margin: 10px;
+    padding: 18px;
+    border: 1px solid #ccc;
+    background-color: #fff; 
+    cursor: pointer; 
+}
+.cornerSquareType-button.selected { 
+    border: 2px solid #5d82d5;
+}
+
+.cornerSquareType-image{
+    /* width: 50px;  */
+    height: 31px;
+}
+
+/* Màu chấm, màu nền */
+
+.card-section_BgDotType{
+    display: flex; 
+    align-items: center; 
+    /* display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        column-gap: 11px; */
+        
+    justify-content: space-between;
+    padding: 0px 0px 25px;
+}
+
+
+.color-picker {
+    /* display: flex; */
+    align-items: center;
+
+    margin-bottom: 20px;
+  }
+  
+  .color-picker label {
+    margin-right: 10px;
+  }
+
+  .color-picker_dopdown {
+    padding: 0px 24px 3px 15px;
+}
+  
+  .color-picker input[type="color"] {
+    margin-right: 10px;
+  }
+  
+  .color-code {
+    border: none;
+    background-color: #ffff;
+    color: #1E1D20;
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+/* DotColor */
+ input.dotColor{
+    position: absolute;
+    width: 50%;
+    height: 55px;
+    left: 192%;
+    border-radius: 50%;
+    top: 4px;
+    z-index: 1;
+    overflow: hidden;
+    background: white;
+   
+  }
+
+  
+ input.bgColor{
+    position: absolute;
+    width: 50%;
+    height: 55px;
+    left: 210%;
+    border-radius: 50%;
+    top: 4px;
+    z-index: 1;
+    overflow: hidden;
+    background: white;
+ }
+
+
+ /* bgDotType */
+ input.bgDotType{
+    position: absolute;
+    width: 50%;
+    height: 55px;
+    left: 200%;
+    border-radius: 50%;
+    top: 4px;
+    z-index: 1;
+    overflow: hidden;
+    background: white;
+   
+  }
+
+  /* bgSquareType */
+ input.bgSquareType{
+    position: absolute;
+    width: 50%;
+    height: 55px;
+    left: 190%;
+    border-radius: 50%;
+    top: 4px;
+    z-index: 1;
+    overflow: hidden;
+    background: white;
+ }
+
+  .color-code {
+        border: none;
+        background-color: #ffff;
+        color: #1E1D20;
+        padding: 5px;
+        font-size: 14px;
+        position: absolute;
+        border: 1px solid #D9DCE1;
+        padding: 25px 80% 19px 25px;
+        border-radius: 9px;
+}
+
+.color-picker_dopdown {
+    padding: 0px 0px 40px 7px;
+    position: relative;
+    /* width: 100%; */
+}
+/* Kiểu khung và kiểu chấm */
+.card-section_cornerSquareType {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 15%;
+}
+
+/* Logo */
+
+.card-section_logoType-input {
+    /* display: flex
+; */
+    width: 50%;
+}
+
+
+.LogoType-button { 
+    border-radius: 10px;
+    margin: 10px 6px 0px 2px;
+    /* padding: 26px; */
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+
+    border: 2px solid #ddd; /* Đặt viền xám nhạt */
+
+    cursor: pointer; /* Đặt con trỏ chuột thành con trỏ khi hover */
+
+} 
+
+
+.LogoType-button:hover { 
+    border-radius: 10px;
+    border: 2px solid #7793d6;
+} 
+
+.LogoType-button.selected { 
+    border: 2px solid #5d82d5;
+}
+
+
+.LogoType-image{ 
+    width: 38px;
+    height: 40px;
+}
+
+.card-section_logoType{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 6%;
+}
+
+.card-section_logoType-window {
+ 
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .mui-styled-title_URL {
+    font-size: 16px; /* Set font size */
+    font-weight: bold; /* Bold font */
+    color: #333; /* Dark grey color */
+    margin-bottom: 10px; /* Space below the title */
+  }
+  
+  .logoUpLoad {
+    width: 100%; 
+    font-size: 14px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    background-color: #fff; 
+    margin-top: 5px;
+    cursor: pointer; 
+    height: 70px;
+    padding: 41px 0px 0px 20px;
+  }
+
+
+  /* Download QR Code */
+
+.downloadQRCode{
+    display: flex;
+    margin-top: 11px;  
+}
+.DoneQRCode{
+    margin: 0px 0px 0px 10px;
+    color: white;
+    cursor: pointer;
+    height: 102px;
+    background: #5d82d5;
+    border: none;
+    height: 55px;
+    font-size: 20px;
+    font-weight: 700;
+    width: 165px;
+    padding: 10px 10px 13px 11px;
+  
+    border-top-left-radius: 5px;
+}
+
+
+.wrapper_select{
+    margin: 0px 0px 0px 4px;
+    color: white;
+    cursor: pointer;
+    height: 102px;
+    /* background: rgb(254, 140, 37); */
+    background: #5d82d5;
+    border: none;
+    height: 55px;
+    font-size: 11px;
+    position: absolute;
+    font-weight: 700;
+    width: 64px;
+    padding: 10px 10px 13px 10px;
+    border-top-right-radius: 5px;
+    left: 69.6%;
+}
+
+

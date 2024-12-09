@@ -1,0 +1,72 @@
+/* HEADER */
+.header{
+    /* position: fixed;
+    width: 100%;
+    /* left: 0px; */
+    top: 0px;
+    background-color: rgb(248, 248, 248);
+    transition: background-color 0.3s;
+
+
+    position: fixed;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 100;
+}
+.container-header{
+    /* padding: 25px 365px 15px 30px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0px auto;
+    max-width: 1256px;
+    width: 100%; */
+    /* padding: 6px 0px 12px 34px; */
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 0px auto;
+    max-width: 1256px;
+    width: 100%;
+}
+.dark-light .click-dark-light{
+    display: inline-flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+        padding: 3px 7px 4px 4px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 18px;
+        border: 2px solid rgb(93, 130, 213);
+        border-radius: 100px;
+        color: rgb(93, 130, 213);
+        cursor: pointer;
+        gap: 4px;
+        background: none;
+        transition: 0.3s;
+}
+
+.dark-light {
+    padding: 15px 30px 0px 30px;
+}
+.click-dark-light:hover{
+    color: #fff;
+    background-color: #5D82D5;
+}
+
+
+.header.scrolled { 
+    background-color: #333;
+    position: fixed;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 100;
+    box-shadow: rgba(39, 51, 59, 0.12) 0px 1px 18px;
+    background-color: rgb(255, 255, 255);
+
+
+}

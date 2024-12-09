@@ -1,0 +1,14 @@
+.qr-container {
+    max-height: 341px;
+    overflow-y: auto;
+    /* padding: 10px; */
+    border: 1px solid #ccc;
+    /* margin-top: 20px; */
+    width: 260px;
+    /* /* padding-right: 56px; */
+  }
+  
+  .qr-item {
+    margin-bottom: 20px;
+  }
+  

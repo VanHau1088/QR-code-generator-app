@@ -1,0 +1,19 @@
+.template-preview-content-wrapper_image{
+    /* display: none */
+}
+
+
+.mui-styled-content_handleInput_Page-Text{
+    padding: 15px 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    box-sizing: border-box;
+    height: 126px;
+    border-radius: 6px;
+    width: 100%;
+    border: 1px solid #D9DCE1;
+    background-color: #FFFFFF;
+    color: black;
+}
+
