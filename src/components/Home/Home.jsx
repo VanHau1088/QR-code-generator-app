@@ -80,7 +80,7 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Email'
                         onMouseEnter={() =>
                           setImageSrc(
-                            '/src/assets/Image/ImageHover/image.jpg'
+                            '/src/assets/Image/ImageHover/Email.png'
                           )
                         }
                         >
@@ -100,7 +100,7 @@ const Home = () => {
                     </li>
 
                     {/* HÌNH ẢNH */}
-                    <li className="card-section-content-IMG">
+                    {/* <li className="card-section-content-IMG">
                     <NavLink to= 'IMG'> 
                         <button className='template-selector__item-container' to = 'IMG'
                         onMouseEnter={() =>
@@ -122,10 +122,10 @@ const Home = () => {
                             </div>
                         </button>
                     </NavLink>
-                    </li>
+                    </li> */}
 
                     {/* Video */}
-                    <li className="card-section-content-Video">
+                    {/* <li className="card-section-content-Video">
                     <NavLink to= 'Video'> 
                         <button className='template-selector__item-container' to = 'Video'
                             onMouseEnter={() =>
@@ -147,7 +147,7 @@ const Home = () => {
                             </div>
                         </button>
                     </NavLink>
-                    </li>
+                    </li> */}
 
                   {/* Văn bản đơn giản */}
                     <li className="card-section-content-Text">
@@ -180,7 +180,7 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'SMS'
                              onMouseEnter={() =>
                               setImageSrc(
-                                '/src/assets/Image/ImageHover/menu.jpg'
+                                '/src/assets/Image/ImageHover/sms.png'
                               )
                             }
                         >
@@ -232,12 +232,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Map'
                                   onMouseEnter={() =>
                                     setImageSrc(
-                                      '/src/assets/Image/ImageHover/wifi.jpg'
+                                      '/src/assets/Image/ImageHover/location.png'
                                     )
                                   }
                           >
                             <div className="template-selector__item-container-logo">
-                            <img src="/src/assets/Image/Icons/Wifi.png" alt="" />
+                            <img src="/src/assets/Image/Icons/geo.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Map'>
                               <p className="template-selector__item-container-text-title">
@@ -257,12 +257,12 @@ const Home = () => {
                               <button className='template-selector__item-container' to = 'Payment'
                                         onMouseEnter={() =>
                                           setImageSrc(
-                                            '/src/assets/Image/ImageHover/wifi.jpg'
+                                            '/src/assets/Image/ImageHover/payment.jpg'
                                           )
                                         }
                                 >
                                   <div className="template-selector__item-container-logo">
-                                  <img src="/src/assets/Image/Icons/Wifi.png" alt="" />
+                                  <img src="/src/assets/Image/Icons/payment.png" alt="" />
                                   </div>
                                   <div className="template-selector__item-container-text" to = 'Payment'>
                                     <p className="template-selector__item-container-text-title">
@@ -307,12 +307,12 @@ const Home = () => {
                           <button className='template-selector__item-container' to = 'BulkQR'
                                     onMouseEnter={() =>
                                       setImageSrc(
-                                        '/src/assets/Image/ImageHover/wifi.jpg'
+                                        '/src/assets/Image/ImageHover/BULK QR.png'
                                       )
                                     }
                             >
                               <div className="template-selector__item-container-logo">
-                              <img src="/src/assets/Image/Icons/Wifi.png" alt="" />
+                              <img src="/src/assets/Image/Icons/bulkqr.png" alt="" />
                               </div>
                               <div className="template-selector__item-container-text" to = 'BulkQR'>
                                 <p className="template-selector__item-container-text-title">

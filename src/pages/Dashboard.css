@@ -1,0 +1,40 @@
+
+.Container_Dashboard{
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+    background: #5D82D5;
+    font-family: "Poppins", sans-serif;
+
+    width:217vh;
+    height: 100vh;
+}
+
+.profile-card{
+    width: 500px;
+}
+
+
+
+
+.username{
+    text-transform: capitalize;
+}
+
+.profile-btn{
+    margin-top: 1.3rem;
+    width: 100%;
+}
+
+
+.profile {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+span.ant-typography.ant-typography-secondary.css-dev-only-do-not-override-77tu7h {
+    padding: 5px;
+}

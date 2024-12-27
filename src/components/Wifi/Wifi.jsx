@@ -2,14 +2,17 @@ import './Wifi.css'
 import Header from "../Header/Header";
 import QRCodeStyling from 'qr-code-styling';
 import { useEffect, useRef, useState } from 'react';
-
+import axios from 'axios';
+import {useAuth} from '../../context/AuthContext';
+import { toPng } from 'html-to-image';
 const wifiTypes = [
   { name: 'WPA/WPA2', value: 'WPA' }, 
   { name: 'WEP', value: 'WEP' }, 
-  { name: 'No Encryption', value: 'nopass' },
+  { name: 'No Encryption', value: 'no pass' },
 ]
 
 const Wifi = () => {
+  const {userData} = useAuth();
   const [name, setName] = useState('');
   const[ssid, setSsid] = useState('');
   const [networkType, setNetworkType] = useState('WPA');
@@ -34,6 +37,10 @@ const Wifi = () => {
   const [logo, setLogo] = useState(null);
   // Download
   const [download, setDownload] = useState('png');
+
+
+  const [shortUrl, setShortUrl] = useState(''); 
+  const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
 
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
@@ -68,35 +75,53 @@ const Wifi = () => {
     qrCode.current.append(qrRef.current);
   }, [ssid, networkType, password, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
-  useEffect(() => {
-    const url = `https://vanhau1088.github.io/wifi.github.io?ssid=${encodeURIComponent(ssid)}&networkType=${encodeURIComponent(networkType)}&password=${encodeURIComponent(password)}`;
-    // const url = `https://vanhau1088.github.io/wifi.github.io?ssid=${encodeURIComponent(ssid)}&networkType=${encodeURIComponent(networkType)}&password=${encodeURIComponent(password)}} `;
-    qrCode.current.update({
-      // data: `WIFI:T:${networkType};S:${ssid};P:${password};;`,
-      data: url,
-      dotsOptions: {
-        type: dotType,
-        color: dotColor
-      },
-      backgroundOptions:{
-        color: bgColor,
-      },
-      cornersSquareOptions:{
-        type: cornerSquareType,
-        color: bgSquareType,
-      },
-      cornersDotOptions:{
-        type: cornerDotType,
-        color: bgDotType,
-      },
-      image: logo,
-      imageOptions:{
-        crossOrigin: 'anonymous',
-        margin: 6,
-        imageSize: 0.3
-      }
-    });
-  }, [ssid,networkType, password, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+
+  useEffect(() => { 
+    if (ssid && networkType && password && !isCreatingQRCode) { 
+      setIsCreatingQRCode(true); 
+      createDynamicQRCode('wifi', { ssid, networkType, password}); 
+    } 
+  }, [ssid, networkType, password]);
+
+  useEffect(() => { 
+    createDynamicQRCode('wifi', { ssid, networkType, password}); 
+  }, [ssid, networkType, password, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
+
+  const createDynamicQRCode = (type, data) => {
+    console.log('Type:', type);
+    console.log('Data:', data);
+    // Tạo URL giả cho mã QR động
+    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+      setShortUrl(shortUrl);
+      console.log('Short URL:', shortUrl);
+        qrCode.current.update({
+          data: shortUrl,
+          dotsOptions: {
+            type: dotType,
+            color: dotColor
+          },
+          backgroundOptions: {
+            color: bgColor,
+          },
+          cornersSquareOptions: {
+            type: cornerSquareType,
+            color: bgSquareType,
+          },
+          cornersDotOptions: {
+            type: cornerDotType,
+            color: bgDotType,
+          },
+          image: logo,
+          imageOptions: {
+            crossOrigin: 'anonymous',
+            margin: 6,
+            imageSize: 0.3
+          }
+        });
+      setIsCreatingQRCode(false);
+    };
+
 
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
 
@@ -104,9 +129,67 @@ const Wifi = () => {
 
   const CornerDotTypes = ['dots', 'square'];
 
-  const handleDownloadClick = () => {
-   qrCode.current.download({name, extension: download})
-  };
+  const saveQRCodeToDatabase = async ( type, data, userId) => {
+    console.log('Saving QR code to database');
+    try {
+      const qrImage = await toPng(qrRef.current);
+        const token = localStorage.getItem('token');
+        console.log('Token:', token); 
+        console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+          // Khởi tạo shortUrl trước khi sử dụng 
+        const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+          type, 
+          data, 
+          userId, 
+          qrImage, 
+          name, 
+          createdAt: new Date(),
+          isActive: true,
+          shortUrlOriginal: ' ', // Lưu URL gốc
+          scanCount: 0,
+        }, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+          setShortUrl(shortUrl);
+          console.log('QR code saved:', response.data);
+            qrCode.current.update({
+              data: shortUrl,
+              dotsOptions: {
+                type: dotType,
+                color: dotColor
+              },
+              backgroundOptions: {
+                color: bgColor,
+              },
+              cornersSquareOptions: {
+                type: cornerSquareType,
+                color: bgSquareType,
+              },
+              cornersDotOptions: {
+                type: cornerDotType,
+                color: bgDotType,
+              },
+              image: logo,
+              imageOptions: {
+                crossOrigin: 'anonymous',
+                margin: 6,
+                imageSize: 0.3
+              }
+            });
+          } catch (error) {
+              console.error('Error saving QR code to database:', error);
+        }
+};
+          
+    const handleDownloadClick = async () => {
+      try{
+        await saveQRCodeToDatabase('wifi', {ssid, networkType, password}, userData._id);
+          qrCode.current.download({ name, extension: download});
+        }catch(error){
+          console.error('Error saving QR code:', error);
+        }
+      };
 
   const handleUploadLogoClick = (e) => {
       const file = e.target.files[0];
@@ -118,6 +201,64 @@ const Wifi = () => {
         reader.readAsDataURL(file);
       }
   }
+
+    // Gọi hàm với dữ liệu cụ thể cho URL
+    const updateQRCodeURL = async (shortUrl, ssid, networkType, password) => {
+      console.log('Updating shortUrl:', shortUrl);  // Log shortUrl gửi đi
+      console.log('Updating WiFi Info - SSID:', ssid, 'Network Type:', networkType, 'Password:', password); // Log thông tin WiFi gửi đi
+      try {
+        const response = await axios.post('http://localhost:3000/update-wifi', {
+          shortUrl: shortUrl,
+          ssid: ssid,
+          networkType: networkType,
+          password: password
+        });
+    
+        if (response.status === 200) {
+          console.log('URL updated successfully');
+          console.log('New Wifi updated successfully:');
+          console.log(`http://localhost:3000/${shortUrl}`);
+          const updateUrl = `http://localhost:3000/${shortUrl}`;
+          qrCode.current.update({
+              data: updateUrl,
+              dotsOptions: {
+                type: dotType,
+                color: dotColor
+              },
+              backgroundOptions:{
+                color: bgColor,
+              },
+              cornersSquareOptions:{
+                type: cornerSquareType,
+                color: bgSquareType,
+              },
+              cornersDotOptions:{
+                type: cornerDotType,
+                color: bgDotType,
+              },
+              image: logo,
+              imageOptions:{
+                crossOrigin: 'anonymous',
+                margin: 6,
+                imageSize: 0.3
+              } 
+            });
+          }
+      } catch (error) {
+        console.error('Error updating Wifi:', error.response ? error.response.data : error.message);
+    };
+  }
+    const handleUpdateWifi = () => {
+      const ssid = prompt('Nhập SSID mới:'); // Hỏi người dùng nhập SSID mới 
+      const networkType = prompt('Nhập loại mạng mới (WPA/WPA2, WEP, nopass):'); // Hỏi người dùng nhập loại mạng mới 
+      const password = prompt('Nhập mật khẩu mới:'); // Hỏi người dùng nhập mật khẩu mới
+      
+      if (ssid && networkType && password) {
+        updateQRCodeURL(shortUrl, ssid, networkType, password);
+      }
+    };
+
+
 
   return (
     <div>
@@ -397,6 +538,7 @@ const Wifi = () => {
                                   <option value="svg">SVG</option>
                               </select>
                             </div>
+                            <button onClick={handleUpdateWifi}>Cập nhật Văn bản</button>
                           </div>
                         )}
                       </div>

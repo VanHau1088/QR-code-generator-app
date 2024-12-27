@@ -117,40 +117,6 @@ useEffect(() => {
   });
 }, [qrData]);
 
-
-  // const qrRef = useRef(null);
-  // const qrCode = useRef(new QRCodeStyling({
-  //   width: 300,
-  //   height: 300,
-  //   margin: 10,
-  //   data: url,
-  //   dotsOptions: {
-  //     color: dotColor,
-  //     type: dotType,
-  //   },
-  //   backgroundOptions:{
-  //     color: bgColor,
-  //   },
-  //   cornerSquareOptions:{
-  //     type: cornerSquareType,
-  //     color: bgSquareType,
-  //   },
-  //   cornersDotOptions:{
-  //     type: cornerDotType,
-  //     color: bgDotType,
-  //   },
-  //   image: logo,
-  //   imageOptions:{
-  //     crossOrigin: 'anonymous',
-  //     margin: 6,
-  //     imageSize: 0.3
-  //   }
-  // }));
-
-  // useEffect(() => {
-  //   qrCode.current.append(qrRef.current);
-  // }, [qrData, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
-
   useEffect(() => {
     qrData.forEach((qr) => {
       qr.qrCodeStyling.update({

@@ -2,8 +2,11 @@ import './Event.css'
 import Header from "../Header/Header";
 import QRCodeStyling from 'qr-code-styling';
 import { useEffect, useRef, useState } from 'react';
-
+import axios from 'axios';
+import {useAuth} from '../../context/AuthContext';
+import { toPng } from 'html-to-image';
 const Event = () => {
+    const {userData} = useAuth();
   const [name, setName] = useState('');
   // Event
   const [title, setTitle] = useState('');
@@ -40,6 +43,11 @@ const Event = () => {
   // Download
   const [download, setDownload] = useState('png');
 
+  const [shortUrl, setShortUrl] = useState(''); 
+  const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
+
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
@@ -73,34 +81,50 @@ const Event = () => {
     qrCode.current.append(qrRef.current);
   }, [title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website,  dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
-  useEffect(() => {
-    const url = `https://vanhau1088.github.io/Event.github.io?title=${encodeURIComponent(title)}&eventName=${encodeURIComponent(eventName)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&about=${encodeURIComponent(about)}&address=${encodeURIComponent(address)}&contactName=${encodeURIComponent(contactName)}&phoneNumber=${encodeURIComponent(phoneNumber)}&email=${encodeURIComponent(email)}&website=${encodeURIComponent(website)}`;
-    qrCode.current.update({
-      // data: `BEGIN:VEVENT\nSUMMARY:${eventName}\nDTSTART:${startDate}\nDTEND:${endDate}\nLOCATION:${address}\nDESCRIPTION:${about}\nCONTACT:${contactName}\nPHONE:${phoneNumber}\nEMAIL:${email}\nURL:${website}\nEND:VEVENT`,
-      data: url,
-      dotsOptions: {
+  useEffect(() => { 
+    if (title && eventName && startDate && endDate && about && address && contactName && phoneNumber && email && website && !isCreatingQRCode) { 
+      setIsCreatingQRCode(true); 
+      createDynamicQRCode('event', { title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website}); 
+    } }, [title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website, ]);
+
+    useEffect(() => { 
+        createDynamicQRCode('event', { title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website}); 
+      }, [title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website, ]);
+  
+  const createDynamicQRCode = (type, data) => {
+    console.log('Type:', type);
+    console.log('Data:', data);
+    // Tạo URL giả cho mã QR động
+    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+      setShortUrl(shortUrl);
+      console.log('Short URL:', shortUrl);
+        qrCode.current.update({
+        data: shortUrl,
+        dotsOptions: {
         type: dotType,
         color: dotColor
-      },
-      backgroundOptions:{
-        color: bgColor,
-      },
-      cornersSquareOptions:{
-        type: cornerSquareType,
-        color: bgSquareType,
-      },
-      cornersDotOptions:{
-        type: cornerDotType,
-        color: bgDotType,
-      },
-      image: logo,
-      imageOptions:{
-        crossOrigin: 'anonymous',
-        margin: 6,
-        imageSize: 0.3
-      }
-    });
-  }, [title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+        },
+        backgroundOptions: {
+           color: bgColor,
+        },
+        cornersSquareOptions: {
+           type: cornerSquareType,
+           color: bgSquareType,
+        },
+        cornersDotOptions: {
+           type: cornerDotType,
+           color: bgDotType,
+        },
+        image: logo,
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 6,
+          imageSize: 0.3
+        }
+      });
+    setIsCreatingQRCode(false);
+  };
 
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
 
@@ -108,9 +132,68 @@ const Event = () => {
 
   const CornerDotTypes = ['dots', 'square'];
 
-  const handleDownloadClick = () => {
-   qrCode.current.download({name, extension: download})
-  };
+  const saveQRCodeToDatabase = async ( type, data, userId) => {
+    console.log('Saving QR code to database');
+    try {
+      const qrImage = await toPng(qrRef.current);
+        const token = localStorage.getItem('token');
+        console.log('Token:', token); 
+        console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+          // Khởi tạo shortUrl trước khi sử dụng 
+        const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+          type, 
+          data, 
+          userId, 
+          qrImage, 
+          name, 
+          createdAt: new Date(),
+          isActive: true,
+          shortUrlOriginal: ' ', // Lưu URL gốc
+          scanCount: 0,
+        }, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+          setShortUrl(shortUrl);
+          console.log('QR code saved:', response.data);
+            qrCode.current.update({
+              data: shortUrl,
+              dotsOptions: {
+                type: dotType,
+                color: dotColor
+              },
+              backgroundOptions: {
+                color: bgColor,
+              },
+              cornersSquareOptions: {
+                type: cornerSquareType,
+                color: bgSquareType,
+              },
+              cornersDotOptions: {
+                type: cornerDotType,
+                color: bgDotType,
+              },
+              image: logo,
+              imageOptions: {
+                crossOrigin: 'anonymous',
+                margin: 6,
+                imageSize: 0.3
+              }
+            });
+          } catch (error) {
+              console.error('Error saving QR code to database:', error);
+        }
+};
+          
+    const handleDownloadClick = async () => {
+      try{  
+        await saveQRCodeToDatabase('event', {title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website, }, userData._id);
+          qrCode.current.download({ name, extension: download});
+        }catch(error){
+          console.error('Error saving QR code:', error);
+        }
+      };
+
 
   const handleUploadLogoClick = (e) => {
       const file = e.target.files[0];
@@ -122,6 +205,86 @@ const Event = () => {
         reader.readAsDataURL(file);
       }
   }
+
+
+
+  // Gọi hàm với dữ liệu cụ thể cho URL
+const updateQRCodeEvent = async (shortUrl, title ,eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website) => {
+  console.log('Updating shortUrl:', shortUrl);  // Log shortUrl gửi đi
+  console.log('Updating Card Info - title Event:', title, 
+    'eventName:', eventName, 
+    'startDate:', startDate, 
+    'endDate:', endDate, 
+    'about:', about, 
+    'address:', address, 
+    'contactName:', contactName, 
+    'phoneNumber:', phoneNumber, 
+    'email:', email,
+    'website:', website);  // Log thông tin card gửi đi
+  try {
+    const response = await axios.post('http://localhost:3000/update-event', {
+      shortUrl: shortUrl,
+      title: title,
+      eventName: eventName,
+      startDate: startDate,
+      endDate: endDate,
+      about: about,
+      address: address,
+      contactName: contactName,
+      phoneNumber: phoneNumber,
+      email: email,
+      website: website,
+    });
+
+    if (response.status === 200) {
+      console.log('Event Info updated successfully');
+      const updateUrl = `http://localhost:3000/${shortUrl}`;
+      qrCode.current.update({
+        data: updateUrl,
+        dotsOptions: {
+          type: dotType,
+          color: dotColor
+        },
+        backgroundOptions: {
+          color: bgColor,
+        },
+        cornersSquareOptions: {
+          type: cornerSquareType,
+          color: bgSquareType,
+        },
+        cornersDotOptions: {
+          type: cornerDotType,
+          color: bgDotType,
+        },
+        image: logo,
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 6,
+          imageSize: 0.3
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error updating Card Info:', error.response ? error.response.data : error.message);
+  }
+};
+
+
+const handleUpdateEvent = () => {
+  const title = prompt('Nhập title mới:');
+  const eventName = prompt('Nhập eventName mới:');
+  const startDate = prompt('Nhập startDate mới:');
+  const endDate = prompt('Nhập endDate mới:');
+  const about = prompt('Nhập about mới:');
+  const address = prompt('Nhập address mới:');
+  const contactName = prompt('Nhập contactName mới:');
+  const phoneNumber = prompt('Nhập phoneNumber mới:');
+  const email = prompt('Nhập email mới:');
+  const website = prompt('Nhập website mới:');
+  if (title && eventName && startDate && endDate && about && address && contactName && phoneNumber && email && website) {
+    updateQRCodeEvent(shortUrl, title, eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website);
+  }
+};
 
   return (
     <div>
@@ -511,6 +674,7 @@ const Event = () => {
                                   <option value="svg">SVG</option>
                               </select>
                             </div>
+                            <button onClick={handleUpdateEvent}>Cập nhật Văn bản</button>
                           </div>
                         )}
                       </div>

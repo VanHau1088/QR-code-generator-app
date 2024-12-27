@@ -3,7 +3,9 @@ import Header from "../Header/Header";
 import QRCodeStyling from 'qr-code-styling';
 import { useEffect, useRef, useState } from 'react';
 import parsePhoneNumberFromString  from 'libphonenumber-js';
-
+import axios from 'axios';
+import {useAuth} from '../../context/AuthContext';
+import { toPng } from 'html-to-image';
 const countryCodes = [
   { code: '+84', name: 'Vietnam' },
   { code: '+1', name: 'United States' },
@@ -12,6 +14,7 @@ const countryCodes = [
 ]
 
 const SMS = () => {
+  const {userData} = useAuth();
   const [name, setName] = useState('');
   const[countryCode, setCounTryCode] = useState('');
   const [number, setNumber] = useState('');
@@ -40,12 +43,16 @@ const SMS = () => {
   // Download
   const [download, setDownload] = useState('png');
 
+  const [shortUrl, setShortUrl] = useState(''); 
+  const [isCreatingQRCode, setIsCreatingQRCode] = useState(false)
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
     height: 300,
     margin: 10,
-    data: `SMSTO:${formattedNumber}:${message}`, // Sử dụng SMSTO để tạo mã QR cho SMS 
+    // data: `SMSTO:${formattedNumber}:${message}`, // Sử dụng SMSTO để tạo mã QR cho SMS 
+    data: `sms:${formattedNumber}?body=${encodeURIComponent(message)}`, // Sử dụng SMSTO để tạo mã QR cho SMS 
     dotsOptions: {
       color: dotColor,
       type: dotType,
@@ -73,32 +80,43 @@ const SMS = () => {
     qrCode.current.append(qrRef.current);
   }, [formattedNumber, message, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
-  useEffect(() => {
-    qrCode.current.update({
-      data: `SMSTO:${formattedNumber}:${message}`, // Sử dụng SMSTO để tạo mã QR cho SMS 
-      dotsOptions: {
-        type: dotType,
-        color: dotColor
-      },
-      backgroundOptions:{
-        color: bgColor,
-      },
-      cornersSquareOptions:{
-        type: cornerSquareType,
-        color: bgSquareType,
-      },
-      cornersDotOptions:{
-        type: cornerDotType,
-        color: bgDotType,
-      },
-      image: logo,
-      imageOptions:{
-        crossOrigin: 'anonymous',
-        margin: 6,
-        imageSize: 0.3
+  useEffect(() => { 
+    if (formattedNumber && message && !isCreatingQRCode) { 
+      setIsCreatingQRCode(true); 
+      if(shortUrl) {
+        const updateUrl = `https://2820-2001-ee0-500e-c150-e922-d689-2223-85d1.ngrok-free.app/${shortUrl}`;
+        console.log(shortUrl)
+        console.log(updateUrl)
+        qrCode.current.update({
+          // data: `SMSTO:${formattedNumber}:${message}`, // Sử dụng SMSTO để tạo mã QR cho SMS 
+          data: updateUrl,
+          dotsOptions: {
+            type: dotType,
+            color: dotColor
+          },
+          backgroundOptions:{
+            color: bgColor,
+          },
+          cornersSquareOptions:{
+            type: cornerSquareType,
+            color: bgSquareType,
+          },
+          cornersDotOptions:{
+            type: cornerDotType,
+            color: bgDotType,
+          },
+          image: logo,
+          imageOptions:{
+            crossOrigin: 'anonymous',
+            margin: 6,
+            imageSize: 0.3
+          }
+        });
       }
-    });
-  }, [formattedNumber, message, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+        createDynamicQRCode('sms', { formattedNumber, message }); 
+
+    } }, [formattedNumber, message, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
+
 
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
 
@@ -106,9 +124,102 @@ const SMS = () => {
 
   const CornerDotTypes = ['dots', 'square'];
 
-  const handleDownloadClick = () => {
-   qrCode.current.download({name, extension: download})
+  const createDynamicQRCode = (type, data) => {
+    console.log('Type:', type);
+    console.log('Data:', data);
+    // Tạo URL giả cho mã QR động
+    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+      setShortUrl(shortUrl);
+      console.log('Short URL:', shortUrl);
+        qrCode.current.update({
+          data: shortUrl,
+          dotsOptions: {
+            type: dotType,
+            color: dotColor
+          },
+          backgroundOptions: {
+            color: bgColor,
+          },
+          cornersSquareOptions: {
+            type: cornerSquareType,
+            color: bgSquareType,
+          },
+          cornersDotOptions: {
+            type: cornerDotType,
+            color: bgDotType,
+          },
+          image: logo,
+          imageOptions: {
+            crossOrigin: 'anonymous',
+            margin: 6,
+            imageSize: 0.3
+          }
+        });
+      setIsCreatingQRCode(false);
+    };
+
+    const saveQRCodeToDatabase = async ( type, data, userId) => {
+      console.log('Saving QR code to database');
+      try {
+        const qrImage = await toPng(qrRef.current);
+          const token = localStorage.getItem('token');
+          console.log('Token:', token); 
+          console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+            // Khởi tạo shortUrl trước khi sử dụng 
+          const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+            type, 
+            data, 
+            userId, 
+            qrImage, 
+            name, 
+            createdAt: new Date(),
+            isActive: true,
+            shortUrlOriginal: ' ', // Lưu URL gốc
+            scanCount: 0,
+          }, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+            setShortUrl(shortUrl);
+            console.log('QR code saved:', response.data);
+              qrCode.current.update({
+                data: shortUrl,
+                dotsOptions: {
+                  type: dotType,
+                  color: dotColor
+                },
+                backgroundOptions: {
+                  color: bgColor,
+                },
+                cornersSquareOptions: {
+                  type: cornerSquareType,
+                  color: bgSquareType,
+                },
+                cornersDotOptions: {
+                  type: cornerDotType,
+                  color: bgDotType,
+                },
+                image: logo,
+                imageOptions: {
+                  crossOrigin: 'anonymous',
+                  margin: 6,
+                  imageSize: 0.3
+                }
+              });
+            } catch (error) {
+                console.error('Error saving QR code to database:', error);
+          }
   };
+            
+      const handleDownloadClick = async () => {
+        try{
+          await saveQRCodeToDatabase('sms', {formattedNumber, message}, userData._id);
+            qrCode.current.download({ name, extension: download});
+          }catch(error){
+            console.error('Error saving QR code:', error);
+          }
+        };
 
   const handleUploadLogoClick = (e) => {
       const file = e.target.files[0];

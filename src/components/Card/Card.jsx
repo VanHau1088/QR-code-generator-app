@@ -2,13 +2,16 @@ import './Card.css'
 import Header from "../Header/Header";
 import QRCodeStyling from 'qr-code-styling';
 import { useEffect, useRef, useState } from 'react';
-
+import axios from 'axios';
+import {useAuth} from '../../context/AuthContext';
+import { toPng } from 'html-to-image';
 const Card = () => {
+  const {userData} = useAuth();
   const [name, setName] = useState('');
   // Vcard
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  // const [profileImage, setProfileImage] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [website, setWebsite] = useState('');
@@ -35,12 +38,16 @@ const Card = () => {
   // Download
   const [download, setDownload] = useState('png');
 
+  const [shortUrl, setShortUrl] = useState(''); 
+  const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
     height: 300,
     margin: 10,
-    data: `BEGIN:VCARD\nVERSION:3.0\nFN:${fullName}\nTEL:${phoneNumber}\nEMAIL:${email}\nURL:${website}\nTITLE:${job}\nADR:${address}:\nIMAGE:${profileImage}\nEND:VCARD`,
+    data: `BEGIN:VCARD\nVERSION:3.0\nFN:${fullName}\nTEL:${phoneNumber}\nEMAIL:${email}\nURL:${website}\nTITLE:${job}\nADR:${address}:\nEND:VCARD`,
     dotsOptions: {
       color: dotColor,
       type: dotType,
@@ -66,46 +73,122 @@ const Card = () => {
 
   useEffect(() => {
     qrCode.current.append(qrRef.current);
-  }, [fullName, phoneNumber, email, address, profileImage, website, job, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+  }, [fullName, phoneNumber, email, address,  website, job, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
-  useEffect(() => {
-    const url = `https://vanhau1088.github.io/vcard.github.io?fullName=${encodeURIComponent(fullName)}&phoneNumber=${encodeURIComponent(phoneNumber)}&email=${encodeURIComponent(email)}&address=${encodeURIComponent(address)}&profileImage=${encodeURIComponent(profileImage)}&website=${encodeURIComponent(website)}&job=${encodeURIComponent(job)}`;
-    qrCode.current.update({
-        data: url,
-      // data: `BEGIN:VCARD\nVERSION:3.0\nFN:${fullName}\nTEL:${phoneNumber}\nEMAIL:${email}\nURL:${website}\nTITLE:${job}\nADR:${address}:\nIMAGE:${profileImage}\nEND:VCARD`,
-      dotsOptions: {
-        type: dotType,
-        color: dotColor
-      },
-      backgroundOptions:{
-        color: bgColor,
-      },
-      cornersSquareOptions:{
-        type: cornerSquareType,
-        color: bgSquareType,
-      },
-      cornersDotOptions:{
-        type: cornerDotType,
-        color: bgDotType,
-      },
-      image: logo,
-      imageOptions:{
-        crossOrigin: 'anonymous',
-        margin: 6,
-        imageSize: 0.3
-      }
-    });
-  }, [fullName,phoneNumber, email, address, profileImage, website, job, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
+  useEffect(() => { 
+    if (fullName && phoneNumber && email && address && website && job && !isCreatingQRCode) { 
+      setIsCreatingQRCode(true); 
+      createDynamicQRCode('card', { fullName, phoneNumber, email, address, website, job }); 
+    } }, [fullName, phoneNumber, email, address, website, job]);
+    
+    
+  useEffect(() => { 
+    createDynamicQRCode('card', { fullName, phoneNumber, email, address, website, job }); 
+  }, [fullName, phoneNumber, email, address, website, job, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
+  
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
 
   const SquareTypes = ['dots', 'square', 'extra-rounded'];
 
   const CornerDotTypes = ['dots', 'square'];
 
-  const handleDownloadClick = () => {
-   qrCode.current.download({name, extension: download})
+
+  const createDynamicQRCode = (type, data) => {
+    console.log('Type:', type);
+    console.log('Data:', data);
+    // Tạo URL giả cho mã QR động
+    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+      setShortUrl(shortUrl);
+      console.log('Short URL:', shortUrl);
+        qrCode.current.update({
+          data: shortUrl,
+          dotsOptions: {
+            type: dotType,
+            color: dotColor
+          },
+          backgroundOptions: {
+            color: bgColor,
+          },
+          cornersSquareOptions: {
+            type: cornerSquareType,
+            color: bgSquareType,
+          },
+          cornersDotOptions: {
+            type: cornerDotType,
+            color: bgDotType,
+          },
+          image: logo,
+          imageOptions: {
+            crossOrigin: 'anonymous',
+            margin: 6,
+            imageSize: 0.3
+          }
+        });
+      setIsCreatingQRCode(false);
+    };
+
+    const saveQRCodeToDatabase = async ( type, data, userId) => {
+      console.log('Saving QR code to database');
+      try {
+        const qrImage = await toPng(qrRef.current);
+          const token = localStorage.getItem('token');
+          console.log('Token:', token); 
+          console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+            // Khởi tạo shortUrl trước khi sử dụng 
+          const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+            type, 
+            data, 
+            userId, 
+            qrImage, 
+            name, 
+            createdAt: new Date(),
+            isActive: true,
+            shortUrlOriginal: ' ', // Lưu URL gốc
+            scanCount: 0,
+          }, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+            setShortUrl(shortUrl);
+            console.log('QR code saved:', response.data);
+              qrCode.current.update({
+                data: shortUrl,
+                dotsOptions: {
+                  type: dotType,
+                  color: dotColor
+                },
+                backgroundOptions: {
+                  color: bgColor,
+                },
+                cornersSquareOptions: {
+                  type: cornerSquareType,
+                  color: bgSquareType,
+                },
+                cornersDotOptions: {
+                  type: cornerDotType,
+                  color: bgDotType,
+                },
+                image: logo,
+                imageOptions: {
+                  crossOrigin: 'anonymous',
+                  margin: 6,
+                  imageSize: 0.3
+                }
+              });
+            } catch (error) {
+                console.error('Error saving QR code to database:', error);
+          }
   };
+  const handleDownloadClick = async () => {
+    try{
+      await saveQRCodeToDatabase('card', {  fullName, phoneNumber, email, address, website, job }, userData._id);
+        qrCode.current.download({ name, extension: download});
+      }catch(error){
+          console.error('Error saving QR code:', error);
+      }
+    };    
 
   const handleUploadLogoClick = (e) => {
       const file = e.target.files[0];
@@ -117,6 +200,68 @@ const Card = () => {
         reader.readAsDataURL(file);
       }
   }
+
+// Gọi hàm với dữ liệu cụ thể cho URL
+const updateQRCodeCard = async (shortUrl, fullName, phoneNumber, email, address, website, job) => {
+  console.log('Updating shortUrl:', shortUrl);  // Log shortUrl gửi đi
+  console.log('Updating Card Info - Full Name:', fullName, 'Phone Number:', phoneNumber, 'Email:', email, 'Address:', address, 'Website:', website, 'Job:', job);  // Log thông tin card gửi đi
+  try {
+    const response = await axios.post('http://localhost:3000/update-card', {
+      shortUrl: shortUrl,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      email: email,
+      address: address,
+      website: website,
+      job: job
+    });
+
+    if (response.status === 200) {
+      console.log('Card Info updated successfully');
+      const updateUrl = `http://localhost:3000/${shortUrl}`;
+      qrCode.current.update({
+        data: updateUrl,
+        dotsOptions: {
+          type: dotType,
+          color: dotColor
+        },
+        backgroundOptions: {
+          color: bgColor,
+        },
+        cornersSquareOptions: {
+          type: cornerSquareType,
+          color: bgSquareType,
+        },
+        cornersDotOptions: {
+          type: cornerDotType,
+          color: bgDotType,
+        },
+        image: logo,
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 6,
+          imageSize: 0.3
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error updating Card Info:', error.response ? error.response.data : error.message);
+  }
+};
+
+
+const handleUpdateCard = () => {
+  const fullName = prompt('Nhập Họ Tên mới:');
+  const phoneNumber = prompt('Nhập Số Điện Thoại mới:');
+  const email = prompt('Nhập Email mới:');
+  const address = prompt('Nhập Địa Chỉ mới:');
+  const website = prompt('Nhập Website mới:');
+  const job = prompt('Nhập Công Việc mới:');
+  if (fullName && phoneNumber && email && address && website && job) {
+    updateQRCodeCard(shortUrl, fullName, phoneNumber, email, address, website, job);
+  }
+};
+
 
   return (
     <div>
@@ -167,7 +312,7 @@ const Card = () => {
                           />
                       </div>
                       {/* Profile Image  */}
-                      <div className="mui-styled-content_handleInput_Page"> 
+                      {/* <div className="mui-styled-content_handleInput_Page"> 
                           <p className="mui-styled-title_URL"> Ảnh đại diện*</p>
                             <input 
                               className='mui-styled-content_handleInput_Page-URL' 
@@ -176,7 +321,7 @@ const Card = () => {
                               value={profileImage}
                               onChange={(e) => setProfileImage(e.target.value)}
                             />
-                      </div>
+                      </div> */}
                     {/* Phone number */}
                     <div className="mui-styled-content_handleInput_Page"> 
                           <p className="mui-styled-title_URL">Số điện thoại</p>
@@ -443,6 +588,7 @@ const Card = () => {
                                   <option value="svg">SVG</option>
                               </select>
                             </div>
+                            <button onClick={handleUpdateCard}>Cập nhật Văn bản</button>
                           </div>
                         )}
                       </div>

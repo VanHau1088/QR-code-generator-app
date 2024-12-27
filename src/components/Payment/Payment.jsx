@@ -3,8 +3,11 @@ import Header from "../Header/Header";
 import QRCodeStyling from 'qr-code-styling';
 import { useEffect, useRef, useState } from 'react';
 import { QRPay, BanksObject } from 'vietnam-qr-pay';
-
+import axios from 'axios';
+import {useAuth} from '../../context/AuthContext';
+import { toPng } from 'html-to-image';
 const Payment = () => {
+  const {userData} = useAuth();
   const [name, setName] = useState('');
   // Thông tin thanh toán
   const [bank, setBank] = useState('');
@@ -33,6 +36,9 @@ const Payment = () => {
   const [logo, setLogo] = useState(null);
   // Download
   const [download, setDownload] = useState('png');
+
+  const [shortUrl, setShortUrl] = useState(''); 
+  const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
 
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
@@ -66,33 +72,19 @@ const Payment = () => {
   useEffect(() => {
     qrCode.current.append(qrRef.current);
   }, [qrContent, bankSuggestions, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+  
+  
+  useEffect(() => { 
+    if ( bank && accountNumber && amount && purpose && !isCreatingQRCode) { 
+      setIsCreatingQRCode(true); 
+      createDynamicQRCode('payment', { bank, accountNumber, amount, purpose, content: qrContent }); 
+  } }, [bank, accountNumber, amount, purpose, qrContent]);
 
-  useEffect(() => {
-    qrCode.current.update({
-      data: qrContent,
-      dotsOptions: {
-        type: dotType,
-        color: dotColor
-      },
-      backgroundOptions:{
-        color: bgColor,
-      },
-      cornersSquareOptions:{
-        type: cornerSquareType,
-        color: bgSquareType,
-      },
-      cornersDotOptions:{
-        type: cornerDotType,
-        color: bgDotType,
-      },
-      image: logo,
-      imageOptions:{
-        crossOrigin: 'anonymous',
-        margin: 6,
-        imageSize: 0.3
-      }
-    });
-  }, [bank, accountNumber, amount, purpose, qrContent, bankSuggestions, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+  useEffect(() => { 
+    createDynamicQRCode('payment', { bank, accountNumber, amount, purpose, content: qrContent}); 
+  }, [bank, accountNumber, amount, purpose, qrContent, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
+
+
 
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
 
@@ -100,9 +92,154 @@ const Payment = () => {
 
   const CornerDotTypes = ['dots', 'square'];
 
-  const handleDownloadClick = () => {
-   qrCode.current.download({name, extension: download})
+ 
+  const createDynamicQRCode = (type, data) => {
+    console.log('Type:', type);
+    console.log('Data:', data);
+    // Tạo URL giả cho mã QR động
+    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+      setShortUrl(shortUrl);
+      console.log('Short URL:', shortUrl);
+        qrCode.current.update({
+          data: shortUrl,
+          dotsOptions: {
+            type: dotType,
+            color: dotColor
+          },
+          backgroundOptions: {
+            color: bgColor,
+          },
+          cornersSquareOptions: {
+            type: cornerSquareType,
+            color: bgSquareType,
+          },
+          cornersDotOptions: {
+            type: cornerDotType,
+            color: bgDotType,
+          },
+          image: logo,
+          imageOptions: {
+            crossOrigin: 'anonymous',
+            margin: 6,
+            imageSize: 0.3
+          }
+        });
+      setIsCreatingQRCode(false);
+    };
+
+    const saveQRCodeToDatabase = async ( type, data, userId) => {
+      console.log('Saving QR code to database');
+      try {
+        const qrImage = await toPng(qrRef.current);
+          const token = localStorage.getItem('token');
+          console.log('Token:', token); 
+          console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+            // Khởi tạo shortUrl trước khi sử dụng 
+          const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+            type, 
+            data, 
+            userId, 
+            qrImage, 
+            name, 
+            createdAt: new Date(),
+            isActive: true,
+            shortUrlOriginal: ' ', // Lưu URL gốc
+            scanCount: 0,
+          }, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+            setShortUrl(shortUrl);
+            console.log('QR code saved:', response.data);
+              qrCode.current.update({
+                data: shortUrl,
+                dotsOptions: {
+                  type: dotType,
+                  color: dotColor
+                },
+                backgroundOptions: {
+                  color: bgColor,
+                },
+                cornersSquareOptions: {
+                  type: cornerSquareType,
+                  color: bgSquareType,
+                },
+                cornersDotOptions: {
+                  type: cornerDotType,
+                  color: bgDotType,
+                },
+                image: logo,
+                imageOptions: {
+                  crossOrigin: 'anonymous',
+                  margin: 6,
+                  imageSize: 0.3
+                }
+              });
+            } catch (error) {
+                console.error('Error saving QR code to database:', error);
+          }
   };
+            
+      const handleDownloadClick = async () => {
+        try{
+          await saveQRCodeToDatabase('payment', {bank, accountNumber, amount, purpose, qrContent}, userData._id);
+            qrCode.current.download({ name, extension: download});
+          }catch(error){
+            console.error('Error saving QR code:', error);
+          }
+        };
+
+  const updateQRCodeURL = async (shortUrl, newUrl) => {
+    console.log('Updating shortUrl:', shortUrl);  // Log shortUrl gửi đi
+    console.log('Updating newUrl:', newUrl);  // Log newUrl gửi đi
+    try {
+      const response = await axios.post('http://localhost:3000/update-url', {
+        shortUrl: shortUrl,
+        newUrl: newUrl
+      });
+  
+      if (response.status === 200) {
+        console.log('URL updated successfully');
+        console.log('New URL updated successfully:');
+        console.log(`http://localhost:3000/${shortUrl}`);
+        const updateUrl = `http://localhost:3000/${shortUrl}`;
+        qrCode.current.update({
+            data: updateUrl,
+            dotsOptions: {
+              type: dotType,
+              color: dotColor
+            },
+            backgroundOptions:{
+              color: bgColor,
+            },
+            cornersSquareOptions:{
+              type: cornerSquareType,
+              color: bgSquareType,
+            },
+            cornersDotOptions:{
+              type: cornerDotType,
+              color: bgDotType,
+            },
+            image: logo,
+            imageOptions:{
+              crossOrigin: 'anonymous',
+              margin: 6,
+              imageSize: 0.3
+            } 
+          });
+        }
+    } catch (error) {
+      console.error('Error updating URL:', error.response ? error.response.data : error.message);
+  };
+}
+  const handleUpdateURL = () => {
+    const newUrl = prompt('Nhập URL mới:'); // Hỏi người dùng nhập URL mới
+    if (newUrl) {
+      updateQRCodeURL(shortUrl, newUrl);
+    }
+  };
+
 
   const handleUploadLogoClick = (e) => {
       const file = e.target.files[0];
@@ -115,7 +252,7 @@ const Payment = () => {
       }
   }
 
-  const handlebank = () =>{
+  const handleBank = () =>{
     if (bank && accountNumber) {
       const selectedBank = Object.keys(BanksObject).find(
         (bankKey) => BanksObject[bankKey].name === bank
@@ -130,8 +267,8 @@ const Payment = () => {
         });
 
         const content = qrPay.build();
-        console.log(content); // Kiểm tra nội dung mã QR
         setQrContent(content);
+        createDynamicQRCode('payment', { bank, accountNumber, amount, purpose, content });
       }
     } else {
       setQrContent('');
@@ -139,10 +276,8 @@ const Payment = () => {
   }
 
   useEffect(() => {
-    handlebank();
+    handleBank();
   }, [bank, accountNumber, amount, purpose]);
-
-
 
   const handleBankChange = (e) => {
     const input = e.target.value;
@@ -162,6 +297,36 @@ const Payment = () => {
     setBank(BanksObject[bankKey].name);
     setBankSuggestions([]);
   };
+
+
+  const handlebank = () => { 
+    if (bank && accountNumber) { 
+      const selectedBank = Object.keys(BanksObject).find( 
+        (bankKey) => BanksObject[bankKey].name === bank 
+      ); 
+
+      if (selectedBank) { 
+        const qrPay = QRPay.initVietQR({
+          bankBin: BanksObject[selectedBank].bin, // Mã BIN của ngân hàng 
+          bankNumber: accountNumber, // Số tài khoản ngân hàng 
+          amount: amount || undefined, // Số tiền 
+          purpose: purpose || undefined, // Nội dung chuyển tiền 
+        }); 
+
+        const content = qrPay.build(); 
+        console.log(content); // Kiểm tra nội dung mã QR 
+        setQrContent(content); 
+        createDynamicQRCode('payment', { bank, accountNumber, amount, purpose, content }); 
+      } 
+    } else { 
+      setQrContent(''); 
+    } 
+  }; 
+
+useEffect(() => { 
+  handlebank(); 
+}, [bank, accountNumber, amount, purpose]);
+
 
   return (
     <div>
@@ -454,7 +619,6 @@ const Payment = () => {
                   <div className="template-preview-content">
                     <div className="template-preview-content-header"> 
                       <div className="template-preview-content-wrapper">
-                       
                         {qrContent && (
                           <div>
                           <div ref={qrRef} />
@@ -466,6 +630,7 @@ const Payment = () => {
                                   <option value="svg">SVG</option>
                               </select>
                             </div>
+                            <button onClick={handleUpdateURL}> Cập nhật Email </button>
                           </div>
                         )}
                       </div>

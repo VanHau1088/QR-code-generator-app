@@ -2,13 +2,14 @@ import './Map.css'
 import Header from "../Header/Header";
 import QRCodeStyling from 'qr-code-styling';
 import { useEffect, useRef, useState } from 'react';
-
+import axios from 'axios';
+import {useAuth} from '../../context/AuthContext';
+import { toPng } from 'html-to-image';
 const Map = () => {
+  const {userData} = useAuth();
   const [name, setName] = useState('');
   const[latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-
-  // const[locationName, setLocationName] = useState('');
 
   // Kiểu mã QR
   const [dotType, setDotType] = useState('rounded');
@@ -31,12 +32,16 @@ const Map = () => {
   // Download
   const [download, setDownload] = useState('png');
 
+  const [shortUrl, setShortUrl] = useState(''); 
+  const [isCreatingQRCode, setIsCreatingQRCode] = useState(false)
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
     height: 300,
     margin: 10,
-    data: `geo:${latitude},${longitude}`,
+    // data: `geo:${latitude},${longitude}`,
+    data: `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`,
     dotsOptions: {
       color: dotColor,
       type: dotType,
@@ -62,34 +67,52 @@ const Map = () => {
 
   useEffect(() => {
     qrCode.current.append(qrRef.current);
-  }, [longitude, latitude, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+  }, [latitude, longitude, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
-  useEffect(() => {
-    qrCode.current.update({
-      data: `geo:${latitude},${longitude}`,
-      dotsOptions: {
-        type: dotType,
-        color: dotColor
-      },
-      backgroundOptions:{
-        color: bgColor,
-      },
-      cornersSquareOptions:{
-        type: cornerSquareType,
-        color: bgSquareType,
-      },
-      cornersDotOptions:{
-        type: cornerDotType,
-        color: bgDotType,
-      },
-      image: logo,
-      imageOptions:{
-        crossOrigin: 'anonymous',
-        margin: 6,
-        imageSize: 0.3
-      }
-    });
-  }, [longitude, latitude, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
+  useEffect(() => { 
+    if (longitude && latitude && !isCreatingQRCode) { 
+      setIsCreatingQRCode(true); 
+      createDynamicQRCode('geo', { latitude, longitude,  }); 
+    } }, [latitude, longitude]);
+
+  useEffect(() => { 
+    createDynamicQRCode('geo', {latitude, longitude  }); 
+  }, [latitude, longitude, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
+  
+
+  // useEffect(() => {
+  //   if (shortUrl) {
+  //     // const updateUrl = `https://2820-2001-ee0-500e-c150-e922-d689-2223-85d1.ngrok-free.app/${shortUrl}`;
+  //     const updateUrl = `https://2820-2001-ee0-500e-c150-e922-d689-2223-85d1.ngrok-free.app/${shortUrl}`;
+  //     console.log(shortUrl)
+  //     console.log(updateUrl)
+  //   qrCode.current.update({
+  //     // data: `geo:${latitude},${longitude}`,
+  //     data: updateUrl,
+  //     dotsOptions: {
+  //       type: dotType,
+  //       color: dotColor
+  //     },
+  //     backgroundOptions:{
+  //       color: bgColor,
+  //     },
+  //     cornersSquareOptions:{
+  //       type: cornerSquareType,
+  //       color: bgSquareType,
+  //     },
+  //     cornersDotOptions:{
+  //       type: cornerDotType,
+  //       color: bgDotType,
+  //     },
+  //     image: logo,
+  //     imageOptions:{
+  //       crossOrigin: 'anonymous',
+  //       margin: 6,
+  //       imageSize: 0.3
+  //     }
+  //   });
+  // }
+  // }, [shortUrl, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
 
@@ -97,9 +120,155 @@ const Map = () => {
 
   const CornerDotTypes = ['dots', 'square'];
 
-  const handleDownloadClick = () => {
-   qrCode.current.download({name, extension: download})
+  const createDynamicQRCode = (type, data) => {
+    console.log('Type:', type);
+    console.log('Data:', data);
+    // Tạo URL giả cho mã QR động
+    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+      setShortUrl(shortUrl);
+      console.log('Short URL:', shortUrl);
+        qrCode.current.update({
+          data: shortUrl,
+          dotsOptions: {
+            type: dotType,
+            color: dotColor
+          },
+          backgroundOptions: {
+            color: bgColor,
+          },
+          cornersSquareOptions: {
+            type: cornerSquareType,
+            color: bgSquareType,
+          },
+          cornersDotOptions: {
+            type: cornerDotType,
+            color: bgDotType,
+          },
+          image: logo,
+          imageOptions: {
+            crossOrigin: 'anonymous',
+            margin: 6,
+            imageSize: 0.3
+          }
+        });
+      setIsCreatingQRCode(false);
+    };
+
+    const saveQRCodeToDatabase = async ( type, data, userId) => {
+      console.log('Saving QR code to database');
+      try {
+        const qrImage = await toPng(qrRef.current);
+          const token = localStorage.getItem('token');
+          console.log('Token:', token); 
+          console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+            // Khởi tạo shortUrl trước khi sử dụng 
+          const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+            type, 
+            data, 
+            userId, 
+            qrImage, 
+            name, 
+            createdAt: new Date(),
+            isActive: true,
+            shortUrlOriginal: ' ', // Lưu URL gốc
+            scanCount: 0,
+          }, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+            setShortUrl(shortUrl);
+            console.log('QR code saved:', response.data);
+              qrCode.current.update({
+                data: shortUrl,
+                dotsOptions: {
+                  type: dotType,
+                  color: dotColor
+                },
+                backgroundOptions: {
+                  color: bgColor,
+                },
+                cornersSquareOptions: {
+                  type: cornerSquareType,
+                  color: bgSquareType,
+                },
+                cornersDotOptions: {
+                  type: cornerDotType,
+                  color: bgDotType,
+                },
+                image: logo,
+                imageOptions: {
+                  crossOrigin: 'anonymous',
+                  margin: 6,
+                  imageSize: 0.3
+                }
+              });
+            } catch (error) {
+                console.error('Error saving QR code to database:', error);
+          }
   };
+            
+      const handleDownloadClick = async () => {
+        try{
+          await saveQRCodeToDatabase('geo', {latitude, longitude}, userData._id);
+            qrCode.current.download({ name, extension: download});
+          }catch(error){
+            console.error('Error saving QR code:', error);
+          }
+        };    
+
+
+  // Gọi hàm với dữ liệu cụ thể cho URL
+  const updateQRCodeURL = async (shortUrl, newUrl) => {
+    console.log('Updating shortUrl:', shortUrl);  // Log shortUrl gửi đi
+    console.log('Updating newUrl:', newUrl);  // Log newUrl gửi đi
+    try {
+      const response = await axios.post('http://localhost:3000/update-url', {
+        shortUrl: shortUrl,
+        newUrl: newUrl
+      });
+  
+      if (response.status === 200) {
+        console.log('URL updated successfully');
+        console.log('New URL updated successfully:');
+        console.log(`http://localhost:3000/${shortUrl}`);
+        const updateUrl = `http://localhost:3000/${shortUrl}`;
+        qrCode.current.update({
+            data: updateUrl,
+            dotsOptions: {
+              type: dotType,
+              color: dotColor
+            },
+            backgroundOptions:{
+              color: bgColor,
+            },
+            cornersSquareOptions:{
+              type: cornerSquareType,
+              color: bgSquareType,
+            },
+            cornersDotOptions:{
+              type: cornerDotType,
+              color: bgDotType,
+            },
+            image: logo,
+            imageOptions:{
+              crossOrigin: 'anonymous',
+              margin: 6,
+              imageSize: 0.3
+            } 
+          });
+        }
+    } catch (error) {
+      console.error('Error updating URL:', error.response ? error.response.data : error.message);
+  };
+}
+  const handleUpdateURL = () => {
+    const newUrl = prompt('Nhập URL mới:'); // Hỏi người dùng nhập URL mới
+    if (newUrl) {
+      updateQRCodeURL(shortUrl, newUrl);
+    }
+  };
+
 
   const handleUploadLogoClick = (e) => {
       const file = e.target.files[0];
@@ -113,7 +282,6 @@ const Map = () => {
   }
 
   // Map
-
   // const geocodeLocation = async () => { 
   //   try { 
   //       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationName)}`); 
@@ -402,6 +570,7 @@ const Map = () => {
                                   <option value="svg">SVG</option>
                               </select>
                             </div>
+                            <button onClick={handleUpdateURL}> Cập nhật Geo </button>
                           </div>
                         )}
                       </div>

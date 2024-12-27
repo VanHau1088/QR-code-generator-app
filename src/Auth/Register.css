@@ -1,0 +1,36 @@
+
+.Container_Register{
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+    background: #5D82D5;
+    font-family: "Poppins", sans-serif;
+
+    width:217vh;
+    height: 100vh;
+}
+
+.form-container{
+    width: 1000px;
+}
+
+.title, .slogan{
+    text-align: center;
+}
+
+.btn{
+    width: 100%;
+}
+
+.auth-image{
+    /* padding: 30px 0px 30px 0px; */
+    padding: 100px 0px 30px 0px;
+    width: 100%;
+    background: #5D82D5;
+    border-radius: 10px;
+    height: 90%;
+}
+
+.alert{
+    margin-bottom: 1.5rem;
+}
