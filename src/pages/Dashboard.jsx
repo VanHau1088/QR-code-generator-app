@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { UserOutlined } from '@ant-design/icons';
 import './Dashboard.css'
 import { useNavigate } from 'react-router-dom';
-import Header from "../components/Header/Header";
+// import Header from "../components/Header/Header";
 function Dashboard() {
   const { userData, logout } = useAuth(); // sửa lỗi chính tả UserData thành userData
   const navigate = useNavigate()
@@ -14,7 +14,7 @@ function Dashboard() {
   
      return (
     <div className='Container_Dashboard'>
-        <Header />
+        {/* <Header /> */}
         <div className="Dashboard">
       
           <Card className="profile-card">

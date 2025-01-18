@@ -1,0 +1,154 @@
+.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-77tu7h {
+    height: 100vh;
+}
+
+main.ant-layout-content.css-dev-only-do-not-override-77tu7h {
+    width: 1448px;
+    padding: 0px 0px 0px 0px !important;
+    margin: 0px !important;
+}
+
+.ant-btn.css-dev-only-do-not-override-77tu7h.ant-btn-text.ant-btn-color-default.ant-btn-variant-text {
+    font-size: 0px; 
+    width: 0px;
+    height: 0px;
+    display: block;
+}
+
+
+.Dropdown{
+    display: flex;
+        align-items: center;
+        gap: 10px;
+}
+
+
+:where(.css-dev-only-do-not-override-77tu7h).ant-btn {
+    display: flex
+;
+    flex-direction: column;
+    margin: 10px 0px;
+}
+
+:where(.css-dev-only-do-not-override-77tu7h).ant-image .ant-image-img {
+    width: 100px;
+    /* height: auto; */
+    /* vertical-align: middle; */
+}
+
+.dashboard {
+    overflow-y: scroll;
+    height: 100vh;
+    overflow-x: hidden;
+    padding: 0px 0px 0px 40px;
+    background: #f2eeee;
+}
+
+
+
+h2.ant-typography.css-dev-only-do-not-override-77tu7h {
+    font-weight: 700;
+
+}
+
+
+
+/* ANALYZE */
+.menu_analyze {
+    display: flex;
+    gap: 30px;
+}
+
+.ant-select.ant-select-outlined.css-dev-only-do-not-override-77tu7h.ant-select-single.ant-select-show-arrow {
+    width: 300px !important;
+    /* height: 59px; */
+    height: 65px;
+}
+
+.total_qr{
+    display: flex;
+    gap: 30px;
+}
+
+.total_qrcode{
+    width: 450px;
+
+}
+
+.menu_time {
+    display: flex;
+}
+
+.menu_down {
+    justify-content: space-between;
+    display: flex ;
+}
+
+.export-buttons {
+    display: flex
+;
+    gap: 10px;
+    margin: 0px 20px 0px 0px;
+    margin-top: 0px !important ;
+}
+
+.LineChart{
+    
+}
+
+.device_scansqrcode{
+    display: flex;
+    gap: 20px;
+}
+
+canvas {
+margin: 0px !important;
+
+}
+
+
+.ant-card-body {
+    padding: 0px 24px !important;
+}
+
+
+.Pie {
+    width: 305px;
+    display: flex;
+    margin: 20px 0px 0px 17px;
+    justify-content: center;
+    align-items: center;
+}
+
+h4.ant-typography.css-dev-only-do-not-override-77tu7h {
+    margin-bottom: 19px;
+}
+
+
+.ant-table-wrapper.css-dev-only-do-not-override-77tu7h {
+    width: 98%;
+}
+
+.creatQR_menu_listqr {
+    display: flex
+;
+    justify-content: space-between;
+}
+
+.createQR {
+    margin: 0px 30px 0px 0px;
+}
+
+button.ant-btn.css-dev-only-do-not-override-77tu7h.ant-btn-primary.ant-btn-dangerous.ant-btn-color-dangerous.ant-btn-variant-solid {
+    /* padding: 30px 50px; */
+    /* font-size: 20px; */
+    /* font-weight: 900; */
+    margin: 0px 0px 20px 0px;
+}
+
+button.ant-btn.css-dev-only-do-not-override-77tu7h.ant-btn-primary.ant-btn-color-primary.ant-btn-variant-solid {
+    /* padding: 29px 28px; */
+    /* font-size: 19px; */
+    /* font-weight: 700; */
+}
+

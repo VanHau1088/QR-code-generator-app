@@ -7,6 +7,7 @@ import {useAuth} from '../../context/AuthContext';
 import { toPng } from 'html-to-image';
 const Text = () => {
    const {userData} = useAuth();
+   const [project, setProject] = useState('');
   const [name, setName] = useState('');
   const [text, setText] = useState('');
   // Kiểu mã QR
@@ -125,22 +126,26 @@ const Text = () => {
       const qrImage = await toPng(qrRef.current);
         const token = localStorage.getItem('token');
         console.log('Token:', token); 
-        console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+        console.log('Ngrok URL:', 'https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten'); 
           // Khởi tạo shortUrl trước khi sử dụng 
-        const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+        const response = await axios.post('https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten', {
           type, 
           data, 
           userId, 
-          qrImage, 
+          qrImage,
           name, 
+          project: project || "Không có dự án",
           createdAt: new Date(),
           isActive: true,
-          shortUrlOriginal: ' ', // Lưu URL gốc
+          shortUrlOriginal: data.url, // Lưu URL gốc
           scanCount: 0,
+          scanIps: [String],
+          scanLocations: [Object], // Lưu trữ thông tin vị trí địa lý
+          scans:[],
         }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+        const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${response.data.shortUrl}`;
           setShortUrl(shortUrl);
           console.log('QR code saved:', response.data);
             qrCode.current.update({
@@ -273,7 +278,24 @@ const Text = () => {
                     </div>
                   </div>
                 </div>
+                <br />
+                  <div className="card-section-url_title-text">
+                    <p className="mui-styled-title">Thêm dự án cho mã QR của bạn (nếu có)</p>
+                    <div className='mui-styled-content_text'>
+                      <div className="mui-styled-content-text_inputPage"> 
+                        <input 
+                          className='mui-styled-content-text_inputPage_muiInputBase' 
+                          aria-invalid='false' 
+                          type="text" 
+                          placeholder="ví dụ: Xuân tình nguyện 2025" 
+                          value={project} 
+                          onChange={(e) => setProject(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
               </div>
+             
               <div className="card-section-url_title">
                 <div className="card-section-url_title-text">
                   <p className="mui-styled-title">Văn bản đơn giản</p>
@@ -497,7 +519,7 @@ const Text = () => {
                                 <option value="svg">SVG</option>
                             </select>
                           </div>
-                        <button onClick={handleUpdateText}>Cập nhật Văn bản</button>
+                        <button onClick={handleUpdateText} className='hidden'>Cập nhật Văn bản</button>
                         </div>
                       )}
                     </div>

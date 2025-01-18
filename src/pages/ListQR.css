@@ -1,5 +1,19 @@
+
+
 .list-qr {
+    /* display: flex; */
+    /* gap: 10px; */
+    /* flex-wrap: wrap; */
+    margin: 0px 20px 0px 0px;
+}
+
+.menu_listqr {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.dashboard {
+    overflow-y: scroll;
+    height: 100vh;
+    padding: 0px 0px 0px 24px 
 }

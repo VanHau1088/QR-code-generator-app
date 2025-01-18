@@ -4,9 +4,7 @@ import {
     saveQRCode, 
     deleteQRCode, 
     toggleQRCodeStatus, 
-    checkQRCode, 
-    increaseScanCount, 
-    checkAndIncreaseScanCount, 
+    deleteQRStatus,
 } from '../controllers/qrController.js';
 import auth from '../middleware/auth.js';
 
@@ -16,9 +14,9 @@ router.get('/user/qrs', auth, getUserQRCodes); // Đảm bảo endpoint chính x
 router.post('/shorten', auth, saveQRCode); // Endpoint để lưu QR code
 router.delete('/delete/:id', auth, deleteQRCode); // Endpoint để xóa mã QR
 router.patch('/toggle-status/:id', auth, toggleQRCodeStatus);
-router.get('/check/:shortUrl', checkQRCode);
-router.patch('/increase-scan/:shortUrl', increaseScanCount); // Endpoint để tăng số lần quét
-router.get('/check/:shortUrl', checkAndIncreaseScanCount);
+router.delete('/delete-status/:id', auth, deleteQRStatus);
+
+
 export default router;
 
 

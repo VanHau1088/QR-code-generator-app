@@ -70,7 +70,7 @@ function useLogin() {
                 message.success(data.message);
                 login(data.token, data.user);
                 localStorage.setItem('token', data.token); // Lưu token vào localStorage
-                navigate('/Dashboard'); // Điều hướng người dùng đến trang dashboard
+                navigate('/'); // Điều hướng người dùng đến trang dashboard
             } else if (res.status === 404) {
                 setError(data.message);
             } else {

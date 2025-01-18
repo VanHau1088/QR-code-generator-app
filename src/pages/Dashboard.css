@@ -1,13 +1,14 @@
 
 .Container_Dashboard{
-    display:  flex;
+    margin: 24px;
+    display: flex
+;
     align-items: center;
     justify-content: center;
     background: #5D82D5;
     font-family: "Poppins", sans-serif;
-
-    width:217vh;
-    height: 100vh;
+    height: 93vh;
+    border-radius: 15px;
 }
 
 .profile-card{

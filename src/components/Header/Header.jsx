@@ -27,16 +27,31 @@ const Header = () => {
               <img src="logo2.png" alt="" className='logo-myqrcode-img' />
             </a>
           </div>
-          <div >
+          {/* <div >
               <NavLink to="/qrs">
                   <button className="click-dark-light">ListQR</button>
                 </NavLink>
           
-          </div>
+                <NavLink to="/Analyze">
+                  <button className="click-dark-light">Analyze</button>
+                </NavLink>
+                      
+                <NavLink to="/Sidebar">
+                  <button className="click-dark-light">Sidebar</button>
+                </NavLink>
+
+          </div> */}
+
+          {/* <div >
+              <NavLink to="/Analyze">
+                </NavLink>
+          </div> */}
+
+
           <div className="dark-light">
             {isAuthenticated ? (
               <div className="user-info">
-                <NavLink to="/Dashboard">
+                <NavLink to="/Sidebar">
                   {/* <button className="click-dark-light">Đăng xuất</button> */}
                   <Avatar size={50} icon={<UserOutlined />} className="avatar"  /> {/* Sử dụng avatar từ userData */}
                   {userData.name}

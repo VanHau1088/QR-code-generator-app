@@ -4,10 +4,13 @@ import { generate } from 'shortid';
 import authRouter from './routes/authRoute.js'
 import QR from './models/qrModel.js'
 import cors from 'cors';
+import axios from 'axios';
 const app = express();
 const PORT = 3000;
 import auth from './middleware/auth.js'; // Middleware để xác thực người dùng
 import qrRoutes from './routes/qrRoutes.js'; // Đảm bảo nhập đúng route
+import { UAParser } from 'ua-parser-js';
+
 // 1) MIDDLEWARESimport express, { json } from 'express';
 app.use(cors());
 app.use(express.json());
@@ -55,14 +58,15 @@ app.use('/api/auth', authRouter);
 app.use(express.json());
 
 app.post('/shorten', auth, async (req, res) => {
-  const {type, data, name} = req.body;
+  const {type, data, name, project, qrImage, maxScans, expirationDate} = req.body;
   const userId = req.user._id; // Lấy userId từ thông tin xác thực người dùng
-  const qrImage = req.body.qrImage;
+  // const qrImage = req.body.qrImage;
   console.log('Received type:', type);
   console.log('Received data:', data);
   console.log('Received userId:', userId);
-  console.log('Received qrImage:', qrImage);
   console.log('Received name:', name);
+  console.log('Received project:', project);
+  console.log('Received maxScans:', maxScans);
   const shortUrl = generate();
   const newQR = new QR({ 
     type, 
@@ -75,6 +79,12 @@ app.post('/shorten', auth, async (req, res) => {
     isActive: true,
     shortUrlOriginal: shortUrl, // Lưu URL gốc
     scanCount: 0,
+    scanIps: [String],
+    scanLocations: [Object], // Lưu trữ thông tin vị trí địa lý
+    scans:[],
+    project: project || "Không có dự án",
+    maxScans,
+    expirationDate: expirationDate ? new Date(expirationDate) : null
    }); // Thêm userId vào mã QR
  
   try {
@@ -86,135 +96,93 @@ app.post('/shorten', auth, async (req, res) => {
   }
 });
 
-
-
-app.post('/update-url', async (req, res) => {
-  const { shortUrl, newUrl } = req.body;
-  console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
-  console.log('Received newUrl:', newUrl);  // Log newUrl nhận được
-  const qr = await QR.findOne({ shortUrl });
-
-  if (qr) {
-    qr.data = { url: newUrl }; // Cập nhật URL mới
-    await qr.save();
-    res.json({ message: 'Data updated successfully' });
-  } else {
-    res.status(404).json({ error: 'Data not found' });
-  }
-});
-
-app.post('/update-text', async (req, res) => {
-  const { shortUrl, newText } = req.body;
-  console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
-  console.log('Received newText:', newText);  // Log newText nhận được
-  const qr = await QR.findOne({ shortUrl });
-
-  if (qr) {
-    qr.data = { text: newText }; // Cập nhật văn bản mới
-    await qr.save();
-    res.json({ message: 'Text updated successfully' });
-  } else {
-    res.status(404).json({ error: 'Data not found' });
-  }
-});
-
-app.post('/update-wifi', async (req, res) => {
-  const { shortUrl, ssid, networkType, password } = req.body;
-  console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
-  console.log('Received ssid:', ssid);  // Log ssid nhận được
-  console.log('Received networkType:', networkType);  // Log networkType nhận được
-  console.log('Received password:', password);  // Log password nhận được
-    const qr = await QR.findOne({ shortUrl });
-    if (qr) {
-      qr.data = {ssid: ssid, networkType: networkType, password: password}
-      await qr.save();
-      res.status(200).json({ message: 'WiFi Info updated successfully' });
-     }
-     else {
-      res.status(404).json({ error: 'Data not found' });
-     }
-    });
-
-
-  app.post('/update-card', async (req, res) => {
-    const { shortUrl, fullName, phoneNumber, email, address, website, job } = req.body;
-    console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
-    console.log('Received fullName:', fullName);  // Log fullName nhận được
-    console.log('Received phoneNumber:', phoneNumber);  // Log phoneNumber nhận được
-    console.log('Received email:', email);  // Log email nhận được
-    console.log('Received address:', address);  // Log address nhận được
-    console.log('Received website:', website);  // Log website nhận được
-    console.log('Received job:', job);  // Log job nhận được
-      const qr = await QR.findOne({ shortUrl });
-        if (qr) {
-          qr.data = {fullName: fullName, phoneNumber: phoneNumber, email: email, address: address, website: website, job: job}
-          await qr.save();
-          res.status(200).json({ message: 'Card Info updated successfully' });
-         }
-         else {
-          res.status(404).json({ error: 'Data not found' });
-         }
-    });
-
-    app.post('/update-event', async (req, res) => {
-      const { shortUrl, title, eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website} = req.body;
-      console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
-      console.log('Received title:', title);  // Log title nhận được
-      console.log('Received eventName:', eventName);  // Log eventName nhận được
-      console.log('Received startDate:', startDate);  // Log startDate nhận được
-      console.log('Received endDate:', endDate);  // Log endDate nhận được
-      console.log('Received about:', about);  // Log about nhận được
-      console.log('Received address:', address);  // Log address nhận được
-      console.log('Received contactName:', contactName);  // Log contactName nhận được
-      console.log('Received phoneNumber:', phoneNumber);  // Log phoneNumber nhận được
-      console.log('Received email:', email);  // Log email nhận được
-      console.log('Received website:', website);  // Log website nhận được
-        const qr = await QR.findOne({ shortUrl });
-          if (qr) {
-            qr.data = {title: title, eventName: eventName, startDate: startDate, endDate: endDate, about: about, address: address, contactName: contactName, phoneNumber: phoneNumber, email: email, website: website}
-            await qr.save();
-            res.status(200).json({ message: 'Event Info updated successfully' });
-           }
-           else {
-            res.status(404).json({ error: 'Data not found' });
-           }
-      });
-
 app.get('/:shortUrl', async (req, res) => {
   const { shortUrl } = req.params;
+  const parser = new UAParser(); 
+  const ua = req.headers['user-agent']; 
+  const result = parser.setUA(ua).getResult();
   try {
-    console.log(`Received request for shortUrl: ${shortUrl}`);
+    const ipRes = await axios.get('https://ipapi.co/ip/');
+    const ip = ipRes.data.ip; 
+    console.log(`Recieved request for short URL: ${shortUrl} from IP: ${ipRes}`);
     const qr = await QR.findOne({ shortUrl });
     if (qr) {
+     
+      // Kiểm tra ngày hết hạn
+      if (qr.expirationDate && new Date() > new Date(qr.expirationDate)) {
+         return res.status(403).send('Mã QR này đã hết hạn sử dụng'); 
+      }
+     
+      // Kiểm tra Số lượng giới hạng quét
+      if (qr.scanCount >= qr.maxScans) { 
+        return res.status(403).send('Mã QR này đã đạt giới hạn số lượt quét'); 
+      }
       console.log(`Found QR data: ${JSON.stringify(qr)}`);
+      // Tăng số lần quét
+      console.log("Số lần quét:", qr.scanCount += 1);
+  
+      // Lưu địa chỉ IP
+      qr.scanIps = qr.scanIps || [];
+      qr.scanIps.push(ip);
+  
+      // Lưu thông tin thiết bị
+          const scanData = { 
+              device: result.device.type || 'Không xác định được thiết bị', 
+              browser: result.browser.name || 'Không xác định được thiết bị',
+              os: result.os.name || 'Không xác định được thiết bị'
+          }; 
+          qr.scans.push(scanData);
+  
+          try {
+              // Gọi API ipinfo để lấy thông tin vị trí địa lý
+              const locationRes = await axios.get(`https://ipapi.co/city/`);
+              const location = locationRes.data;
+              console.log(`Location: ${JSON.stringify(location)}`);
+              
+              const locationData = {
+                  city: location
+                  // loc: `${location.latitude}, ${location.longitude}` || 'Không xác định được vị trí'
+              };
+              
+              // Lưu thông tin vị trí vào cơ sở dữ liệu
+              qr.scanLocations = qr.scanLocations || [];
+              qr.scanLocations.push({ location: locationData });
+              
+          } catch (error) {
+              console.error(`Failed to fetch location data for IP: ${ip}`, error);
+          }
+          await qr.save();
+          console.log('QR data saved successfully');
+          
       switch (qr.type) {
         case 'url':
           {
-          res.redirect(qr.data.url);
-          break;
+            res.redirect(qr.data.url); 
+            break;
           }
         case 'text':
           {
-          const textUrl = `https://vanhau1088.github.io/myqrcode.github.io?text=${encodeURIComponent(qr.data.text)}`;
-          res.redirect(textUrl);
+            await qr.save();
+            const textUrl = `https://vanhau1088.github.io/myqrcode.github.io?text=${encodeURIComponent(qr.data.text)}`;
+            res.redirect(textUrl);
           break;
           }
         case 'wifi':
           {
-          const wifiUrl = `https://vanhau1088.github.io/wifi.github.io?ssid=${encodeURIComponent(qr.data.ssid)}&networkType=${encodeURIComponent(qr.data.networkType)}&password=${encodeURIComponent(qr.data.password)}`;
-          res.redirect(wifiUrl);
+            const wifiUrl = `https://vanhau1088.github.io/wifi.github.io?ssid=${encodeURIComponent(qr.data.ssid)}&networkType=${encodeURIComponent(qr.data.networkType)}&password=${encodeURIComponent(qr.data.password)}`;
+            res.redirect(wifiUrl);
           break;
           }
         case 'card':
           {
-          const cardUrl = `https://vanhau1088.github.io/vcard.github.io?fullName=${encodeURIComponent(qr.data.fullName)}&phoneNumber=${encodeURIComponent(qr.data.phoneNumber)}&email=${encodeURIComponent(qr.data.email)}&address=${encodeURIComponent(qr.data.address)}&website=${encodeURIComponent(qr.data.website)}&job=${encodeURIComponent(qr.data.job)}`;
-          res.redirect(cardUrl);
+            const cardUrl = `https://vanhau1088.github.io/vcard.github.io?fullName=${encodeURIComponent(qr.data.fullName)}&phoneNumber=${encodeURIComponent(qr.data.phoneNumber)}&email=${encodeURIComponent(qr.data.email)}&address=${encodeURIComponent(qr.data.address)}&website=${encodeURIComponent(qr.data.website)}&job=${encodeURIComponent(qr.data.job)}`;
+            res.redirect(cardUrl);
           break;
           }
         case 'event':
           {
-          const eventUrl = `https://vanhau1088.github.io/Event.github.io?title=${encodeURIComponent(qr.data.title)}&eventName=${encodeURIComponent(qr.data.eventName)}&startDate=${encodeURIComponent(qr.data.startDate)}&endDate=${encodeURIComponent(qr.data.endDate)}&about=${encodeURIComponent(qr.data.about)}&address=${encodeURIComponent(qr.data.address)}&contactName=${encodeURIComponent(qr.data.contactName)}&phoneNumber=${encodeURIComponent(qr.data.phoneNumber)}&email=${encodeURIComponent(qr.data.email)}&website=${encodeURIComponent(qr.data.website)}`;
-          res.redirect(eventUrl);
+            const eventUrl = `https://vanhau1088.github.io/Event.github.io?title=${encodeURIComponent(qr.data.title)}&eventName=${encodeURIComponent(qr.data.eventName)}&startDate=${encodeURIComponent(qr.data.startDate)}&endDate=${encodeURIComponent(qr.data.endDate)}&about=${encodeURIComponent(qr.data.about)}&address=${encodeURIComponent(qr.data.address)}&contactName=${encodeURIComponent(qr.data.contactName)}&phoneNumber=${encodeURIComponent(qr.data.phoneNumber)}&email=${encodeURIComponent(qr.data.email)}&website=${encodeURIComponent(qr.data.website)}`;
+            res.redirect(eventUrl);
           break;
           }
         case 'email':
@@ -266,6 +234,126 @@ app.get('/:shortUrl', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.patch('/api/set-max-scans/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { maxScans } = req.body;
+    const qr = await QR.findByIdAndUpdate(id, { maxScans }, { new: true });
+    res.status(200).json(qr);
+  } catch (error) {
+    console.error('Failed to set max scans', error);
+    res.status(500).send('Đã xảy ra lỗi');
+  }
+});
+
+app.patch('/api/set-expiration-date/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { expirationDate } = req.body;
+    const qr = await QR.findByIdAndUpdate(id, { expirationDate }, { new: true });
+    res.status(200).json(qr);
+  } catch (error) {
+    console.error('Failed to set expiration date', error);
+    res.status(500).send('Đã xảy ra lỗi');
+  }
+});
+
+
+
+
+
+
+app.post('/update-url', async (req, res) => {
+  const { shortUrl, newUrl } = req.body;
+  console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
+  console.log('Received newUrl:', newUrl);  // Log newUrl nhận được
+  const qr = await QR.findOne({ shortUrl });
+
+  if (qr) {
+    qr.data = { url: newUrl }; // Cập nhật URL mới
+    await qr.save();
+    res.json({ message: 'Data updated successfully' });
+  } else {
+    res.status(404).json({ error: 'Data not found' });
+  }
+});
+
+app.post('/update-text', async (req, res) => {
+  const { shortUrl, newText } = req.body;
+  console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
+  console.log('Received newText:', newText);  // Log newText nhận được
+  const qr = await QR.findOne({ shortUrl });
+
+  if (qr) {
+    qr.data = { text: newText }; // Cập nhật văn bản mới
+    await qr.save();
+    res.json({ message: 'Text updated successfully' });
+  } else {
+    res.status(404).json({ error: 'Data not found' });
+  }
+});
+
+app.post('/update-wifi', async (req, res) => {
+  const { shortUrl, ssid, networkType, password } = req.body;
+  console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
+  console.log('Received ssid:', ssid);  // Log ssid nhận được
+  console.log('Received networkType:', networkType);  // Log networkType nhận được
+  console.log('Received password:', password);  // Log password nhận được
+    const qr = await QR.findOne({ shortUrl });
+    if (qr) {
+      qr.data = {ssid: ssid, networkType: networkType, password: password}
+      await qr.save();
+      res.status(200).json({ message: 'WiFi Info updated successfully' });
+     }
+     else {
+      res.status(404).json({ error: 'Data not found' });
+     }
+    });
+
+app.post('/update-card', async (req, res) => {
+    const { shortUrl, fullName, phoneNumber, email, address, website, job } = req.body;
+    console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
+    console.log('Received fullName:', fullName);  // Log fullName nhận được
+    console.log('Received phoneNumber:', phoneNumber);  // Log phoneNumber nhận được
+    console.log('Received email:', email);  // Log email nhận được
+    console.log('Received address:', address);  // Log address nhận được
+    console.log('Received website:', website);  // Log website nhận được
+    console.log('Received job:', job);  // Log job nhận được
+      const qr = await QR.findOne({ shortUrl });
+        if (qr) {
+          qr.data = {fullName: fullName, phoneNumber: phoneNumber, email: email, address: address, website: website, job: job}
+          await qr.save();
+          res.status(200).json({ message: 'Card Info updated successfully' });
+         }
+         else {
+          res.status(404).json({ error: 'Data not found' });
+         }
+    });
+
+app.post('/update-event', async (req, res) => {
+      const { shortUrl, title, eventName, startDate, endDate, about, address, contactName, phoneNumber, email, website} = req.body;
+      console.log('Received shortUrl:', shortUrl);  // Log shortUrl nhận được
+      console.log('Received title:', title);  // Log title nhận được
+      console.log('Received eventName:', eventName);  // Log eventName nhận được
+      console.log('Received startDate:', startDate);  // Log startDate nhận được
+      console.log('Received endDate:', endDate);  // Log endDate nhận được
+      console.log('Received about:', about);  // Log about nhận được
+      console.log('Received address:', address);  // Log address nhận được
+      console.log('Received contactName:', contactName);  // Log contactName nhận được
+      console.log('Received phoneNumber:', phoneNumber);  // Log phoneNumber nhận được
+      console.log('Received email:', email);  // Log email nhận được
+      console.log('Received website:', website);  // Log website nhận được
+        const qr = await QR.findOne({ shortUrl });
+          if (qr) {
+            qr.data = {title: title, eventName: eventName, startDate: startDate, endDate: endDate, about: about, address: address, contactName: contactName, phoneNumber: phoneNumber, email: email, website: website}
+            await qr.save();
+            res.status(200).json({ message: 'Event Info updated successfully' });
+           }
+           else {
+            res.status(404).json({ error: 'Data not found' });
+           }
+      });
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

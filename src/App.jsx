@@ -23,13 +23,16 @@ import Login from './Auth/Login.jsx';
 import Register from './Auth/Register.jsx';
 
 //DashBoard
-import Dashboard from './pages/Dashboard.jsx'
+// import Dashboard from './pages/Dashboard.jsx'
 import {useAuth} from './context/AuthContext.jsx'
 
 
 
 import ListQR from './pages/ListQR.jsx';
-
+import Analyze from './pages/Analyze.jsx';
+import Sidebar from './pages/Sidebar.jsx';
+// import Analyze from './pages/Analyze.jsx';
+// import Layout from './components/Layout/Layout.jsx';
 
 // import IMG from './components/IMG/IMG.JSX';
 // import Video from './components/Video/Video.jsx';
@@ -50,12 +53,14 @@ function App() {
     <>
     <Router>
       <Routes> 
-
-
             <Route path="/"  element = {<Home/>} /> 
             <Route path="/Register"  element = {!isAuththenticated ? <Register/> : <Navigate to='/dashboard'/>} /> 
             <Route path="/Login"  element = {!isAuththenticated ? <Login/> : <Navigate to='/dashboard'/>  } /> 
-            <Route path="/Dashboard" element={!isAuththenticated ? <Dashboard/> : <Login/>} />   
+            <Route path="/Sidebar" element={!isAuththenticated ? <Sidebar/> : <Login/>} />   
+        
+            <Route path="/Analyze"  element = {<Analyze/>} /> 
+           <Route path="/Sidebar"  element = {<Sidebar/>} /> 
+
             <Route path="/URL"  element = {<URL/>} /> 
             <Route path="/Card"  element = {<Card/>} /> 
 
@@ -70,7 +75,7 @@ function App() {
 
             <Route path="/Wifi"  element = {<Wifi/>} />
             <Route path="/qrs" element={<ListQR />} />
-            
+            <Route path="/Analyze" element={<Analyze />} />
             <Route path="/BulkQR"  element = {<BulkQR/>} />
             {/* <Route path="/IMG"  element = {<IMG/>} />  */}
            {/* <Route path="/Video"  element = {<Video/>} />  */}

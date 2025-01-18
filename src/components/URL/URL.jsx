@@ -5,9 +5,10 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import {useAuth} from '../../context/AuthContext'
 // import User from '../../../backend/models/userModel';
-import { toPng } from 'html-to-image';
+import { toPng } from 'html-to-image'
 const URL = () => {
   const {userData} = useAuth();
+  const [project, setProject] = useState('');
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   // Kiểu mã QR
@@ -82,10 +83,9 @@ const createDynamicQRCode = (type, data) => {
   console.log('Data:', data);
   // Tạo URL giả cho mã QR động
   // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
-  const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+  const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
   setShortUrl(shortUrl);
   console.log('Short URL:', shortUrl);
-
       qrCode.current.update({
         data: shortUrl,
         dotsOptions: {
@@ -110,7 +110,6 @@ const createDynamicQRCode = (type, data) => {
           imageSize: 0.3
         }
       });
-    setIsCreatingQRCode(false);
     }
 
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
@@ -122,28 +121,31 @@ const createDynamicQRCode = (type, data) => {
     const saveQRCodeToDatabase = async ( type, data, userId) => {
       console.log('Saving QR code to database');
       try {
-
+        
         const qrImage = await toPng(qrRef.current);
-      
         const token = localStorage.getItem('token');
         console.log('Token:', token); 
-        console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+        console.log('Ngrok URL:', 'https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten'); 
   
         // Khởi tạo shortUrl trước khi sử dụng 
-        const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+        const response = await axios.post('https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten', {
           type, 
           data, 
           userId, 
-          qrImage, 
+          qrImage,
           name, 
+          project: project || "Không có dự án",
           createdAt: new Date(),
           isActive: true,
-          shortUrlOriginal: ' ', // Lưu URL gốc
+          shortUrlOriginal: data.url, // Lưu URL gốc
           scanCount: 0,
+          scanIps: [String],
+          scanLocations: [Object], // Lưu trữ thông tin vị trí địa lý
+          scans:[],
         }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+        const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${response.data.shortUrl}`;
         setShortUrl(shortUrl);
         console.log('QR code saved:', response.data);
         qrCode.current.update({
@@ -170,7 +172,8 @@ const createDynamicQRCode = (type, data) => {
             imageSize: 0.3
           }
         });
-  
+        
+        return response.data
       } catch (error) {
         console.error('Error saving QR code to database:', error);
       }
@@ -178,7 +181,7 @@ const createDynamicQRCode = (type, data) => {
 
   const handleDownloadClick = async () => {
     try{
-      await saveQRCodeToDatabase('url', {url}, userData._id);
+      await saveQRCodeToDatabase('url', {url}, userData._id);  // Lưu mã QR vào cơ sở dữ liệu
       qrCode.current.download({ name, extension: download});
     }catch(error){
       console.error('Error saving QR code:', error);
@@ -240,6 +243,7 @@ const createDynamicQRCode = (type, data) => {
       console.error('Error updating URL:', error.response ? error.response.data : error.message);
   };
 }
+
   const handleUpdateURL = () => {
     const newUrl = prompt('Nhập URL mới:'); // Hỏi người dùng nhập URL mới
     if (newUrl) {
@@ -272,6 +276,22 @@ const createDynamicQRCode = (type, data) => {
                           placeholder="ví dụ: Mã QR đầu tiên của tôi" 
                           value={name} 
                           onChange={(e) => setName(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div className="card-section-url_title-text">
+                    <p className="mui-styled-title">Thêm dự án cho mã QR của bạn (nếu có)</p>
+                    <div className='mui-styled-content_text'>
+                      <div className="mui-styled-content-text_inputPage"> 
+                        <input 
+                          className='mui-styled-content-text_inputPage_muiInputBase' 
+                          aria-invalid='false' 
+                          type="text" 
+                          placeholder="ví dụ: Xuân tình nguyện 2025" 
+                          value={project} 
+                          onChange={(e) => setProject(e.target.value)}
                         />
                       </div>
                     </div>
@@ -500,9 +520,10 @@ const createDynamicQRCode = (type, data) => {
                                     <option value="svg">SVG</option>
                                 </select>
                               </div>
-                              <button onClick={handleUpdateURL} > Cập nhật URL </button>
+                              <button onClick={handleUpdateURL} className="hidden" > Cập nhật URL </button>
                           </div>
                        )} 
+                      
                       </div>
                     </div>
                     <img src="phonemyqrcode.jpg" alt="" className='template-preview-content-wrapper-phone-img' />

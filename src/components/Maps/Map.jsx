@@ -7,6 +7,7 @@ import {useAuth} from '../../context/AuthContext';
 import { toPng } from 'html-to-image';
 const Map = () => {
   const {userData} = useAuth();
+  const [project, setProject] = useState('');
   const [name, setName] = useState('');
   const[latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
@@ -78,41 +79,6 @@ const Map = () => {
   useEffect(() => { 
     createDynamicQRCode('geo', {latitude, longitude  }); 
   }, [latitude, longitude, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
-  
-
-  // useEffect(() => {
-  //   if (shortUrl) {
-  //     // const updateUrl = `https://2820-2001-ee0-500e-c150-e922-d689-2223-85d1.ngrok-free.app/${shortUrl}`;
-  //     const updateUrl = `https://2820-2001-ee0-500e-c150-e922-d689-2223-85d1.ngrok-free.app/${shortUrl}`;
-  //     console.log(shortUrl)
-  //     console.log(updateUrl)
-  //   qrCode.current.update({
-  //     // data: `geo:${latitude},${longitude}`,
-  //     data: updateUrl,
-  //     dotsOptions: {
-  //       type: dotType,
-  //       color: dotColor
-  //     },
-  //     backgroundOptions:{
-  //       color: bgColor,
-  //     },
-  //     cornersSquareOptions:{
-  //       type: cornerSquareType,
-  //       color: bgSquareType,
-  //     },
-  //     cornersDotOptions:{
-  //       type: cornerDotType,
-  //       color: bgDotType,
-  //     },
-  //     image: logo,
-  //     imageOptions:{
-  //       crossOrigin: 'anonymous',
-  //       margin: 6,
-  //       imageSize: 0.3
-  //     }
-  //   });
-  // }
-  // }, [shortUrl, dotType, dotColor, bgColor, cornerSquareType, cornerDotType, bgSquareType, bgDotType, logo]);
 
   const dotTypes = ['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded'];
 
@@ -124,8 +90,7 @@ const Map = () => {
     console.log('Type:', type);
     console.log('Data:', data);
     // Tạo URL giả cho mã QR động
-    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
-    const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
       setShortUrl(shortUrl);
       console.log('Short URL:', shortUrl);
         qrCode.current.update({
@@ -161,22 +126,26 @@ const Map = () => {
         const qrImage = await toPng(qrRef.current);
           const token = localStorage.getItem('token');
           console.log('Token:', token); 
-          console.log('Ngrok URL:', 'https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten'); 
+          console.log('Ngrok URL:', 'https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten'); 
             // Khởi tạo shortUrl trước khi sử dụng 
-          const response = await axios.post('https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/shorten', {
+          const response = await axios.post('https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten', {
             type, 
             data, 
             userId, 
-            qrImage, 
+            qrImage,
             name, 
+            project: project || "Không có dự án",
             createdAt: new Date(),
             isActive: true,
-            shortUrlOriginal: ' ', // Lưu URL gốc
+            shortUrlOriginal: data.url, // Lưu URL gốc
             scanCount: 0,
+            scanIps: [String],
+            scanLocations: [Object], // Lưu trữ thông tin vị trí địa lý
+            scans:[],
           }, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
-          const shortUrl = `https://76e4-2001-ee0-500e-c150-992-a9a1-edc-d09b.ngrok-free.app/${response.data.shortUrl}`;
+          const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${response.data.shortUrl}`;
             setShortUrl(shortUrl);
             console.log('QR code saved:', response.data);
               qrCode.current.update({
@@ -281,24 +250,6 @@ const Map = () => {
       }
   }
 
-  // Map
-  // const geocodeLocation = async () => { 
-  //   try { 
-  //       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationName)}`); 
-  //       const data = await response.json(); 
-  //       if (data.length > 0) { 
-  //           const location = data[0];
-  //           setLatitude(location.lat); 
-  //           setLongitude(location.lon); 
-  //       } else { 
-  //           alert('Không tìm thấy địa điểm. Vui lòng thử lại.'); 
-  //       } 
-  //   } catch (error) { 
-  //       console.error('Lỗi khi tìm kiếm địa điểm:', error); 
-  //       alert('Đã xảy ra lỗi khi tìm kiếm địa điểm. Vui lòng thử lại.'); 
-  //   } };
-
-
   return (
     <div>
       <div className="main-container">
@@ -324,6 +275,22 @@ const Map = () => {
                           placeholder="ví dụ: Mã QR đầu tiên của tôi" 
                           value={name} 
                           onChange={(e) => setName(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div className="card-section-url_title-text">
+                    <p className="mui-styled-title">Thêm dự án cho mã QR của bạn (nếu có)</p>
+                    <div className='mui-styled-content_text'>
+                      <div className="mui-styled-content-text_inputPage"> 
+                        <input 
+                          className='mui-styled-content-text_inputPage_muiInputBase' 
+                          aria-invalid='false' 
+                          type="text" 
+                          placeholder="ví dụ: Xuân tình nguyện 2025" 
+                          value={project} 
+                          onChange={(e) => setProject(e.target.value)}
                         />
                       </div>
                     </div>
@@ -570,7 +537,7 @@ const Map = () => {
                                   <option value="svg">SVG</option>
                               </select>
                             </div>
-                            <button onClick={handleUpdateURL}> Cập nhật Geo </button>
+                            <button onClick={handleUpdateURL} className='hidden'> Cập nhật Geo </button>
                           </div>
                         )}
                       </div>
