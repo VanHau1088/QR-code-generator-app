@@ -1,5 +1,4 @@
 
-
 Bước 1: Cài đặt Node.js và npm
 Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) được cài sẵn cùng với Node.js. Bạn có thể tải Node.js từ trang chính thức nodejs.org và làm theo hướng dẫn cài đặt cho hệ điều hành của bạn.
 Bước 2: Cài đặt các package cần thiết
