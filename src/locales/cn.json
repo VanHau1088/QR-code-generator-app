@@ -1,0 +1,102 @@
+{
+    "Choose QR code type": "选择二维码类型",
+    "Link to your chosen website": "链接到您选择的网站",
+    "Website URL": "网站URL",
+    "shareDigitalBusinessCard": "分享您的电子名片",
+    "shareEmailContent": "分享您的电子邮件内容",
+    "plainText": "纯文本",
+    "displayTextContent": "显示文本内容",
+    "createPrewrittenMessage": "创建预写消息",
+    "location": "位置",
+    "Location_text": "在地图上嵌入位置信息",
+    "event": "活动",
+    "event_text": "在地图上嵌入活动信息",
+    "wifi": "Wi-Fi",
+    "wifi_text": "连接到无线网络",
+    "payment": "支付",
+    "payment_text": "与支付平台集成",
+    "bulkqr": "批量二维码",
+    "createBulkQRCodes": "使用CSV或EXCEL批量创建二维码",
+
+    "addContentToQrUrl": "向二维码URL添加内容",
+    "websiteAddress": "网站地址",
+    "websiteUrlRequired": "网站URL*",
+
+
+        "Creating a QR code is easy and customizable for Vcard in minutes.": "创建二维码非常容易，并且可以在几分钟内自定义 Vcard。",
+        "addContentToQrCard": "向 QR 码卡片添加内容",
+        "VcardQRCode": "Vcard 二维码",
+
+        "Enter the Email address you want to link to": "输入您要链接到的电子邮件地址",
+        "addContentToQrEmail": "向电子邮件二维码添加内容",
+        "Email": "电子邮件地址",
+        "Subject": "主题",
+        "Message": "消息",
+        "name": "全名*",
+        "email": "电子邮件地址*",
+        "phone": "电话号码",
+        "job": "工作*",
+        "address": "地址",
+        "websiteAddress": "网站地址",
+
+
+        "Creating a QR code is easy and customizable for Event in minutes.": "创建二维码非常容易，并且可以在几分钟内自定义活动。",
+        "addContentToQrEvent": "向活动二维码添加内容",
+        "EventQRCode": "活动二维码",
+        "TitleEvent": "活动名称",
+        "Eventtt": "活动摘要*",
+        "DateEnd": "结束日期",
+        "DateStart": "开始日期",
+        "namecontact": "联系人姓名",
+        "content": "内容",
+
+
+        "addContentToQrMap": "向地图二维码添加内容",
+        "Location": "地点",
+        "Creating a QR code is easy and customizable for Map in minutes.": "创建二维码非常容易，并且可以在几分钟内自定义地图。",
+        "Latitude": "纬度*",
+        "Longitude": "经度*",
+
+            "SimpleText": "纯文本",
+            "EnterTheTextYouWantToDisplay": "输入用户扫描您的二维码时要显示的文本",
+             "AddContentToQrSimpleText": "向纯文本二维码添加内容",
+          
+        "SMS": "短信",
+        "addContentToQrSMS": "向短信二维码添加内容",
+        "Creating a QR code is easy and customizable for SMS in minutes.": "创建二维码非常容易，并且可以在几分钟内自定义短信。",
+        "Area": "区号",
+
+
+        "Creating a QR code is easy and customizable for Payment in minutes.": "创建二维码非常容易，并且可以在几分钟内自定义支付。",
+        "addContentToQrPayment": "向支付二维码添加内容",
+        "Your Bank Address": "您的银行地址",
+        "Enter the Bank address that the QR code will link to": "输入二维码将链接到的银行地址",
+        "Find a bank*": "查找您的银行*",
+        "Bank account number*": "银行帐号*",
+        "Amount*": "金额*",
+        "Remittance Details:*": "汇款详情：*",
+
+
+        "Creating a QR code is easy and customizable for WiFi in minutes.": "创建二维码非常容易，并且可以在几分钟内自定义 WiFi。",
+        "addContentToQrWiFi": "向 WiFi 二维码添加内容",
+        "WiFiQRCode": "WiFi 二维码",
+        "TitleWifi": "WiFi 名称 (SSID)*",
+        "Encode": "编码",
+        "Password": "密码",
+      
+
+
+    "nameYourQrCode": "为您的二维码命名",
+    "addProjectForYourQrCodeIfAny": "为您的二维码添加项目（如果有）",
+    "qrCodeFrame": "二维码框架",
+    "chooseDotColorRequired": "选择点颜色*",
+    "chooseBackgroundColor": "选择背景颜色",
+    "cornerStyle": "角样式",
+    "dotCornerStyle": "点角样式",
+    "chooseDotCornerRequired": "选择点角*",
+    "frameCornerStyle": "框架角样式",
+    "chooseFrameCornerRequired": "选择框架角*",
+    "addLogo": "添加标志",
+    "chooseLogo": "选择标志",
+    "uploadYourOwnLogo": "上传您自己的标志"
+}

@@ -1,0 +1,103 @@
+{
+    "Choose QR code type": "Choose QR code type",
+    "Link to your chosen website": "Link to your chosen website",
+    "Website URL": "Website URL",
+        "shareDigitalBusinessCard": "Share your digital business card",
+        "shareEmailContent": "Share your Email content",
+        "plainText": "Plain text",
+        "displayTextContent": "Display text content",
+        "createPrewrittenMessage": "Create pre-written message.",
+        "location": "Location",
+        "Location_text": "Embed location information on a map",
+        "event": "Event",
+        "event_text": "Embed event information on a map",
+        "wifi": "Wi-Fi",
+        "wifi_text": "Connect to a wireless network",
+        "payment": "payment",
+        "payment_text": "Integrate with payment platforms",
+        "bulkqr": "Bulk QR Code",
+        "createBulkQRCodes": "Create QR codes in bulk with CSV or EXCEL",
+
+    "addContentToQrUrl": "Add content to QR URL",
+    "websiteUrlRequired": "URL Website*",
+
+
+    "addContentToQrCard": "Add content to QR Card", 
+    "Creating a QR code is easy and customizable for Vcard in minutes.": "Creating a QR code is easy and customizable for Vcard in minutes.",
+        
+    "Email": "Email Address",
+       "addContentToQrEmail": "Add content to QR Email", 
+        "Enter the Email address you want to link to": "Enter the Email address you want to link to",
+        "Subject": "Subject",
+        "Message": "Message",
+        "name": "Name*",
+        "email": "Email*",
+        "phone": "Phone Number*",
+        "job": "Job*",
+        "address": "Address*",
+        "websiteAddress": "Website address*",
+
+    "EventQRCode": "Event QR Code",
+      "addContentToQrEvent": "Add content to QR Event", 
+      "Creating a QR code is easy and customizable for Event in minutes": "Creating a QR code is easy and customizable for an event in minutes.",
+      "TitleEvent": "Event Name", 
+      "Eventtt": "Event Summary*",
+      "namecontact": "Contact Name",
+      "DateEnd": "End Date",
+      "DateStart": "Start Date",
+      "content": "Content",
+    
+
+    "map": "Map", 
+      "addContentToQrMap": "Add content to QR Map", 
+      "Creating a QR code is easy and customizable for Map in minutes.": "Creating a QR code is easy and customizable for an map in minutes.",
+      "Latitude": "Latitude*",
+      "Longitude":"Longitude*",
+
+    "SimpleText": "Simple Text",
+      "EnterTheTextYouWantToDisplay": "Enter the text you want to display when users scan your QR code",
+      "AddContentToQrSimpleText": "Add content to the simple text QR code",
+
+      
+    "SMS": "SMS",
+      "addContentToQrSMS": "Add content to QR SMS", 
+      "Area ": "Area",
+      "Creating a QR code is easy and customizable for SMS in minutes.": "Creating a QR code is easy and customizable for an SMS in minutes.",
+
+    "Find a bank*": "Find a bank*",
+      "Creating a QR code is easy and customizable for Payment in minutes.": "Creating a QR code is easy and customizable for Payment in minutes.",
+      "addContentToQrPayment": "Add content to QR Payment", 
+      "Your Bank Address": "Your Bank Address",
+      "Enter the Bank address that the QR code will link to":"Enter the Bank address that the QR code will link to",
+      "Bank account number*": "Bank account number*",
+      "Amount*": "Amount*",
+      "Remittance Details:*":"Remittance Details:*",
+
+    "WiFiQRCode": "WiFi QR Code",
+      "Creating a QR code is easy and customizable for WiFi in minutes.": "Creating a QR code is easy and customizable for WiFi in minutes.",
+      "addContentToQrWiFi": "Add content to WiFi QR code",
+      "TitleWifi": "WiFi Name (SSID)*",
+      "Encode": "Encoding",
+      "Password": "Password",
+
+
+    "nameYourQrCode": "Name your QR code",
+    "addProjectForYourQrCodeIfAny": "Add a project for your QR code (if any)",
+    "qrCodeFrame": "QR Code Frame",
+    "chooseDotColorRequired": "Choose dot color*",
+    "chooseBackgroundColor": "Choose background color",
+    "cornerStyle": "Corner Style",
+    "dotCornerStyle": "Dot corner style",
+    "chooseDotCornerRequired": "Choose dot corner*",
+    "frameCornerStyle": "Frame corner style",
+    "chooseFrameCornerRequired": "Choose frame corner*",
+    "addLogo": "Add Logo",
+    "chooseLogo": "Choose Logo",
+    "uploadYourOwnLogo": "Upload your own Logo"
+
+
+
+}
+      
+
+

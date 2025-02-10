@@ -18,11 +18,20 @@ app.use(express.json());
 app.use('/api', qrRoutes); // Đảm bảo sử dụng đúng route
 
 // Kết nối đến MongoDB
+// mongoose.set('strictQuery', false); // Hoặc true nếu bạn muốn giữ strictQuery
+// connect('mongodb://127.0.0.1:27017/qrDynamic', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// }).then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Error connecting to MongoDB:', error));
+
+
 mongoose.set('strictQuery', false); // Hoặc true nếu bạn muốn giữ strictQuery
-connect('mongodb://127.0.0.1:27017/qrDynamic', {
+connect('mongodb+srv://root:123@cluster0.td1md.mongodb.net/qrs?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Error connecting to MongoDB:', error));
+
+
 
 // connect('mongodb://localhost:27017/qrDynamic');
 app.use(json());
@@ -101,8 +110,10 @@ app.get('/:shortUrl', async (req, res) => {
   const parser = new UAParser(); 
   const ua = req.headers['user-agent']; 
   const result = parser.setUA(ua).getResult();
+  // const ua = UAParser(req.headers['user-agent']);
+  // const result = ua.getResult();
   try {
-    const ipRes = await axios.get('https://ipapi.co/ip/');
+    const ipRes = await axios.get('https://ipinfo.io/json');
     const ip = ipRes.data.ip; 
     console.log(`Recieved request for short URL: ${shortUrl} from IP: ${ipRes}`);
     const qr = await QR.findOne({ shortUrl });
@@ -135,15 +146,19 @@ app.get('/:shortUrl', async (req, res) => {
   
           try {
               // Gọi API ipinfo để lấy thông tin vị trí địa lý
-              const locationRes = await axios.get(`https://ipapi.co/city/`);
+              // const locationRes = await axios.get(`https://ipapi.co/city`);
+
+              const locationRes = await axios.get(`https://ipinfo.io/${ip}/json`);
+
               const location = locationRes.data;
-              console.log(`Location: ${JSON.stringify(location)}`);
+              console.log('Thông tin vị trí: ', location);
               
               const locationData = {
-                  city: location
-                  // loc: `${location.latitude}, ${location.longitude}` || 'Không xác định được vị trí'
+                city: location.city || 'Không xác định được vị trí',
+                country: location.country || 'Không xác định được vị trí' //Lấy Country
               };
-              
+
+              console.log('Thông tin vị trí: ', locationData.city);
               // Lưu thông tin vị trí vào cơ sở dữ liệu
               qr.scanLocations = qr.scanLocations || [];
               qr.scanLocations.push({ location: locationData });
@@ -234,6 +249,9 @@ app.get('/:shortUrl', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+
 
 app.patch('/api/set-max-scans/:id', async (req, res) => {
   try {

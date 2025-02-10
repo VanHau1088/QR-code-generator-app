@@ -6,7 +6,9 @@ import axios from 'axios';
 import {useAuth} from '../../context/AuthContext'
 // import User from '../../../backend/models/userModel';
 import { toPng } from 'html-to-image'
+import { useTranslation } from "react-i18next";
 const URL = () => {
+  const {t} = useTranslation();
   const {userData} = useAuth();
   const [project, setProject] = useState('');
   const [name, setName] = useState('');
@@ -83,7 +85,7 @@ const createDynamicQRCode = (type, data) => {
   console.log('Data:', data);
   // Tạo URL giả cho mã QR động
   // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
-  const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+  const shortUrl = `https://5811-171-243-50-172.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
   setShortUrl(shortUrl);
   console.log('Short URL:', shortUrl);
       qrCode.current.update({
@@ -125,10 +127,10 @@ const createDynamicQRCode = (type, data) => {
         const qrImage = await toPng(qrRef.current);
         const token = localStorage.getItem('token');
         console.log('Token:', token); 
-        console.log('Ngrok URL:', 'https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten'); 
+        console.log('Ngrok URL:', 'https://5811-171-243-50-172.ngrok-free.app/shorten'); 
   
         // Khởi tạo shortUrl trước khi sử dụng 
-        const response = await axios.post('https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten', {
+        const response = await axios.post('https://5811-171-243-50-172.ngrok-free.app/shorten', {
           type, 
           data, 
           userId, 
@@ -145,7 +147,7 @@ const createDynamicQRCode = (type, data) => {
         }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${response.data.shortUrl}`;
+        const shortUrl = `https://5811-171-243-50-172.ngrok-free.app/${response.data.shortUrl}`;
         setShortUrl(shortUrl);
         console.log('QR code saved:', response.data);
         qrCode.current.update({
@@ -259,14 +261,14 @@ const createDynamicQRCode = (type, data) => {
           <div className="section">
             <div className="title-home-section">
               <h3 className='title-home-section-children'>
-                <span>2. Thêm nội dung vào mã QR URL</span>
+                <span>2. {t("addContentToQrUrl")}</span>
               </h3>
             </div>
             <div className="card-section">
               <section className='card-section_container'>
                 <div className="card-section-url_title">
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Đặt tên cho mã QR của bạn</p>
+                    <p className="mui-styled-title">{t("nameYourQrCode")}</p>
                     <div className='mui-styled-content_text'>
                       <div className="mui-styled-content-text_inputPage"> 
                         <input 
@@ -282,7 +284,7 @@ const createDynamicQRCode = (type, data) => {
                   </div>
                   <br />
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Thêm dự án cho mã QR của bạn (nếu có)</p>
+                    <p className="mui-styled-title">{t("addProjectForYourQrCodeIfAny")}</p>
                     <div className='mui-styled-content_text'>
                       <div className="mui-styled-content-text_inputPage"> 
                         <input 
@@ -299,12 +301,12 @@ const createDynamicQRCode = (type, data) => {
                 </div>
                 <div className="card-section-url_title">
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Địa chỉ trang web</p>
-                    <span className='mui-styled-title_children'>Nhập URL mà mã QR sẽ liên kết tới</span>
+                    <p className="mui-styled-title">{t("websiteAddress")}</p>
+                    <span className='mui-styled-title_children'>{t("addContentToQrUrl")}</span>
                     <div className='mui-styled-content_handleInput'>
                       <div className="mui-styled-content_handleInput_Page"> 
                         <hr />
-                        <p className="mui-styled-title_URL">URL trang web*</p>
+                        <p className="mui-styled-title_URL">{t("websiteUrlRequired")}</p>
                         <input 
                           className='mui-styled-content_handleInput_Page-URL' 
                           aria-invalid='false' 
@@ -323,7 +325,7 @@ const createDynamicQRCode = (type, data) => {
               <section className='card-section_styled'>
                 <div className="card-section-url_title">
                       <div className="card-section-url_title-text">
-                        <p className="mui-styled-title">Khung mã QR</p>
+                        <p className="mui-styled-title">{t("qrCodeFrame")}</p>
                       </div>
                       {/* Kiểu mã */}
                       <div className="card-section_dotType">
@@ -340,54 +342,77 @@ const createDynamicQRCode = (type, data) => {
                       {/* Màu nền & màu chấm */}
                       <div className="card-section_BgDotType">
                           {/* Màu chấm */}
-                          <div className="color-picker">
-                              {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                              <p className="mui-styled-title_URL">
-                              Chọn màu chấm*
-                            </p>
-                                <div className="color-picker_dopdown">
-                                    <input 
-                                    type="color" 
-                                    placeholder='color'
-                                    className='dotColor'
-                                    value={dotColor} 
-                                    onChange={(e) => setDotColor(e.target.value)} />
-                                    <input type="text" value={dotColor} readOnly className="color-code" />
-                                </div>
+                          <div className='dotname'>  
+                              <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseDotColorRequired")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='dotColor'
+                                      value={dotColor} 
+                                      onChange={(e) => setDotColor(e.target.value)} />
+                                      <input type="text" value={dotColor} readOnly className="color-code" />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: dotColor}}
+                            >
+                            </div>
                           </div>
-                          <div className="color-preview"
-                            style={{background: dotColor}}
-                          >
-                          </div>
+                        
                           {/* Màu nền */}
-                          <div className="color-picker">
-                              {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                              <p className="mui-styled-title_URL">
-                              Chọn màu nền*
-                            </p>
-                                <div className="color-picker_dopdown">
-                                    <input 
-                                    type="color" 
-                                    placeholder='color'
-                                    className='bgColor'
-                                    value={bgColor} 
-                                    onChange={(e) => setBgColor(e.target.value)} />
-                                    <input type="text" value={bgColor} readOnly className= 'color-code'  />
-                                </div>
+                          <div className='dotname'>  
+                              <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseBackgroundColor")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='bgColor'
+                                      value={bgColor} 
+                                      onChange={(e) => setBgColor(e.target.value)} />
+                                      <input type="text" value={bgColor} readOnly className="color-code" />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: bgColor}}
+                            >
+                            </div>
                           </div>
-                          <div className="color-preview"
-                            style={{background: bgColor}}
-                          >
-                          </div>
+                          {/* <div>
+                            <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseBackgroundColor")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='bgColor'
+                                      value={bgColor} 
+                                      onChange={(e) => setBgColor(e.target.value)} />
+                                      <input type="text" value={bgColor} readOnly className= 'color-code'  />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: bgColor}}
+                            >
+                            </div>
+                          </div> */}
                       </div>
                 <hr />
                     {/* Kiểu góc & kiểu chấm*/}
                       <div className="card-section-url_title-text">
-                          <p className="mui-styled-title">Kiểu góc</p>
+                          <p className="mui-styled-title">{t("cornerStyle")}</p>
                           <div className="card-section_cornerSquareType">
                               <div className="card-section_cornerSquareTypeStyled">
                                     <p className="mui-styled-title_URL">
-                                        Kiểu khung góc
+                                        {t("frameCornerStyle")}
                                     </p>
                                     <div className="card-section_bgCornerSquareType">
                                           {SquareTypes.map(type => (
@@ -404,7 +429,7 @@ const createDynamicQRCode = (type, data) => {
                               
                                 <div className="card-section_cornerDotTypeStyled">
                                 <p className="mui-styled-title_URL">
-                                  Kiểu chấm góc
+                                  {t("dotCornerStyle")}
                                 </p>
                                 <div className="card-section_bgCornerSquareType">
                                     {CornerDotTypes.map(type => (
@@ -423,44 +448,48 @@ const createDynamicQRCode = (type, data) => {
                    {/* Màu khung góc & màu chấm góc */}
                       <div className="card-section_BgDotType">
                               {/* Màu khung góc */}
-                              <div className="color-picker">
-                                  {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                                  <p className="mui-styled-title_URL">
-                                  Chọn khung góc*
-                                </p>
-                                    <div className="color-picker_dopdown">
-                                        <input 
-                                        type="color" 
-                                        placeholder='color'
-                                        className='bgSquareType'
-                                        value={bgSquareType} 
-                                        onChange={(e) => setBgCornerSquareType(e.target.value)} />
-                                        <input type="text" value={bgSquareType} readOnly className="color-code" />
-                                    </div>
-                              </div>
-                              <div className="color-preview"
-                                style={{background: bgSquareType}}
-                              >
+                              <div className='dotname'>
+                                <div className="color-picker">
+                                    {/* <label htmlFor="dotColor">Màu chấm</label> */}
+                                    <p className="mui-styled-title_URL">
+                                    {t("frameCornerStyle")}
+                                  </p>
+                                      <div className="color-picker_dopdown">
+                                          <input 
+                                          type="color" 
+                                          placeholder='color'
+                                          className='bgSquareType'
+                                          value={bgSquareType} 
+                                          onChange={(e) => setBgCornerSquareType(e.target.value)} />
+                                          <input type="text" value={bgSquareType} readOnly className="color-code" />
+                                      </div>
+                                </div>
+                                <div className="color-preview"
+                                  style={{background: bgSquareType}}
+                                >
+                                </div>
                               </div>
                               {/* Màu chấm góc */}
-                              <div className="color-picker">
-                                  {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                                  <p className="mui-styled-title_URL">
-                                  Chọn chấm góc*
-                                </p>
-                                    <div className="color-picker_dopdown">
-                                        <input 
-                                        type="color" 
-                                        placeholder='color'
-                                        className='bgDotType'
-                                        value={bgDotType} 
-                                        onChange={(e) => setBgDotType(e.target.value)} />
-                                        <input type="text" value={bgDotType} readOnly className= 'color-code'  />
-                                    </div>
-                              </div>
-                              <div className="color-preview"
-                                style={{background: bgDotType}}
-                              >
+                              <div className='dotname'>
+                                <div className="color-picker">
+                                    {/* <label htmlFor="dotColor">Màu chấm</label> */}
+                                    <p className="mui-styled-title_URL">
+                                    {t("chooseDotCornerRequired")}
+                                  </p>
+                                      <div className="color-picker_dopdown">
+                                          <input 
+                                          type="color" 
+                                          placeholder='color'
+                                          className='bgDotType'
+                                          value={bgDotType} 
+                                          onChange={(e) => setBgDotType(e.target.value)} />
+                                          <input type="text" value={bgDotType} readOnly className= 'color-code'  />
+                                      </div>
+                                </div>
+                                <div className="color-preview"
+                                  style={{background: bgDotType}}
+                                >
+                                </div>
                               </div>
                       </div>
                  </div>
@@ -468,14 +497,15 @@ const createDynamicQRCode = (type, data) => {
                     {/* Logo */}
                 <div className="card-section-logo_title">
                     <div className="card-section-url_title-text">
-                        <p className="mui-styled-title">Thêm Logo</p>
+                        <p className="mui-styled-title">{t("addLogo")}</p>
+                   
                     </div>
                       {/* Thêm Logo */}
                       <div className="card-section_logoType">
 
                         <div className="card-section_logoType-input">
                         <p className="mui-styled-title_URL">
-                               Chọn Logo
+                            {t("chooseLogo")}
                           </p>
                           {/* Logo */}
                               {LogoTypes.map(type => (
@@ -491,7 +521,7 @@ const createDynamicQRCode = (type, data) => {
                           {/* <span className='card-section_logoType-text'>hoặc</span> */}
                         <div className="card-section_logoType-window">
                         <p className="mui-styled-title_URL">
-                                        Tải Logo riêng của bạn
+                                        {t("uploadYourOwnLogo")}
                           </p>
                               <input type="file" accept='image/*' onChange={handleUploadLogoClick} className='logoUpLoad' placeholder='Tải lên ảnh của riêng bạn'/>
                         </div>
@@ -511,16 +541,16 @@ const createDynamicQRCode = (type, data) => {
                       <div className="template-preview-content-wrapper">
                         {url && (
                           <div>
-                          <div ref={qrRef} />
-                            <div className="downloadQRCode">
-                              <button className='DoneQRCode' onClick={handleDownloadClick}> Hoàn thành </button>
-                                <select className='wrapper_select' value={download} onChange={(e) => setDownload(e.target.value)}>
-                                    <option value="png">PNG</option>
-                                    <option value="jpg">JPG</option>
-                                    <option value="svg">SVG</option>
-                                </select>
-                              </div>
-                              <button onClick={handleUpdateURL} className="hidden" > Cập nhật URL </button>
+                            <div className='qr_Code' ref={qrRef} />
+                              <div className="downloadQRCode">
+                                <button className='DoneQRCode' onClick={handleDownloadClick}> Hoàn thành </button>
+                                  <select className='wrapper_select' value={download} onChange={(e) => setDownload(e.target.value)}>
+                                      <option value="png">PNG</option>
+                                      <option value="jpg">JPG</option>
+                                      <option value="svg">SVG</option>
+                                  </select>
+                                </div>
+                                <button onClick={handleUpdateURL} className="hidden" > Cập nhật URL </button>
                           </div>
                        )} 
                       

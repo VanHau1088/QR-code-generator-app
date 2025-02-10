@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import Papa from 'papaparse'
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { useTranslation } from "react-i18next";
 const BulkQR = () => {
-    
+  const {t} = useTranslation();
   const [name, setName] = useState('');
   const [qrData, setQrData] = useState([]);
   // Kiểu mã QR
@@ -174,14 +175,14 @@ useEffect(() => {
           <div className="section">
             <div className="title-home-section">
               <h3 className='title-home-section-children'>
-                <span>2. Thêm nội dung vào mã QR URL</span>
+                <span>2. {t("addContentToQrUrl")}</span>
               </h3>
             </div>
             <div className="card-section">
               <section className='card-section_container'>
                 <div className="card-section-url_title">
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Đặt tên cho mã QR của bạn</p>
+                    <p className="mui-styled-title">{t("nameYourQrCode")}</p>
                     <div className='mui-styled-content_text'>
                       <div className="mui-styled-content-text_inputPage"> 
                         <input 
@@ -198,12 +199,12 @@ useEffect(() => {
                 </div>
                 <div className="card-section-url_title">
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Địa chỉ trang web</p>
-                    <span className='mui-styled-title_children'>Nhập URL mà mã QR sẽ liên kết tới</span>
+                    <p className="mui-styled-title">{t("websiteAddress")}</p>
+                    <span className='mui-styled-title_children'>{t("addContentToQrUrl")}</span>
                     <div className='mui-styled-content_handleInput'>
                       <div className="mui-styled-content_handleInput_Page"> 
                         <hr />
-                        <p className="mui-styled-title_URL">URL trang web*</p>
+                        <p className="mui-styled-title_URL">{t("websiteUrlRequired")}</p>
                         <input 
                           className='mui-styled-content_handleInput_Page-URL' 
                           type="file" 
@@ -217,11 +218,10 @@ useEffect(() => {
                 </div>
                 <div className="card-section-url_content"></div>
               </section>
-
               <section className='card-section_styled'>
                 <div className="card-section-url_title">
                       <div className="card-section-url_title-text">
-                        <p className="mui-styled-title">Khung mã QR</p>
+                        <p className="mui-styled-title">{t("qrCodeFrame")}</p>
                       </div>
                       {/* Kiểu mã */}
                       <div className="card-section_dotType">
@@ -238,54 +238,77 @@ useEffect(() => {
                       {/* Màu nền & màu chấm */}
                       <div className="card-section_BgDotType">
                           {/* Màu chấm */}
-                          <div className="color-picker">
-                              {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                              <p className="mui-styled-title_URL">
-                              Chọn màu chấm*
-                            </p>
-                                <div className="color-picker_dopdown">
-                                    <input 
-                                    type="color" 
-                                    placeholder='color'
-                                    className='dotColor'
-                                    value={dotColor} 
-                                    onChange={(e) => setDotColor(e.target.value)} />
-                                    <input type="text" value={dotColor} readOnly className="color-code" />
-                                </div>
+                          <div className='dotname'>  
+                              <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseDotColorRequired")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='dotColor'
+                                      value={dotColor} 
+                                      onChange={(e) => setDotColor(e.target.value)} />
+                                      <input type="text" value={dotColor} readOnly className="color-code" />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: dotColor}}
+                            >
+                            </div>
                           </div>
-                          <div className="color-preview"
-                            style={{background: dotColor}}
-                          >
-                          </div>
+                        
                           {/* Màu nền */}
-                          <div className="color-picker">
-                              {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                              <p className="mui-styled-title_URL">
-                              Chọn màu nền*
-                            </p>
-                                <div className="color-picker_dopdown">
-                                    <input 
-                                    type="color" 
-                                    placeholder='color'
-                                    className='bgColor'
-                                    value={bgColor} 
-                                    onChange={(e) => setBgColor(e.target.value)} />
-                                    <input type="text" value={bgColor} readOnly className= 'color-code'  />
-                                </div>
+                          <div className='dotname'>  
+                              <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseBackgroundColor")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='bgColor'
+                                      value={bgColor} 
+                                      onChange={(e) => setBgColor(e.target.value)} />
+                                      <input type="text" value={bgColor} readOnly className="color-code" />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: bgColor}}
+                            >
+                            </div>
                           </div>
-                          <div className="color-preview"
-                            style={{background: bgColor}}
-                          >
-                          </div>
+                          {/* <div>
+                            <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseBackgroundColor")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='bgColor'
+                                      value={bgColor} 
+                                      onChange={(e) => setBgColor(e.target.value)} />
+                                      <input type="text" value={bgColor} readOnly className= 'color-code'  />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: bgColor}}
+                            >
+                            </div>
+                          </div> */}
                       </div>
                 <hr />
                     {/* Kiểu góc & kiểu chấm*/}
                       <div className="card-section-url_title-text">
-                          <p className="mui-styled-title">Kiểu góc</p>
+                          <p className="mui-styled-title">{t("cornerStyle")}</p>
                           <div className="card-section_cornerSquareType">
                               <div className="card-section_cornerSquareTypeStyled">
                                     <p className="mui-styled-title_URL">
-                                        Kiểu khung góc
+                                        {t("frameCornerStyle")}
                                     </p>
                                     <div className="card-section_bgCornerSquareType">
                                           {SquareTypes.map(type => (
@@ -302,7 +325,7 @@ useEffect(() => {
                               
                                 <div className="card-section_cornerDotTypeStyled">
                                 <p className="mui-styled-title_URL">
-                                  Kiểu chấm góc
+                                  {t("dotCornerStyle")}
                                 </p>
                                 <div className="card-section_bgCornerSquareType">
                                     {CornerDotTypes.map(type => (
@@ -321,44 +344,48 @@ useEffect(() => {
                    {/* Màu khung góc & màu chấm góc */}
                       <div className="card-section_BgDotType">
                               {/* Màu khung góc */}
-                              <div className="color-picker">
-                                  {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                                  <p className="mui-styled-title_URL">
-                                  Chọn khung góc*
-                                </p>
-                                    <div className="color-picker_dopdown">
-                                        <input 
-                                        type="color" 
-                                        placeholder='color'
-                                        className='bgSquareType'
-                                        value={bgSquareType} 
-                                        onChange={(e) => setBgCornerSquareType(e.target.value)} />
-                                        <input type="text" value={bgSquareType} readOnly className="color-code" />
-                                    </div>
-                              </div>
-                              <div className="color-preview"
-                                style={{background: bgSquareType}}
-                              >
+                              <div className='dotname'>
+                                <div className="color-picker">
+                                    {/* <label htmlFor="dotColor">Màu chấm</label> */}
+                                    <p className="mui-styled-title_URL">
+                                    {t("frameCornerStyle")}
+                                  </p>
+                                      <div className="color-picker_dopdown">
+                                          <input 
+                                          type="color" 
+                                          placeholder='color'
+                                          className='bgSquareType'
+                                          value={bgSquareType} 
+                                          onChange={(e) => setBgCornerSquareType(e.target.value)} />
+                                          <input type="text" value={bgSquareType} readOnly className="color-code" />
+                                      </div>
+                                </div>
+                                <div className="color-preview"
+                                  style={{background: bgSquareType}}
+                                >
+                                </div>
                               </div>
                               {/* Màu chấm góc */}
-                              <div className="color-picker">
-                                  {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                                  <p className="mui-styled-title_URL">
-                                  Chọn chấm góc*
-                                </p>
-                                    <div className="color-picker_dopdown">
-                                        <input 
-                                        type="color" 
-                                        placeholder='color'
-                                        className='bgDotType'
-                                        value={bgDotType} 
-                                        onChange={(e) => setBgDotType(e.target.value)} />
-                                        <input type="text" value={bgDotType} readOnly className= 'color-code'  />
-                                    </div>
-                              </div>
-                              <div className="color-preview"
-                                style={{background: bgDotType}}
-                              >
+                              <div className='dotname'>
+                                <div className="color-picker">
+                                    {/* <label htmlFor="dotColor">Màu chấm</label> */}
+                                    <p className="mui-styled-title_URL">
+                                    {t("chooseDotCornerRequired")}
+                                  </p>
+                                      <div className="color-picker_dopdown">
+                                          <input 
+                                          type="color" 
+                                          placeholder='color'
+                                          className='bgDotType'
+                                          value={bgDotType} 
+                                          onChange={(e) => setBgDotType(e.target.value)} />
+                                          <input type="text" value={bgDotType} readOnly className= 'color-code'  />
+                                      </div>
+                                </div>
+                                <div className="color-preview"
+                                  style={{background: bgDotType}}
+                                >
+                                </div>
                               </div>
                       </div>
                  </div>
@@ -366,14 +393,15 @@ useEffect(() => {
                     {/* Logo */}
                 <div className="card-section-logo_title">
                     <div className="card-section-url_title-text">
-                        <p className="mui-styled-title">Thêm Logo</p>
+                        <p className="mui-styled-title">{t("addLogo")}</p>
+                   
                     </div>
                       {/* Thêm Logo */}
                       <div className="card-section_logoType">
 
                         <div className="card-section_logoType-input">
                         <p className="mui-styled-title_URL">
-                               Chọn Logo
+                            {t("chooseLogo")}
                           </p>
                           {/* Logo */}
                               {LogoTypes.map(type => (
@@ -389,7 +417,7 @@ useEffect(() => {
                           {/* <span className='card-section_logoType-text'>hoặc</span> */}
                         <div className="card-section_logoType-window">
                         <p className="mui-styled-title_URL">
-                                        Tải Logo riêng của bạn
+                                        {t("uploadYourOwnLogo")}
                           </p>
                               <input type="file" accept='image/*' onChange={handleUploadLogoClick} className='logoUpLoad' placeholder='Tải lên ảnh của riêng bạn'/>
                         </div>
@@ -411,7 +439,7 @@ useEffect(() => {
                  
                         {qrData && (
                           <div>
-                          <div ref={qrCodesRef} />
+                          <div  ref={qrCodesRef} />
 
                           <div className="qr-container">
                                 {qrData.map((qr) => (

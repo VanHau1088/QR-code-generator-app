@@ -209,13 +209,13 @@ hr{
 /* Màu chấm, màu nền */
 
 .card-section_BgDotType{
-    display: flex; 
+    /* display: flex;  */
     align-items: center; 
     /* display: grid;
         grid-template-columns: 1fr auto 1fr;
         column-gap: 11px; */
         
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 0px 0px 25px;
 }
 
@@ -226,6 +226,8 @@ hr{
 
     margin-bottom: 20px;
   }
+
+
   
   .color-picker label {
     margin-right: 10px;
@@ -236,7 +238,7 @@ hr{
 }
   
   .color-picker input[type="color"] {
-    margin-right: 10px;
+    margin-right: 5px;
   }
   
   .color-code {
@@ -249,11 +251,11 @@ hr{
   
 /* DotColor */
  input.dotColor{
-    position: absolute;
-    width: 50%;
-    height: 55px;
+    /* position: absolute; */
+    width: 11%;
+    border-radius: 100%;
+    height: 60px;
     left: 192%;
-    border-radius: 50%;
     top: 4px;
     z-index: 1;
     overflow: hidden;
@@ -263,11 +265,11 @@ hr{
 
   
  input.bgColor{
-    position: absolute;
-    width: 50%;
-    height: 55px;
+    /* position: absolute; */
+    width: 11%;
+    border-radius: 100%;
+    height: 60px;
     left: 210%;
-    border-radius: 50%;
     top: 4px;
     z-index: 1;
     overflow: hidden;
@@ -277,9 +279,9 @@ hr{
 
  /* bgDotType */
  input.bgDotType{
-    position: absolute;
-    width: 50%;
-    height: 55px;
+    /* position: absolute; */
+    width: 11%;
+    height: 60px;
     left: 200%;
     border-radius: 50%;
     top: 4px;
@@ -291,9 +293,9 @@ hr{
 
   /* bgSquareType */
  input.bgSquareType{
-    position: absolute;
-    width: 50%;
-    height: 55px;
+    /* position: absolute; */
+    width: 11%;
+    height: 60px;
     left: 190%;
     border-radius: 50%;
     top: 4px;
@@ -441,4 +443,10 @@ hr{
 
 .hidden{
     display: none;
+}
+
+
+
+.dotname {
+    margin-right: 260px;
 }

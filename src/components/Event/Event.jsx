@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import {useAuth} from '../../context/AuthContext';
 import { toPng } from 'html-to-image';
+import { useTranslation } from "react-i18next";
 const Event = () => {
+  const {t} = useTranslation();
     const {userData} = useAuth();
     const [project, setProject] = useState('');
   const [name, setName] = useState('');
@@ -299,14 +301,14 @@ const handleUpdateEvent = () => {
           <div className="section">
             <div className="title-home-section">
               <h3 className='title-home-section-children'>
-                <span>2. Thêm nội dung vào mã QR Vcard</span>
+              <span>2. {t("addContentToQrEvent")}</span>
               </h3>
             </div>
             <div className="card-section">
               <section className='card-section_container'>
                 <div className="card-section-url_title">
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Đặt tên cho mã QR của bạn</p>
+                    <p className="mui-styled-title">{t("nameYourQrCode")}</p>
                     <div className='mui-styled-content_text'>
                       <div className="mui-styled-content-text_inputPage"> 
                         <input 
@@ -322,7 +324,7 @@ const handleUpdateEvent = () => {
                   </div>
                   <br />
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Thêm dự án cho mã QR của bạn (nếu có)</p>
+                    <p className="mui-styled-title">{t("addProjectForYourQrCodeIfAny")}</p>
                     <div className='mui-styled-content_text'>
                       <div className="mui-styled-content-text_inputPage"> 
                         <input 
@@ -339,13 +341,13 @@ const handleUpdateEvent = () => {
                 </div>
                 <div className="card-section-url_title">
                   <div className="card-section-url_title-text">
-                    <p className="mui-styled-title">Mã QR Vcard</p>
-                    <span className='mui-styled-title_children'>Tạo mã QR dễ dàng và có thể tùy chỉnh Vcard trong vài phút.</span>
+                    <p className="mui-styled-title">{t("EventQRCode")}</p>
+                    <span className='mui-styled-title_children'>{t("Creating a QR code is easy and customizable for Event in minutes.")}</span>
                     <div className='mui-styled-content_handleInput'>
                   {/* Title */}
                       <div className="mui-styled-content_handleInput_Page"> 
                           <hr />
-                          <p className="mui-styled-title_URL">Tên sự kiện*</p>
+                          <p className="mui-styled-title_URL">{t("TitleEvent")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
@@ -357,7 +359,7 @@ const handleUpdateEvent = () => {
                       </div>
                        {/* Tóm tắt sự kiện  */}
                        <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL"> Tóm tắt sự kiện*</p>
+                          <p className="mui-styled-title_URL"> {t("Eventtt")}</p>
                             <input 
                               className='mui-styled-content_handleInput_Page-URL' 
                               aria-invalid='false' 
@@ -383,7 +385,7 @@ const handleUpdateEvent = () => {
 
                     {/* Start Time  */}
                     <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL">Ngày bắt đầu</p>
+                          <p className="mui-styled-title_URL">{t("DateStart")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                              type="datetime-local"
@@ -394,7 +396,7 @@ const handleUpdateEvent = () => {
                       </div>
                       {/*    End Time   */}
                     <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL">Ngày kết thúc</p>
+                          <p className="mui-styled-title_URL">{t("DateEnd")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                              type="datetime-local"
@@ -417,7 +419,7 @@ const handleUpdateEvent = () => {
                       </div> */}
                         {/*  About   */}
                         <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL">Nội dung</p>
+                          <p className="mui-styled-title_URL">{t("content")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
@@ -429,7 +431,7 @@ const handleUpdateEvent = () => {
                       </div>
                         {/*  address:  */}
                         <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL">Địa chỉ</p>
+                          <p className="mui-styled-title_URL">{t("address")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
@@ -441,7 +443,7 @@ const handleUpdateEvent = () => {
                       </div>
                         {/*   Tên liên hệ:  */}
                         <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL">Tên liên hệ*</p>
+                          <p className="mui-styled-title_URL">{t("namecontact")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
@@ -453,7 +455,7 @@ const handleUpdateEvent = () => {
                       </div>
                         {/*  Phone:  */}
                         <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL"> Số điện thoại* </p>
+                          <p className="mui-styled-title_URL">{t("phone")} </p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
@@ -466,7 +468,7 @@ const handleUpdateEvent = () => {
 
                         {/*  Email:  */}
                         <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL">Email</p>
+                          <p className="mui-styled-title_URL">{t("Email")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
@@ -478,7 +480,7 @@ const handleUpdateEvent = () => {
                       </div>
                         {/*  Website:  */}
                         <div className="mui-styled-content_handleInput_Page"> 
-                          <p className="mui-styled-title_URL">Website</p>
+                          <p className="mui-styled-title_URL">{t("websiteAddress")}</p>
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
@@ -497,7 +499,7 @@ const handleUpdateEvent = () => {
               <section className='card-section_styled'>
                 <div className="card-section-url_title">
                       <div className="card-section-url_title-text">
-                        <p className="mui-styled-title">Khung mã QR</p>
+                        <p className="mui-styled-title">{t("qrCodeFrame")}</p>
                       </div>
                       {/* Kiểu mã */}
                       <div className="card-section_dotType">
@@ -514,54 +516,77 @@ const handleUpdateEvent = () => {
                       {/* Màu nền & màu chấm */}
                       <div className="card-section_BgDotType">
                           {/* Màu chấm */}
-                          <div className="color-picker">
-                              {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                              <p className="mui-styled-title_URL">
-                              Chọn màu chấm*
-                            </p>
-                                <div className="color-picker_dopdown">
-                                    <input 
-                                    type="color" 
-                                    placeholder='color'
-                                    className='dotColor'
-                                    value={dotColor} 
-                                    onChange={(e) => setDotColor(e.target.value)} />
-                                    <input type="text" value={dotColor} readOnly className="color-code" />
-                                </div>
+                          <div className='dotname'>  
+                              <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseDotColorRequired")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='dotColor'
+                                      value={dotColor} 
+                                      onChange={(e) => setDotColor(e.target.value)} />
+                                      <input type="text" value={dotColor} readOnly className="color-code" />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: dotColor}}
+                            >
+                            </div>
                           </div>
-                          <div className="color-preview"
-                            style={{background: dotColor}}
-                          >
-                          </div>
+                        
                           {/* Màu nền */}
-                          <div className="color-picker">
-                              {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                              <p className="mui-styled-title_URL">
-                              Chọn màu nền*
-                            </p>
-                                <div className="color-picker_dopdown">
-                                    <input 
-                                    type="color" 
-                                    placeholder='color'
-                                    className='bgColor'
-                                    value={bgColor} 
-                                    onChange={(e) => setBgColor(e.target.value)} />
-                                    <input type="text" value={bgColor} readOnly className= 'color-code'  />
-                                </div>
+                          <div className='dotname'>  
+                              <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseBackgroundColor")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='bgColor'
+                                      value={bgColor} 
+                                      onChange={(e) => setBgColor(e.target.value)} />
+                                      <input type="text" value={bgColor} readOnly className="color-code" />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: bgColor}}
+                            >
+                            </div>
                           </div>
-                          <div className="color-preview"
-                            style={{background: bgColor}}
-                          >
-                          </div>
+                          {/* <div>
+                            <div className="color-picker">
+                                <p className="mui-styled-title_URL">
+                                {t("chooseBackgroundColor")}
+                              </p>
+                                  <div className="color-picker_dopdown">
+                                      <input 
+                                      type="color" 
+                                      placeholder='color'
+                                      className='bgColor'
+                                      value={bgColor} 
+                                      onChange={(e) => setBgColor(e.target.value)} />
+                                      <input type="text" value={bgColor} readOnly className= 'color-code'  />
+                                  </div>
+                            </div>
+                            <div className="color-preview"
+                              style={{background: bgColor}}
+                            >
+                            </div>
+                          </div> */}
                       </div>
                 <hr />
                     {/* Kiểu góc & kiểu chấm*/}
                       <div className="card-section-url_title-text">
-                          <p className="mui-styled-title">Kiểu góc</p>
+                          <p className="mui-styled-title">{t("cornerStyle")}</p>
                           <div className="card-section_cornerSquareType">
                               <div className="card-section_cornerSquareTypeStyled">
                                     <p className="mui-styled-title_URL">
-                                        Kiểu khung góc
+                                        {t("frameCornerStyle")}
                                     </p>
                                     <div className="card-section_bgCornerSquareType">
                                           {SquareTypes.map(type => (
@@ -578,7 +603,7 @@ const handleUpdateEvent = () => {
                               
                                 <div className="card-section_cornerDotTypeStyled">
                                 <p className="mui-styled-title_URL">
-                                  Kiểu chấm góc
+                                  {t("dotCornerStyle")}
                                 </p>
                                 <div className="card-section_bgCornerSquareType">
                                     {CornerDotTypes.map(type => (
@@ -597,44 +622,48 @@ const handleUpdateEvent = () => {
                    {/* Màu khung góc & màu chấm góc */}
                       <div className="card-section_BgDotType">
                               {/* Màu khung góc */}
-                              <div className="color-picker">
-                                  {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                                  <p className="mui-styled-title_URL">
-                                  Chọn khung góc*
-                                </p>
-                                    <div className="color-picker_dopdown">
-                                        <input 
-                                        type="color" 
-                                        placeholder='color'
-                                        className='bgSquareType'
-                                        value={bgSquareType} 
-                                        onChange={(e) => setBgCornerSquareType(e.target.value)} />
-                                        <input type="text" value={bgSquareType} readOnly className="color-code" />
-                                    </div>
-                              </div>
-                              <div className="color-preview"
-                                style={{background: bgSquareType}}
-                              >
+                              <div className='dotname'>
+                                <div className="color-picker">
+                                    {/* <label htmlFor="dotColor">Màu chấm</label> */}
+                                    <p className="mui-styled-title_URL">
+                                    {t("frameCornerStyle")}
+                                  </p>
+                                      <div className="color-picker_dopdown">
+                                          <input 
+                                          type="color" 
+                                          placeholder='color'
+                                          className='bgSquareType'
+                                          value={bgSquareType} 
+                                          onChange={(e) => setBgCornerSquareType(e.target.value)} />
+                                          <input type="text" value={bgSquareType} readOnly className="color-code" />
+                                      </div>
+                                </div>
+                                <div className="color-preview"
+                                  style={{background: bgSquareType}}
+                                >
+                                </div>
                               </div>
                               {/* Màu chấm góc */}
-                              <div className="color-picker">
-                                  {/* <label htmlFor="dotColor">Màu chấm</label> */}
-                                  <p className="mui-styled-title_URL">
-                                  Chọn chấm góc*
-                                </p>
-                                    <div className="color-picker_dopdown">
-                                        <input 
-                                        type="color" 
-                                        placeholder='color'
-                                        className='bgDotType'
-                                        value={bgDotType} 
-                                        onChange={(e) => setBgDotType(e.target.value)} />
-                                        <input type="text" value={bgDotType} readOnly className= 'color-code'  />
-                                    </div>
-                              </div>
-                              <div className="color-preview"
-                                style={{background: bgDotType}}
-                              >
+                              <div className='dotname'>
+                                <div className="color-picker">
+                                    {/* <label htmlFor="dotColor">Màu chấm</label> */}
+                                    <p className="mui-styled-title_URL">
+                                    {t("chooseDotCornerRequired")}
+                                  </p>
+                                      <div className="color-picker_dopdown">
+                                          <input 
+                                          type="color" 
+                                          placeholder='color'
+                                          className='bgDotType'
+                                          value={bgDotType} 
+                                          onChange={(e) => setBgDotType(e.target.value)} />
+                                          <input type="text" value={bgDotType} readOnly className= 'color-code'  />
+                                      </div>
+                                </div>
+                                <div className="color-preview"
+                                  style={{background: bgDotType}}
+                                >
+                                </div>
                               </div>
                       </div>
                  </div>
@@ -642,14 +671,15 @@ const handleUpdateEvent = () => {
                     {/* Logo */}
                 <div className="card-section-logo_title">
                     <div className="card-section-url_title-text">
-                        <p className="mui-styled-title">Thêm Logo</p>
+                        <p className="mui-styled-title">{t("addLogo")}</p>
+                   
                     </div>
                       {/* Thêm Logo */}
                       <div className="card-section_logoType">
 
                         <div className="card-section_logoType-input">
                         <p className="mui-styled-title_URL">
-                               Chọn Logo
+                            {t("chooseLogo")}
                           </p>
                           {/* Logo */}
                               {LogoTypes.map(type => (
@@ -665,7 +695,7 @@ const handleUpdateEvent = () => {
                           {/* <span className='card-section_logoType-text'>hoặc</span> */}
                         <div className="card-section_logoType-window">
                         <p className="mui-styled-title_URL">
-                                        Tải Logo riêng của bạn
+                                        {t("uploadYourOwnLogo")}
                           </p>
                               <input type="file" accept='image/*' onChange={handleUploadLogoClick} className='logoUpLoad' placeholder='Tải lên ảnh của riêng bạn'/>
                         </div>
@@ -686,7 +716,7 @@ const handleUpdateEvent = () => {
                        
                         {title && eventName && startDate && endDate && about && contactName && phoneNumber && email && address && website && (
                           <div>
-                          <div ref={qrRef} />
+                          <div  className='qr_Code' ref={qrRef} />
                           <div className="downloadQRCode">
                             <button className='DoneQRCode' onClick={handleDownloadClick}> Hoàn thành </button>
                               <select className='wrapper_select' value={download} onChange={(e) => setDownload(e.target.value)}>

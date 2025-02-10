@@ -289,7 +289,6 @@ const ListQR = () => {
           value={selectedProject}
         >
           <Select.Option value="">Tất cả</Select.Option>
-          <Select.Option value="NoProject">Không có dự án</Select.Option>
           {[...new Set(qrs.map(qr => qr.project))].map((project, index) => (
             <Select.Option key={index} value={project}>{project}</Select.Option>
           ))}

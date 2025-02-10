@@ -165,7 +165,7 @@ const Analyze = () => {
   const filteredQrs = qrs.filter(qr => {
     // const matchesQRName = (selectedQRName ? qr.name === selectedQRName : true) ;
     const matchesQRName = (selectedQRName && selectedQRName !== "Tất cả" ? qr.name === selectedQRName : true);
-    const matchesCity = selectedCity ? qr.scanLocations.some(location => location.location.city === selectedCity) : true;
+    const matchesCity = selectedCity ? qr.scanLocations.some(location => location.location.country === selectedCity) : true;
     const matchesDevice = selectedOS ? qr.scans.some(scan => scan.os === selectedOS) : true;
     const matchesBrowser = selectedBrowser ? qr.scans.some(scan => scan.browser === selectedBrowser) : true;
 
@@ -252,9 +252,9 @@ const Analyze = () => {
                 value={selectedCity} 
                 disabled={!selectedQR} > 
                   {selectedQR 
-                  && [...new Set(selectedQR.scanLocations.map(location => location.location.city))].map((city, index) => ( 
-                    <Option key={index} value={city}> 
-                    {city} 
+                  && [...new Set(selectedQR.scanLocations.map(location => location.location.country))].map((country, index) => ( 
+                    <Option key={index} value={country}> 
+                    {country} 
                     </Option> 
                     ))} 
                 </Select> 
@@ -342,14 +342,14 @@ const Analyze = () => {
               });
              
               const location = qr.scanLocations.find(location => location.ip === scan.ip) || {};
-              const city = location?.location?.city || 'Không xác định được thành phố';
+              const city = location?.location?.country || 'Không xác định được thành phố';
               const scanDetail = `${scanTime} - ${scan.os} - ${scan.browser} - ${city}`; 
               counts[scanDetail] = (counts[scanDetail] || 0) + 1; 
               return counts;
             }, {});
 
             const locationCounts = qr.scanLocations.reduce((counts, location) => {
-             const locationString = `${location.location.city}`;
+             const locationString = `${location.location.country}`;
              counts[locationString] = (counts[locationString] || 0) + 1; 
              return counts;
             }, {});
@@ -572,11 +572,7 @@ const Analyze = () => {
                       </div>
                   </Card>
                 </div>
-
               </div>
-         
-
-
 
             );
           })

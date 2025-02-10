@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import {
     UserOutlined,
-    VideoCameraOutlined,
+    QrcodeOutlined,
+    LineChartOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import './Sidebar.css';
@@ -50,12 +51,12 @@ function Sidebar() {
                     items={[
                         {
                             key: '1',
-                            icon: <UserOutlined />,
+                            icon: <LineChartOutlined />,
                             label: 'Analyze',
                         },
                         {
                             key: '2',
-                            icon: <VideoCameraOutlined />,
+                            icon: <QrcodeOutlined />,
                             label: 'My QR',
                         },
                         {

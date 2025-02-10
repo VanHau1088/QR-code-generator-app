@@ -4,10 +4,15 @@ import './Header.css';
 import { useAuth } from '../../context/AuthContext'; // Điều chỉnh đường dẫn
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useTranslation } from "react-i18next";
+import Select from 'react-select';
+
 const Header = () => {
     const { userData, isAuthenticated } = useAuth();
     const [isScrolled, setIsScrolled] = useState(false);
-
+ 
+    
+ 
     useEffect(() => {
       const handleScroll = () => {
         const scrollTop = window.scrollY;
@@ -18,6 +23,49 @@ const Header = () => {
           window.removeEventListener('scroll', handleScroll);
          };
         }, []);  
+
+        const {t, i18n} = useTranslation();
+        const [language, setLanguage] = useState(i18n.language);
+        console.log(language);
+        console.log(t);
+        useEffect(() => {
+          setLanguage(i18n.language);
+        }, [i18n.language]);
+      
+        const options = [
+          { value: 'vi', label: 'Tiếng Việt' },
+          { value: 'en', label: 'Tiếng Anh' },
+          { value: 'cn', label: 'Tiếng Trung' }
+        ];
+
+        
+    const customStyles = {
+      select: (provided, state) => ({
+        ...provided,
+        fontSize: state.isSelected? '13px':'13px' , // Độ mạnh chữ
+        border: state.isSelected ?'#5D82D5' : '#5D82D5',
+      }),
+
+      option: (provided, state) => ({
+        ...provided,
+        
+        backgroundColor: state.isSelected ? '#5D82D5' : '#5D82D5', // Màu nền cho option
+        fontSize: state.isSelected? '13px':'13px' , // Độ mạnh chữ
+        border: state.isSelected ?'#5D82D5' : '#5D82D5',
+        color: state.isSelected ? 'white' : 'white', // Màu chữ
+        ':hover': {
+          backgroundColor: '#3A5FAA', // Màu nền khi hover
+        },
+      }),
+    };
+        
+      
+        const handleChange = (selectedOption) => {
+          const selectedLanguage = selectedOption.value;
+          i18n.changeLanguage(selectedLanguage);
+          setLanguage(selectedLanguage);
+        };
+      
 
     return (
       <div className={isScrolled ? 'header scrolled' : "header"}>
@@ -46,6 +94,19 @@ const Header = () => {
               <NavLink to="/Analyze">
                 </NavLink>
           </div> */}
+
+          {/* <select className="select " onChange={handleChange}>
+            <option className="optine" value="vi">Tiếng Việt</option>
+            <option className="optine" value="en">Tiếng Anh</option>
+          </select> */}
+
+           <Select
+           className="select"
+            options={options}
+            styles={customStyles}
+            value={options.find(option => option.value === language)}
+            onChange={handleChange}
+          /> 
 
 
           <div className="dark-light">

@@ -4,14 +4,23 @@ import { NavLink } from "react-router-dom";
 import './Home.css'
 import Header from "../Header/Header";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 const Home = () => {
 
   // ImageHover
     const [imageSrc, setImageSrc] = useState(
       '/src/assets/Image/ImageHover/QR.jpg'
     );
+    const {t} = useTranslation();
+    // const [language, setLanguage] = useState("");
+    // const handleChange = (e) => {
+    //   i18n.changeLanguage(e.target.value);
+    //   setLanguage(e.target.value);
+    // }
 
   return (
+       
+
         <div>
           <div className="main-container">
           <Header></Header>
@@ -19,7 +28,7 @@ const Home = () => {
               <div className="section">
                 <div className="title-home-section">
                   <h3 className='title-home-section-children'>
-                    <span>1. Chọn loại mã QR</span>
+                    <span>1. {t("Choose QR code type")}</span>
                   </h3>
                 </div>
 
@@ -39,11 +48,15 @@ const Home = () => {
                             </div>
                             <div className="template-selector__item-container-text" to = 'URL'>
                               <p className="template-selector__item-container-text-title">
-                                <span> URL trang web</span>
+                                <span> 
+                                  {t("Website URL")}
+                                  </span>
                               </p>
 
                               <p className="template-selector__item-container-text-subtitle">
-                                <span>Liên kết tới trang web bạn chọn</span>
+                                <span>
+                                {t("Link to your chosen website")}
+                                 </span>
                               </p>
                             </div>
                         </button>
@@ -67,7 +80,8 @@ const Home = () => {
                                 <span> vCard </span>
                               </p>
                               <p className="template-selector__item-container-text-subtitle">
-                                <span>Chia sẻ danh thiếp điện tử của bạn</span>
+                         
+                                <span>    {t("shareDigitalBusinessCard")}</span>
                               </p>
                             </div>
                         </button>
@@ -92,7 +106,10 @@ const Home = () => {
                                 <span> Email </span>
                               </p>
                               <p className="template-selector__item-container-text-subtitle">
-                                <span>Chia sẽ nội dung Email của bạn</span>
+                                <span>
+                                {t("shareEmailContent")}
+                                 
+                                  </span>
                               </p>
                             </div>
                         </button>
@@ -164,10 +181,12 @@ const Home = () => {
                             </div>
                             <div className="template-selector__item-container-text" to = 'Text'>
                               <p className="template-selector__item-container-text-title">
-                                <span> Văn bản đơn giản </span>
+                                <span> 
+                                {t("plainText")}
+                                </span>
                               </p>
                               <p className="template-selector__item-container-text-subtitle">
-                                <span>Hiển thị nội dung văn bản</span>
+                                <span> {t("displayTextContent")}</span>
                               </p>
                             </div>
                         </button>
@@ -192,7 +211,7 @@ const Home = () => {
                                 <span> SMS </span>
                               </p>
                               <p className="template-selector__item-container-text-subtitle">
-                                <span>Tạo tin nhắn soạn sẵn.
+                                <span>   {t("createPrewrittenMessage")}
                                 </span>
                               </p>
                             </div>
@@ -215,10 +234,14 @@ const Home = () => {
                             </div>
                             <div className="template-selector__item-container-text" to = 'Event'>
                               <p className="template-selector__item-container-text-title">
-                                <span> Sự kiện</span>
+                                <span> 
+                                {t("event")}
+
+                                </span>
                               </p>
                               <p className="template-selector__item-container-text-subtitle">
-                                <span>Tạo mã QR chứa chi tiết sự kiện (thời gian, địa điểm).
+                                <span>
+                                {t("event_text")}
                                 </span>
                               </p>
                             </div>
@@ -241,10 +264,14 @@ const Home = () => {
                             </div>
                             <div className="template-selector__item-container-text" to = 'Map'>
                               <p className="template-selector__item-container-text-title">
-                                <span> Vị trí </span>
+                                <span> 
+                                {t("location")}
+                                </span>
                               </p>
                               <p className="template-selector__item-container-text-subtitle">
-                                <span>Gắn thông tin vị trí trên bản đồ.</span>
+                                <span>
+                                {t("Location_text")}
+                                 </span>
                               </p>
                             </div>
                         </button>
@@ -266,10 +293,13 @@ const Home = () => {
                                   </div>
                                   <div className="template-selector__item-container-text" to = 'Payment'>
                                     <p className="template-selector__item-container-text-title">
-                                      <span> Thanh toán </span>
+                                      <span> 
+                                      {t("payment")}
+                                       </span>
                                     </p>
                                     <p className="template-selector__item-container-text-subtitle">
-                                      <span>Tích hợp với các nền tảng thanh toán 
+                                      <span>
+                                      {t("payment_text")}
                                       </span>
                                     </p>
                                   </div>
@@ -292,10 +322,10 @@ const Home = () => {
                               </div>
                               <div className="template-selector__item-container-text" to = 'Wifi'>
                                 <p className="template-selector__item-container-text-title">
-                                  <span> Wi-Fi </span>
+                                  <span>     {t("wifi")} </span>
                                 </p>
                                 <p className="template-selector__item-container-text-subtitle">
-                                  <span>Kết nối với mạng không dây</span>
+                                  <span>  {t("wifi_text")} </span>
                                 </p>
                               </div>
                           </button>
@@ -316,10 +346,10 @@ const Home = () => {
                               </div>
                               <div className="template-selector__item-container-text" to = 'BulkQR'>
                                 <p className="template-selector__item-container-text-title">
-                                  <span> Tạo mã QR hàng loạt </span>
+                                  <span> {t("bulkqr")}</span>
                                 </p>
                                 <p className="template-selector__item-container-text-subtitle">
-                                  <span>Tạo mã QR hàng loạt với CSV hoặc EXCEL</span>
+                                  <span> {t("createBulkQRCodes")}</span>
                                 </p>
                               </div>
                           </button>
@@ -489,18 +519,17 @@ const Home = () => {
                           <div className="template-preview-content">
                             <div className="template-preview-content-header"> 
                                   <div className="template-preview-content-wrapper">
-                                  <img 
-                                        className="template-preview-content-wrapper_image"
-                                        src={imageSrc}
-                                        // alt='Hover to change'
-                                        // onMouseLeave={() =>
-                                        //   setImageSrc(
-                                        //     'https://ss-images.saostar.vn/wp700/pc/1597331599109/maxresdefault(1).jpg'
-                                        //   )
-                                        // }
-                                      />
-                                  </div>
-                                
+                                    <img 
+                                          className="template-preview-content-wrapper_image"
+                                          src={imageSrc}
+                                          // alt='Hover to change'
+                                          // onMouseLeave={() =>
+                                          //   setImageSrc(
+                                          //     'https://ss-images.saostar.vn/wp700/pc/1597331599109/maxresdefault(1).jpg'
+                                          //   )
+                                          // }
+                                        />
+                                    </div>
                             </div>
                                 <img src="phonemyqrcode.jpg" alt="" className='template-preview-content-wrapper-phone-img' />
                             </div>

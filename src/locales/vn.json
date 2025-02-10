@@ -1,0 +1,103 @@
+{
+    "Choose QR code type": "Chọn loại mã QR",
+    "Link to your chosen website": "Liên kết tới trang web bạn chọn",
+    "Website URL": "URL trang web",
+        "shareDigitalBusinessCard": "Chia sẻ danh thiếp điện tử của bạn",
+        "shareEmailContent": "Chia sẻ nội dung Email của bạn",
+        "plainText": "Văn bản đơn giản",
+        "displayTextContent": "Hiển thị nội dung văn bản",
+        "createPrewrittenMessage": "Tạo tin nhắn soạn sẵn.",
+        "location": "Vị trí",
+        "Location_text": "Thông tin vị trí trên bản đồ",
+        "event": "Sự kiện",
+        "event_text": "Thông tin sự kiện trên mã QR",
+        "wifi": "Wi-Fi",
+        "wifi_text": "Kết nối với mạng không dây",
+        "payment": "Thanh toán",
+        "payment_text": "Tích hợp với các nền tảng thanh toán",
+        "createBulkQRCodes": "Tạo mã QR hàng loạt với CSV hoặc EXCEL",
+
+        "addContentToQrUrl": "Thêm nội dung vào mã QR URL",
+        "websiteAddress": "Địa chỉ trang web",
+        "websiteUrlRequired": "URL trang web*",
+
+
+        "Creating a QR code is easy and customizable for Vcard in minutes.": "Tạo mã QR dễ dàng và có thể tùy chỉnh Vcard trong vài phút.",
+        "addContentToQrCard": "Thêm nội dung vào mã QR Card", 
+        "VcardQRCode" : "Vcard QR Code",
+       
+       
+        "Enter the Email address you want to link to": "Nhập địa chỉ Email mà bạn muốn liên kết tới",
+        "addContentToQrEmail": "Thêm nội dung vào mã QR Email", 
+        "Email": "Địa chỉ Email",
+        "Subject": "Chủ đề",
+        "Message": "Tin nhắn",
+        "name": "Họ tên đầy đủ*",
+        "email": "Địa chỉ Email*",
+        "phone": "Số điện thoại",
+        "job": "Công việc*",
+        "address": "Địa chỉ",
+        "websiteAddress": "Website address",
+
+
+        "Creating a QR code is easy and customizable for Event in minutes.": "Tạo mã QR dễ dàng và có thể tùy chỉnh sự kiện trong vài phút.",
+        "addContentToQrEvent": "Thêm nội dung vào mã QR Sự kiện", 
+        "EventQRCode" : "Mã QR sự kiện",
+        "TitleEvent": "Tên sự kiện",
+        "Eventtt": "Tóm tắt sự kiện*",
+        "DateEnd": "Ngày kết thúc",
+        "DateStart": "Ngày bắt đầu",
+        "namecontact": "Tên liên hệ",
+        "content": "Nội dung",
+
+            "SimpleText": "Văn bản đơn giản",
+            "EnterTheTextYouWantToDisplay": "Nhập văn bản bạn muốn hiển thị khi người dùng quét mã QR của bạn",
+             "AddContentToQrSimpleText": "Thêm nội dung vào mã QR văn bản đơn giản",
+          
+
+
+        "addContentToQrMap": "Thêm nội dung vào mã QR Địa điểm", 
+        "Location": "Địa điểm",
+        "Creating a QR code is easy and customizable for Map in minutes.": "Tạo mã QR dễ dàng và có thể tùy chỉnh Địa điểm trong vài phút.",
+        "Latitude": "Vĩ độ*",
+        "Longitude":"Kinh độ*",
+
+        "SMS": "Tin nhắn",
+        "addContentToQrSMS": "Thêm nội dung vào mã QR tin nhắn SMS", 
+        "Creating a QR code is easy and customizable for SMS in minutes.": "Tạo mã QR dễ dàng và có thể tùy chỉnh tin nhắn SMS trong vài phút.",
+        "Area": "Khu vực",
+      
+        "Creating a QR code is easy and customizable for Payment in minutes.": "Tạo mã QR dễ dàng và có thể tùy chỉnh Thanh toán trong vài phút.",
+        "addContentToQrPayment": "Thêm nội dung vào mã QR Thanh toán", 
+        "Your Bank Address": "Địa chỉ Ngân hàng của bạn",
+        "Enter the Bank address that the QR code will link to":"Nhập địa chỉ Ngân hàng mà mã QR sẽ liên kết tới",
+        "Find a bank*": "Tìm ngân hàng của bạn",
+        "Bank account number*":"Số tài khoản ngân hàng*",
+        "Amount*":"Số tiền*",
+        "Remittance Details:*":"Nội Dung Chuyển Tiền:*",
+
+
+
+        "Creating a QR code is easy and customizable for WiFi in minutes.": "Tạo mã QR dễ dàng và có thể tùy chỉnh WiFi trong vài phút.",
+        "addContentToQrWiFi": "Thêm nội dung vào mã QR WiFi", 
+        "WiFiQRCode" : "Mã QR WiFi",
+        "TitleWifi": "Tên wifi (SSID)*",
+        "Encode": "Mã hóa",
+        "Password": "Mật khẩu",
+
+
+        "nameYourQrCode": "Đặt tên cho mã QR của bạn",
+        "addProjectForYourQrCodeIfAny": "Thêm dự án cho mã QR của bạn (nếu có)",
+        "qrCodeFrame": "Khung mã QR",
+        "chooseDotColorRequired": "Chọn màu chấm*",
+        "chooseBackgroundColor": "Chọn màu nền",
+        "cornerStyle": "Kiểu góc",
+        "dotCornerStyle": "Kiểu chấm góc",
+        "chooseDotCornerRequired": "Chọn chấm góc*",
+        "frameCornerStyle": "Kiểu khung góc",
+        "chooseFrameCornerRequired": "Chọn khung góc*",
+        "addLogo": "Thêm Logo",
+        "chooseLogo": "Chọn Logo",
+        "uploadYourOwnLogo": "Tải Logo riêng của bạn"
+          
+}
