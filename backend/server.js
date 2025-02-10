@@ -6,11 +6,12 @@ import QR from './models/qrModel.js'
 import cors from 'cors';
 import axios from 'axios';
 const app = express();
-const PORT = 3000;
+const PORT =  3000;
+
 import auth from './middleware/auth.js'; // Middleware để xác thực người dùng
 import qrRoutes from './routes/qrRoutes.js'; // Đảm bảo nhập đúng route
 import { UAParser } from 'ua-parser-js';
-
+import dotenv from 'dotenv'
 // 1) MIDDLEWARESimport express, { json } from 'express';
 app.use(cors());
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use('/api', qrRoutes); // Đảm bảo sử dụng đúng route
 //   useUnifiedTopology: true,
 // }).then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Error connecting to MongoDB:', error));
 
+dotenv.config()
 
 mongoose.set('strictQuery', false); // Hoặc true nếu bạn muốn giữ strictQuery
 connect('mongodb+srv://root:123@cluster0.td1md.mongodb.net/qrs?retryWrites=true&w=majority&appName=Cluster0', {
@@ -372,6 +374,8 @@ app.post('/update-event', async (req, res) => {
             res.status(404).json({ error: 'Data not found' });
            }
       });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
