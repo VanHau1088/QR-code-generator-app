@@ -34,7 +34,6 @@ connect('mongodb+srv://root:123@cluster0.td1md.mongodb.net/qrs?retryWrites=true&
 }).then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Error connecting to MongoDB:', error));
 
 
-
 // connect('mongodb://localhost:27017/qrDynamic');
 app.use(json());
 

@@ -7,6 +7,7 @@ import {useAuth} from '../../context/AuthContext'
 // import User from '../../../backend/models/userModel';
 import { toPng } from 'html-to-image'
 import { useTranslation } from "react-i18next";
+// import CryptoJS from 'crypto-js';
 const URL = () => {
   const {t} = useTranslation();
   const {userData} = useAuth();
@@ -31,10 +32,25 @@ const URL = () => {
   const LogoTypes = ['Facebook', 'Gmail', 'Instagram', 'Linkedin', 'Netflix', 'Outlook', 'Pinterest', 'TikTok', 'Twitter', 'Whatsapp', 'Youtube', 'Apple']; 
   // const [logo, setLogo] = useState(`src/assets/Image/LogoType/${LogoTypes[0]}.svg`);
   const [logo, setLogo] = useState(null);
+
+
+
+  
+ // Regex để kiểm tra URL
+  // Error 
+  // const [key, setKey] = useState('');
+  // const [qrCodeValue, setQrCodeValue] = useState(''); // Giá trị để tạo mã QR
+  const [isValid, setIsValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const urlRegex = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
+
   // Download
   const [download, setDownload] = useState('png');
   const [shortUrl, setShortUrl] = useState(''); 
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false)
+
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
@@ -79,6 +95,9 @@ useEffect(()=>{
   useEffect(() => { 
     createDynamicQRCode('url', { url }); 
   }, [url, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
+
+
+
 
 const createDynamicQRCode = (type, data) => {
   console.log('Type:', type);
@@ -180,6 +199,30 @@ const createDynamicQRCode = (type, data) => {
         console.error('Error saving QR code to database:', error);
       }
     };
+  
+//     // Theo dõi sự thay đổi của URL và khóa để tự động mã hóa
+// useEffect(() => {
+//   if (url && key) {
+//       // Kiểm tra tính hợp lệ của URL
+//       if (urlRegex.test(url)) {
+//           setIsValid(true);
+//           setErrorMessage('');
+
+//           // Mã hóa URL
+//           const ciphertext = CryptoJS.AES.encrypt(url, key).toString();
+//           setQrCodeValue(ciphertext); // Cập nhật giá trị cho mã QR
+//       } else {
+//           setIsValid(false);
+//           setErrorMessage('URL không hợp lệ. Vui lòng nhập lại.');
+//           setQrCodeValue(''); // Xóa giá trị mã QR nếu URL không hợp lệ
+//       }
+//   } else {
+//       setIsValid(false);
+//       setQrCodeValue(''); // Xóa giá trị mã QR nếu không có URL hoặc khóa
+//   }
+// }, [url, key]); // Chạy khi url hoặc key thay đổi
+
+
 
   const handleDownloadClick = async () => {
     try{
@@ -200,6 +243,32 @@ const createDynamicQRCode = (type, data) => {
         reader.readAsDataURL(file);
       }
   }
+
+
+  const handleInputChange = (e) => {
+    const inputUrl = e.target.value;
+    setUrl(inputUrl);
+
+    // Kiểm tra tính hợp lệ của URL
+    if (urlRegex.test(inputUrl)) {
+        setIsValid(true);
+        setErrorMessage('');
+    } else {
+        setIsValid(false);
+        setErrorMessage('URL không hợp lệ. Vui lòng nhập lại.');
+    }
+};
+
+
+
+
+// const handleUpdateText = () => {
+//   const newText = prompt('Nhập URL mới:'); // Hỏi người dùng nhập URL mới
+//   if (newText) {
+//     updateQRCodeURL(shortUrl, newText);
+//   }
+// };
+
 
   // Gọi hàm với dữ liệu cụ thể cho URL
   const updateQRCodeURL = async (shortUrl, newUrl) => {
@@ -313,8 +382,20 @@ const createDynamicQRCode = (type, data) => {
                           type="text" 
                           placeholder="ví dụ: www.mywebsite.com" 
                           value={url}
-                          onChange={(e) => setUrl(e.target.value)}
+                          // onChange={(e) => setUrl(e.target.value)}
+                          onChange={handleInputChange}
                         />
+            
+                    {/* <input
+                      type="text"
+                      value={key}
+                      onChange={(e) => setKey(e.target.value)}
+                      placeholder="Nhập khóa bí mật"
+                      style={{ width: '300px', marginRight: '10px' }}
+                     /> */}
+                    {/* <button onClick={() => { setUrl(''); setKey(''); }}>Xóa</button> */}
+                          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                           
                       </div>
                     </div>
                   </div>
@@ -539,7 +620,7 @@ const createDynamicQRCode = (type, data) => {
                   <div className="template-preview-content">
                     <div className="template-preview-content-header"> 
                       <div className="template-preview-content-wrapper">
-                        {url && (
+                        {url && isValid && (  
                           <div>
                             <div className='qr_Code' ref={qrRef} />
                               <div className="downloadQRCode">

@@ -36,6 +36,40 @@ const Text = () => {
   const [shortUrl, setShortUrl] = useState(''); 
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
 
+
+   // Regex để kiểm tra URL
+  // Error 
+  const [isValid, setIsValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const urlRegex = /^[a-zA-Z0-9]+$/;
+
+  // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // const smsRegex = /^[a-zA-Z0-9\s.,?!]*$/;
+
+  //  const sdtRegex = /(84|0[3|5|7|8|9])+[0-9]{8}\b/;
+
+  // const longRegex = /-?((1?[0-7][0-9]|0?[0-9])|180)\.[0-9]{1,20}/;
+  // const latRegex = /-?([0-8]?[0-9]|90)\.[0-9]{1,20}/;
+
+
+  // const ssidRegex = /^[a-zA-Z0-9\s]+$/;
+  // const psRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
+
+  const handleInputChange = (e) => {
+    const inputText = e.target.value;
+    setText(inputText);
+    
+    // Kiểm tra tính hợp lệ của URL
+    if (urlRegex.test(inputText)) {
+        setIsValid(true);
+        setErrorMessage('');
+    } else {
+        setIsValid(false);
+        setErrorMessage('Text không hợp lệ. Vui lòng nhập lại.');
+    }
+};
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
@@ -312,8 +346,12 @@ const Text = () => {
                         type="text" 
                         placeholder="ví dụ: Buổi hòa nhạc sẽ diễn ra lúc 9 giờ tối ngày 12 tháng 10." 
                         value={text}
-                        onChange={(e) => setText(e.target.value)}
+                        // onChange={(e) => setText(e.target.value)}
+                        onChange={handleInputChange}
                       />
+                        <button className="hidden"  onClick={() => setText('') }>Xóa</button>
+                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                           
                     </div>
                   </div>
                 </div>
@@ -537,7 +575,7 @@ const Text = () => {
                 <div className="template-preview-content">
                   <div className="template-preview-content-header"> 
                     <div className="template-preview-content-wrapper">
-                      {text && (
+                      {text && isValid && (
                         <div>
                         <div  className='qr_Code' ref={qrRef} />
                         <div className="downloadQRCode">
