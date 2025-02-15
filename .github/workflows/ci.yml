@@ -27,3 +27,6 @@ jobs:
 
       - name: Run tests (Yarn)
         run: yarn test  # Thay thế bằng lệnh test của bạn, ví dụ: `yarn run test:unit`
+
+      - name: Build
+        run: yarn build
