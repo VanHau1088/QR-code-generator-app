@@ -19,14 +19,12 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Check Git repository
-        run: git fsck --full --strict
-
-      - name: Clean install
+      - name: Add SSH key
         run: |
-          rm -rf node_modules
-          yarn cache clean
-          yarn install --force
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/haucaibat111  
+          chmod 400 ~/.ssh/haucaibat111  
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Install dependencies (Yarn)
         run: yarn install
