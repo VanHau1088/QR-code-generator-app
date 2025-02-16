@@ -1,0 +1,25 @@
+name: CI # Descriptive name for the workflow
+on:
+  push:
+    branches: [main] # Trigger on pushes to the main branch
+  pull_request:
+    branches: [main] # Trigger on pull requests targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    steps:
+      - name: Checkout code # Check out the repository code
+        uses: actions/checkout@v3 # Use v3 for better performance and features
+
+      - name: Set up Node.js # Set up Node.js environment
+        uses: actions/setup-node@v3 # Use v3 for better features
+        with:
+          node-version: '14' # Specify Node.js version
+
+      - name: Install dependencies # Install project dependencies
+        run: yarn install # Use yarn install
+
+      - name: Run tests # Run project tests
+        run: yarn test # Use yarn test
