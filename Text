@@ -1,0 +1,7 @@
+File giao diện chính: src/components/Home/Home.jsx
+Không có Admin
+Database MongoAlas: backend/server.js
+ 
+mongoose.set('strictQuery', false); 
+connect('mongodb+srv://root:123@cluster0.td1md.mongodb.net/qrs?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true,})
+.then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Error connecting to MongoDB:', error));
