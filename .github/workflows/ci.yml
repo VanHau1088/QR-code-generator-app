@@ -1,39 +1,25 @@
-name: CI with Yarn
+name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
-      - name: Add SSH key
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/haucaibat111  
-          chmod 400 ~/.ssh/haucaibat111  
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      - name: Install dependencies (Yarn)
+          node-version: '18' # Thay đổi nếu bạn dùng phiên bản Node.js khác
+      - name: Install dependencies
         run: yarn install
-
-      - name: Run linters
-        run: yarn lint # hoặc lệnh lint của bạn
-
-      - name: Run tests (Yarn)
-        run: yarn test  # Thay thế bằng lệnh test của bạn, ví dụ: `yarn run test:unit`
-
+      - name: Run tests
+        run: yarn test
       - name: Build
         run: yarn build
