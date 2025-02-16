@@ -5,6 +5,9 @@ import './Home.css'
 import Header from "../Header/Header";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import purify from "dompurify";
+
+
 const Home = () => {
 
   // ImageHover
@@ -21,7 +24,7 @@ const Home = () => {
   return (
        
 
-        <div>
+        <div >        
           <div className="main-container">
           <Header></Header>
             <div className="content">

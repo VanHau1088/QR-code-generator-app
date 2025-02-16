@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "moongose": "^1.0.0",
     "prop-types": "^15.8.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^4.0.3",
+    "typescript": "^4.9.5"
   }
 }

@@ -49,6 +49,28 @@ const SMS = () => {
   const [shortUrl, setShortUrl] = useState(''); 
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false)
 
+
+   // Regex để kiểm tra URL
+  // Error 
+  const [isValid, setIsValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const urlRegex = /^\+?[1-9]\d{1,14}$/;
+
+  const handleInputChange = (e) => {
+    const inputText = e.target.value;
+    setNumber(inputText);
+    
+    // Kiểm tra tính hợp lệ của URL
+    if (urlRegex.test(inputText)) {
+        setIsValid(true);
+        setErrorMessage('');
+    } else {
+        setIsValid(false);
+        setErrorMessage('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
+    }
+};
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
@@ -332,8 +354,9 @@ useEffect(() => {
                           type="number" 
                           placeholder="ví dụ: 0919381862" 
                           value={number}
-                          onChange={(e) => setNumber(e.target.value)}
+                          onChange={handleInputChange}
                         />
+                           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                       </div>
                     </div>
                     
@@ -573,7 +596,7 @@ useEffect(() => {
                     <div className="template-preview-content-header"> 
                       <div className="template-preview-content-wrapper">
                        
-                        {countryCode && number && message && (
+                        {countryCode && isValid && number && message  &&(
                           <div>
                           <div  className='qr_Code' ref={qrRef} />
                           <div className="downloadQRCode">

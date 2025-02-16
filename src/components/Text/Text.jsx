@@ -41,20 +41,7 @@ const Text = () => {
   // Error 
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const urlRegex = /^[a-zA-Z0-9]+$/;
-
-  // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  // const smsRegex = /^[a-zA-Z0-9\s.,?!]*$/;
-
-  //  const sdtRegex = /(84|0[3|5|7|8|9])+[0-9]{8}\b/;
-
-  // const longRegex = /-?((1?[0-7][0-9]|0?[0-9])|180)\.[0-9]{1,20}/;
-  // const latRegex = /-?([0-8]?[0-9]|90)\.[0-9]{1,20}/;
-
-
-  // const ssidRegex = /^[a-zA-Z0-9\s]+$/;
-  // const psRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
-
+  const urlRegex = /^(0|\+84)[1-9][0-9]{8,13}$/;
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     setText(inputText);

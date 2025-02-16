@@ -38,6 +38,47 @@ const Map = () => {
   const [shortUrl, setShortUrl] = useState(''); 
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false)
 
+
+     // Regex để kiểm tra URL
+  // Error 
+  const [isValid, setIsValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorLong, setErrorLong] = useState('');
+  const latRegex = /^([+-]?([1-8]?\d(\.\d+)?|90(\.0+)?))$/;
+  const longRegex = /^([+-]?((1[0-7]\d(\.\d+)?|[1-9]?\d(\.\d+)?|180(\.0+)?)))$/;
+
+
+  const handleInputChangeLat = (e) => {
+    const inputLat = e.target.value;
+    setLatitude(inputLat);
+    
+    // Kiểm tra tính hợp lệ của URL
+    if (latRegex.test(inputLat)) {
+        setIsValid(true);
+        setErrorMessage('');
+    }else {
+        setIsValid(false);
+        setErrorMessage('Vĩ độ không hợp lệ. Vui lòng nhập lại.');
+    }
+};
+
+const handleInputChangeLong = (e) => {
+  const inputLong = e.target.value;
+  setLongitude(inputLong);
+  
+  // Kiểm tra tính hợp lệ của URL
+  if (longRegex.test(inputLong)) {
+      setIsValid(true);
+      setErrorLong('');
+  }else {
+      setIsValid(false);
+      setErrorLong('Kinh độ không hợp lệ. Vui lòng nhập lại.');
+  }
+};
+
+
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
@@ -310,11 +351,12 @@ const Map = () => {
                         <input 
                           className='mui-styled-content_handleInput_Page-URL' 
                           aria-invalid='false' 
-                          type="text" 
+                          type="number" 
                           placeholder="10.7320130702352" 
                           value={latitude}
-                          onChange={(e) => setLatitude(e.target.value)}
+                          onChange={handleInputChangeLat}
                         />
+                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                       </div>
 
                      {/* Kinh độ */}
@@ -324,11 +366,12 @@ const Map = () => {
                         <input 
                           className='mui-styled-content_handleInput_Page-URL' 
                           aria-invalid='false' 
-                          type="text" 
+                          type="number" 
                           placeholder="106.69935328658882" 
                           value={longitude}
-                          onChange={(e) => setLongitude(e.target.value)}
+                          onChange={handleInputChangeLong}
                         />
+                          {errorLong && <p style={{ color: 'red' }}>{errorLong}</p>}
                       </div>
 
                     
@@ -556,7 +599,7 @@ const Map = () => {
                     <div className="template-preview-content-header"> 
                       <div className="template-preview-content-wrapper">
                        
-                        {longitude && latitude && (
+                        {longitude && latitude && isValid && (
                           <div>
                           <div  className='qr_Code' ref={qrRef} />
                           <div className="downloadQRCode">

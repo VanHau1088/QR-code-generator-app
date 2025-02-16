@@ -33,11 +33,34 @@ const Email = () => {
   const LogoTypes = ['Facebook', 'Gmail', 'Instagram', 'Linkedin', 'Netflix', 'Outlook', 'Pinterest', 'TikTok', 'Twitter', 'Whatsapp', 'Youtube', 'Apple']; 
   // const [logo, setLogo] = useState(`src/assets/Image/LogoType/${LogoTypes[0]}.svg`);
   const [logo, setLogo] = useState(null);
+
+   // Regex để kiểm tra URL
+  // Error 
+  const [isValid, setIsValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const urlRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  
+  const handleInputChange = (e) => {
+    const inputEmail = e.target.value;
+    setEmail(inputEmail);
+    
+    // Kiểm tra tính hợp lệ của URL
+    if (urlRegex.test(inputEmail)) {
+        setIsValid(true);
+        setErrorMessage('');
+    } else {
+        setIsValid(false);
+        setErrorMessage('Email không hợp lệ. Vui lòng nhập lại.');
+    }
+};
+
+
   // Download
   const [download, setDownload] = useState('png');
-
   const [shortUrl, setShortUrl] = useState(''); 
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false)
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
@@ -246,6 +269,9 @@ const saveQRCodeToDatabase = async ( type, data, userId) => {
       console.error('Error updating URL:', error.response ? error.response.data : error.message);
   };
 }
+
+
+
   const handleUpdateURL = () => {
     const newUrl = prompt('Nhập URL mới:'); // Hỏi người dùng nhập URL mới
     if (newUrl) {
@@ -314,8 +340,10 @@ const saveQRCodeToDatabase = async ( type, data, userId) => {
                           type="email" 
                           placeholder="ví dụ: hauvan788@gmail.com"
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={handleInputChange}
                         />
+                          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
                       </div>
                       {/* Subject */}
                       <div className="mui-styled-content_handleInput_Page"> 
@@ -565,7 +593,7 @@ const saveQRCodeToDatabase = async ( type, data, userId) => {
                     <div className="template-preview-content-header"> 
                       <div className="template-preview-content-wrapper">
                        
-                        {email && subject && message && (
+                        {email && isValid && subject && message &&(
                           <div>
                           <div  className='qr_Code' ref={qrRef} />
                           <div className="downloadQRCode">

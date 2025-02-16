@@ -49,7 +49,56 @@ const Event = () => {
   const [shortUrl, setShortUrl] = useState(''); 
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
 
+  const [isValid, setIsValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessageEmail, setErrorMessageEmail] = useState('');
+  const [errorMessageURL, setErrorMessageURL] = useState('');
 
+  const urlRegex = /^\+?[0-9]\d{1,14}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const urlRegex2 = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
+
+  const handleInputChange = (e) => {
+    const inputText = e.target.value;
+    setPhoneNumber(inputText);
+    // Kiểm tra tính hợp lệ của URL
+    if (urlRegex.test(inputText)) {
+        setIsValid(true);
+        setErrorMessage('');
+    } else {
+        setIsValid(false);
+        setErrorMessage('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
+    }
+};
+
+
+const handleInputChangeEmail = (e) => {
+  const inputText = e.target.value;
+  setEmail(inputText);
+  
+  // Kiểm tra tính hợp lệ của URL
+  if (emailRegex.test(inputText)) {
+      setIsValid(true);
+      setErrorMessageEmail('');
+  } else {
+      setIsValid(false);
+      setErrorMessageEmail('Email không hợp lệ. Vui lòng nhập lại.');
+  }
+};
+
+const handleInputChangeURL = (e) => {
+  const inputText = e.target.value;
+  setWebsite(inputText);
+  
+  // Kiểm tra tính hợp lệ của URL
+  if (urlRegex2.test(inputText)) {
+      setIsValid(true);
+      setErrorMessageURL('');
+  } else {
+      setIsValid(false);
+      setErrorMessageURL('URL không hợp lệ. Vui lòng nhập lại.');
+  }
+};
 
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
@@ -459,11 +508,13 @@ const handleUpdateEvent = () => {
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
-                            type="number" 
+                            // type="number" 
                             placeholder="0919381862" 
                             value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            // onChange={(e) => setPhoneNumber(e.target.value)}
+                            onChange={handleInputChange}
                           />
+                             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                       </div>
 
                         {/*  Email:  */}
@@ -472,11 +523,12 @@ const handleUpdateEvent = () => {
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
-                            type="email" 
+                            // type="email" 
                             placeholder="hauvan788@gmail.com" 
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleInputChangeEmail}
                           />
+                           {errorMessageEmail && <p style={{ color: 'red' }}>{errorMessageEmail}</p>}
                       </div>
                         {/*  Website:  */}
                         <div className="mui-styled-content_handleInput_Page"> 
@@ -484,11 +536,12 @@ const handleUpdateEvent = () => {
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
-                            type="website"  
+                            // type="website"  
                             placeholder="http://abc.com" 
                             value={website}
-                            onChange={(e) => setWebsite(e.target.value)}
+                            onChange={handleInputChangeURL}
                           />
+                           {errorMessageURL && <p style={{ color: 'red' }}>{errorMessageURL}</p>}
                       </div>
                     </div>
                   </div>
@@ -714,7 +767,7 @@ const handleUpdateEvent = () => {
                     <div className="template-preview-content-header"> 
                       <div className="template-preview-content-wrapper">
                        
-                        {title && eventName && startDate && endDate && about && contactName && phoneNumber && email && address && website && (
+                        {title && eventName && startDate && endDate && about && contactName && phoneNumber && email && address && website && isValid && (
                           <div>
                           <div  className='qr_Code' ref={qrRef} />
                           <div className="downloadQRCode">

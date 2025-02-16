@@ -45,6 +45,63 @@ const Card = () => {
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
 
 
+  const [isValid, setIsValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessageEmail, setErrorMessageEmail] = useState('');
+  const [errorMessageURL, setErrorMessageURL] = useState('');
+
+  const urlRegex = /^\+?[0-9]\d{1,14}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const urlRegex2 = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
+
+  const handleInputChange = (e) => {
+    const inputText = e.target.value;
+    setPhoneNumber(inputText);
+    
+    // Kiểm tra tính hợp lệ của URL
+    if (urlRegex.test(inputText)) {
+        setIsValid(true);
+        setErrorMessage('');
+    } else {
+        setIsValid(false);
+        setErrorMessage('Số điện thoại không hợp lệ. Vui lòng nhập lại.');
+    }
+};
+
+
+const handleInputChangeEmail = (e) => {
+  const inputText = e.target.value;
+  setEmail(inputText);
+  
+  // Kiểm tra tính hợp lệ của URL
+  if (emailRegex.test(inputText)) {
+      setIsValid(true);
+      setErrorMessageEmail('');
+  } else {
+      setIsValid(false);
+      setErrorMessageEmail('Email không hợp lệ. Vui lòng nhập lại.');
+  }
+};
+
+
+const handleInputChangeURL = (e) => {
+  const inputText = e.target.value;
+  setWebsite(inputText);
+  
+  // Kiểm tra tính hợp lệ của URL
+  if (urlRegex2.test(inputText)) {
+      setIsValid(true);
+      setErrorMessageURL('');
+  } else {
+      setIsValid(false);
+      setErrorMessageURL('URL không hợp lệ. Vui lòng nhập lại.');
+  }
+};
+
+
+
+
+
   const qrRef = useRef(null);
   const qrCode = useRef(new QRCodeStyling({
     width: 300,
@@ -351,11 +408,12 @@ const handleUpdateCard = () => {
                           <input 
                             className='mui-styled-content_handleInput_Page-URL' 
                             aria-invalid='false' 
-                            type="number" 
+                            // type="number" 
                             placeholder="0919381862" 
                             value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            onChange={handleInputChange}
                           />
+                           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                       </div>
                       {/*  Email Address:  */}
                     <div className="mui-styled-content_handleInput_Page"> 
@@ -364,9 +422,10 @@ const handleUpdateCard = () => {
                             className='mui-styled-content_handleInput_Page-URL' 
                             type="email" 
                             placeholder="titi27748@gmail.com" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            // value={email}
+                            onChange={handleInputChangeEmail}
                           />
+                            {errorMessageEmail && <p style={{ color: 'red' }}>{errorMessageEmail}</p>}
                       </div>
                        {/*   Address:  */}
                       <div className="mui-styled-content_handleInput_Page"> 
@@ -401,8 +460,9 @@ const handleUpdateCard = () => {
                             type="text" 
                             placeholder="http://abc.com" 
                             value={website}
-                            onChange={(e) => setWebsite(e.target.value)}
+                            onChange={handleInputChangeURL}
                           />
+                          {errorMessageURL && <p style={{ color: 'red' }}>{errorMessageURL}</p>}
                       </div>
                     </div>
                   </div>
@@ -629,7 +689,7 @@ const handleUpdateCard = () => {
                     <div className="template-preview-content-header"> 
                       <div className="template-preview-content-wrapper">
                        
-                        {fullName && phoneNumber && email && address && job && website && (
+                        {fullName && phoneNumber  && email && address && job && website &&  isValid &&(
                           <div>
                           <div  className='qr_Code' ref={qrRef} />
                           <div className="downloadQRCode">
