@@ -41,7 +41,7 @@ const Text = () => {
   // Error 
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const urlRegex = /^(0|\+84)[1-9][0-9]{8,13}$/;
+  const urlRegex = /^[a-zA-Z]+([a-zA-Z0-9]( _ | - | \\. | , | # | \\+ )*)*[a-zA-Z0-9]+$/;
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     setText(inputText);
