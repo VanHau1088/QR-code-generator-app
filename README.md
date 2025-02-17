@@ -19,9 +19,8 @@ Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) 
 ### Đi vào thư mục backend của project và chạy server bằng lệnh sau:
 *node server.js*
 
-# Bước 6: Sử dụng ngrok để tạo tunnel
-### Ngrok cho phép bạn tạo một tunnel từ internet đến localhost của bạn. Tải ngrok về từ trang chính thức ngrok.com và sau đó chạy lệnh sau để mở tunnel trên cổng 3000:
-*ngrok http 3000*
+# Bước 6: Sau khi chạy backend 
+### Link Website được deploy trên vercel:
+*(https://vercel.com/titi27748-gmailcoms-projects/qr-code-generator-app/9QgZXnpQdH3vt9kMn6S8J64uwTGc)*
 
-# Bước 7: Cập nhật URL trong project
-### Sau khi ngrok chạy, nó sẽ cung cấp một URL công khai. Thay thế đoạn URL đó trong project của bạn bằng URL này để truy cập ứng dụng từ bên ngoài.
+
