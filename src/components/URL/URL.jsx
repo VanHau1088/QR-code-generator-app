@@ -97,8 +97,6 @@ useEffect(()=>{
   }, [url, dotType, dotColor, bgColor, cornerSquareType, bgSquareType, cornerDotType, bgDotType, logo]);
 
 
-
-
 const createDynamicQRCode = (type, data) => {
   console.log('Type:', type);
   console.log('Data:', data);
