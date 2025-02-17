@@ -321,7 +321,7 @@ const Home = () => {
                                     }
                             >
                               <div className="template-selector__item-container-logo">
-                              <img src="/public/assets/Image/Icons/wifi.png" alt="" />
+                              <img src="/assets/Image/Icons/wifi1.png" alt="" />
                               </div>
                               <div className="template-selector__item-container-text" to = 'Wifi'>
                                 <p className="template-selector__item-container-text-title">
