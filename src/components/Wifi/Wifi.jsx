@@ -94,7 +94,7 @@ const Wifi = () => {
     console.log('Type:', type);
     console.log('Data:', data);
     // Tạo URL giả cho mã QR động
-    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    // const shortUrl = `https://qr-code-generate-backend.onrender.com/${Math.random().toString(36).substring(7)}`;
     const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
       setShortUrl(shortUrl);
       console.log('Short URL:', shortUrl);
@@ -215,7 +215,7 @@ const Wifi = () => {
       console.log('Updating shortUrl:', shortUrl);  // Log shortUrl gửi đi
       console.log('Updating WiFi Info - SSID:', ssid, 'Network Type:', networkType, 'Password:', password); // Log thông tin WiFi gửi đi
       try {
-        const response = await axios.post('http://localhost:3000/update-wifi', {
+        const response = await axios.post('https://qr-code-generate-backend.onrender.com/update-wifi', {
           shortUrl: shortUrl,
           ssid: ssid,
           networkType: networkType,
@@ -225,8 +225,8 @@ const Wifi = () => {
         if (response.status === 200) {
           console.log('URL updated successfully');
           console.log('New Wifi updated successfully:');
-          console.log(`http://localhost:3000/${shortUrl}`);
-          const updateUrl = `http://localhost:3000/${shortUrl}`;
+          console.log(`https://qr-code-generate-backend.onrender.com/${shortUrl}`);
+          const updateUrl = `https://qr-code-generate-backend.onrender.com/${shortUrl}`;
           qrCode.current.update({
               data: updateUrl,
               dotsOptions: {

@@ -11,7 +11,7 @@
 //             try{
 //                     setError(null);
 //                     setLoading(true);
-//                     const res = await fetch('http://localhost:3000/api/auth/login', {
+//                     const res = await fetch('https://qr-code-generate-backend.onrender.com/api/auth/login', {
 //                         method: 'POST',
 //                         body: JSON.stringify(values),
 //                         headers: {
@@ -58,7 +58,7 @@ function useLogin() {
         try {
             setError(null);
             setLoading(true);
-            const res = await fetch('http://localhost:3000/api/auth/login', {
+            const res = await fetch('https://qr-code-generate-backend.onrender.com/api/auth/login', {
                 method: 'POST',
                 body: JSON.stringify(values),
                 headers: {

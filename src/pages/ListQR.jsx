@@ -33,7 +33,7 @@ const ListQR = () => {
 
     const fetchQRCodes = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/user/qrs', {
+        const res = await axios.get('https://qr-code-generate-backend.onrender.com/api/user/qrs', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
         if (Array.isArray(res.data)) {
@@ -56,7 +56,7 @@ const ListQR = () => {
 
   const handleDelete = async (id) => {
         try {
-          await axios.delete(`http://localhost:3000/api/delete/${id}`, {
+          await axios.delete(`https://qr-code-generate-backend.onrender.com/api/delete/${id}`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
           });
           setQrs(qrs.filter(qr => qr._id !== id));
@@ -69,7 +69,7 @@ const ListQR = () => {
         const confirmed = window.confirm("Bạn có chắc chắn muốn thay đổi trạng thái mã QR này? Hành động này không thể hoàn tác.");
         if (confirmed) {
           try {
-            await axios.delete(`http://localhost:3000/api/delete/${id}`, {
+            await axios.delete(`https://qr-code-generate-backend.onrender.com/api/delete/${id}`, {
               headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
             });
             setQrs(qrs.filter(qr => qr._id !== id));
@@ -82,7 +82,7 @@ const ListQR = () => {
     
       const handleToggleStatus = async (id) => {
         try {
-          const res = await axios.patch(`http://localhost:3000/api/toggle-status/${id}`, {}, {
+          const res = await axios.patch(`https://qr-code-generate-backend.onrender.com/api/toggle-status/${id}`, {}, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
           });
           setQrs(qrs.map(qr => qr._id === id ? { ...qr, isActive: res.data.isActive } : qr));
@@ -110,7 +110,7 @@ const ListQR = () => {
     
       const handleMaxScansSubmit = async () => {
         try {
-          await axios.patch(`http://localhost:3000/api/set-max-scans/${selectedQR._id}`, { maxScans }, {
+          await axios.patch(`https://qr-code-generate-backend.onrender.com/api/set-max-scans/${selectedQR._id}`, { maxScans }, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
           });
           setQrs(qrs.map(qr => qr._id === selectedQR._id ? { ...qr, maxScans } : qr));
@@ -134,7 +134,7 @@ const ListQR = () => {
     
       const handleExpirationDateSubmit = async () => { 
         try { 
-          await axios.patch(`http://localhost:3000/api/set-expiration-date/${selectedQR._id}`, { expirationDate }, { 
+          await axios.patch(`https://qr-code-generate-backend.onrender.com/api/set-expiration-date/${selectedQR._id}`, { expirationDate }, { 
              headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } 
             }); 
             setQrs(qrs.map(qr => qr._id === selectedQR._id ? { ...qr, expirationDate } : qr));

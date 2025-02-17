@@ -147,7 +147,7 @@ const handleInputChangeURL = (e) => {
     console.log('Type:', type);
     console.log('Data:', data);
     // Tạo URL giả cho mã QR động
-    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    // const shortUrl = `https://qr-code-generate-backend.onrender.com/${Math.random().toString(36).substring(7)}`;
     const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
       setShortUrl(shortUrl);
       console.log('Short URL:', shortUrl);
@@ -278,7 +278,7 @@ const updateQRCodeEvent = async (shortUrl, title ,eventName, startDate, endDate,
     'email:', email,
     'website:', website);  // Log thông tin card gửi đi
   try {
-    const response = await axios.post('http://localhost:3000/update-event', {
+    const response = await axios.post('https://qr-code-generate-backend.onrender.com/update-event', {
       shortUrl: shortUrl,
       title: title,
       eventName: eventName,
@@ -294,7 +294,7 @@ const updateQRCodeEvent = async (shortUrl, title ,eventName, startDate, endDate,
 
     if (response.status === 200) {
       console.log('Event Info updated successfully');
-      const updateUrl = `http://localhost:3000/${shortUrl}`;
+      const updateUrl = `https://qr-code-generate-backend.onrender.com/${shortUrl}`;
       qrCode.current.update({
         data: updateUrl,
         dotsOptions: {

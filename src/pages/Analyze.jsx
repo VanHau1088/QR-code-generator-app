@@ -41,7 +41,7 @@ const Analyze = () => {
 
     const fetchQRCodes = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/user/qrs', {
+        const res = await axios.get('https://qr-code-generate-backend.onrender.com/api/user/qrs', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
         console.log('Response data:', res.data);

@@ -153,7 +153,7 @@ const SMS = () => {
     console.log('Type:', type);
     console.log('Data:', data);
     // Tạo URL giả cho mã QR động
-    // const shortUrl = `http://localhost:3000/${Math.random().toString(36).substring(7)}`;
+    // const shortUrl = `https://qr-code-generate-backend.onrender.com/${Math.random().toString(36).substring(7)}`;
     const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
       setShortUrl(shortUrl);
       console.log('Short URL:', shortUrl);

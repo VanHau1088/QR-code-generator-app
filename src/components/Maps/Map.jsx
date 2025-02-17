@@ -235,7 +235,7 @@ const handleInputChangeLong = (e) => {
     console.log('Updating shortUrl:', shortUrl);  // Log shortUrl gửi đi
     console.log('Updating newUrl:', newUrl);  // Log newUrl gửi đi
     try {
-      const response = await axios.post('http://localhost:3000/update-url', {
+      const response = await axios.post('https://qr-code-generate-backend.onrender.com/update-url', {
         shortUrl: shortUrl,
         newUrl: newUrl
       });
@@ -243,8 +243,8 @@ const handleInputChangeLong = (e) => {
       if (response.status === 200) {
         console.log('URL updated successfully');
         console.log('New URL updated successfully:');
-        console.log(`http://localhost:3000/${shortUrl}`);
-        const updateUrl = `http://localhost:3000/${shortUrl}`;
+        console.log(`https://qr-code-generate-backend.onrender.com/${shortUrl}`);
+        const updateUrl = `https://qr-code-generate-backend.onrender.com/${shortUrl}`;
         qrCode.current.update({
             data: updateUrl,
             dotsOptions: {
