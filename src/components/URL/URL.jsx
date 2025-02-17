@@ -104,7 +104,7 @@ const createDynamicQRCode = (type, data) => {
   console.log('Data:', data);
   // Tạo URL giả cho mã QR động
   // const shortUrl = `https://qr-code-generate-backend.onrender.com/${Math.random().toString(36).substring(7)}`;
-  const shortUrl = `https://5811-171-243-50-172.ngrok-free.app/${Math.random().toString(36).substring(7)}`;
+  const shortUrl = `https://qr-code-generator-app-lovat.vercel.app/${Math.random().toString(36).substring(7)}`;
   setShortUrl(shortUrl);
   console.log('Short URL:', shortUrl);
       qrCode.current.update({
@@ -146,10 +146,10 @@ const createDynamicQRCode = (type, data) => {
         const qrImage = await toPng(qrRef.current);
         const token = localStorage.getItem('token');
         console.log('Token:', token); 
-        console.log('Ngrok URL:', 'https://5811-171-243-50-172.ngrok-free.app/shorten'); 
+        console.log('Ngrok URL:', 'https://qr-code-generate-backend.onrender.com/shorten'); 
   
         // Khởi tạo shortUrl trước khi sử dụng 
-        const response = await axios.post('https://5811-171-243-50-172.ngrok-free.app/shorten', {
+        const response = await axios.post('https://qr-code-generate-backend.onrender.com/shorten', {
           type, 
           data, 
           userId, 
@@ -166,7 +166,7 @@ const createDynamicQRCode = (type, data) => {
         }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        const shortUrl = `https://5811-171-243-50-172.ngrok-free.app/${response.data.shortUrl}`;
+        const shortUrl = `https://qr-code-generate-backend.onrender.com/${response.data.shortUrl}`;
         setShortUrl(shortUrl);
         console.log('QR code saved:', response.data);
         qrCode.current.update({

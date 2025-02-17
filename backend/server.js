@@ -38,7 +38,7 @@ connect('mongodb+srv://root:123@cluster0.td1md.mongodb.net/qrs?retryWrites=true&
 app.use(json());
 
 // Thiết lập CORS
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'https://vanhau1088.github.io'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'https://vanhau1088.github.io, https://qr-code-generator-app-lovat.vercel.app'];
 app.use(cors({
   origin: function (origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {

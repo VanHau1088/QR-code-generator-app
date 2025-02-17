@@ -15,7 +15,7 @@ export const saveQRCode = async (req, res) => {
   if (!type || !data || !userId || !qrImage) {
     return res.status(400).json({ error: 'Data not found' });
   }
-  const shortUrl = `https://localhost:3000/${Math.random().toString(36).substring(7)}`;
+  const shortUrl = `https://qr-code-generate-backend.onrender.com/${Math.random().toString(36).substring(7)}`;
   console.log('Received type:', type); 
   console.log('Received data:', data); 
   console.log('Received userId:', userId); 
