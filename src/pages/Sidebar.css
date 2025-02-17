@@ -161,3 +161,10 @@ main.ant-layout-content.css-77tu7h {
 td.ant-table-cell {
     width: 0%;
 }
+
+
+ul.ant-dropdown-menu.ant-dropdown-menu-root.ant-dropdown-menu-vertical.ant-dropdown-menu-light.css-77tu7h {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
