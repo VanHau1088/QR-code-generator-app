@@ -149,9 +149,10 @@ const Text = () => {
       const qrImage = await toPng(qrRef.current);
         const token = localStorage.getItem('token');
         console.log('Token:', token); 
-        console.log('Ngrok URL:', 'https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten'); 
-          // Khởi tạo shortUrl trước khi sử dụng 
-        const response = await axios.post('https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/shorten', {
+        console.log('Ngrok URL:', 'https://qr-code-generate-backend.onrender.com/shorten'); 
+  
+        // Khởi tạo shortUrl trước khi sử dụng 
+        const response = await axios.post('https://qr-code-generate-backend.onrender.com/shorten', {
           type, 
           data, 
           userId, 
@@ -168,7 +169,7 @@ const Text = () => {
         }, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        const shortUrl = `https://503b-2001-ee0-4f8c-92c0-d1a1-1519-84f-2120.ngrok-free.app/${response.data.shortUrl}`;
+        const shortUrl = `https://qr-code-generate-backend.onrender.com/${response.data.shortUrl}`;
           setShortUrl(shortUrl);
           console.log('QR code saved:', response.data);
             qrCode.current.update({

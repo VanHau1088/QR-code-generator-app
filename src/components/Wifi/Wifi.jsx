@@ -95,7 +95,7 @@ const Wifi = () => {
     console.log('Data:', data);
     // Tạo URL giả cho mã QR động
     // const shortUrl = `https://qr-code-generate-backend.onrender.com/${Math.random().toString(36).substring(7)}`;
-    const shortUrl = `https://qr-code-generator-app-lovat.vercel.app/${Math.random().toString(36).substring(7)}`;
+    const shortUrl = `https://qr-code-generate-backend.onrender.com/${Math.random().toString(36).substring(7)}`;
       setShortUrl(shortUrl);
       console.log('Short URL:', shortUrl);
         qrCode.current.update({
