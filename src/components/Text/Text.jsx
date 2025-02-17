@@ -39,22 +39,22 @@ const Text = () => {
 
    // Regex để kiểm tra URL
   // Error 
-  const [isValid, setIsValid] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const urlRegex = /^[a-zA-Z]+([a-zA-Z0-9]( _ | - | \\. | , | # | \\+ )*)*[a-zA-Z0-9]+$/;
-  const handleInputChange = (e) => {
-    const inputText = e.target.value;
-    setText(inputText);
+//   const [isValid, setIsValid] = useState(false);
+//   const [errorMessage, setErrorMessage] = useState('');
+//   const urlRegex = /^[a-zA-Z]+([a-zA-Z0-9]( _ | - | \\. | , | # | \\+ )*)*[a-zA-Z0-9]+$/;
+//   const handleInputChange = (e) => {
+//     const inputText = e.target.value;
+//     setText(inputText);
     
-    // Kiểm tra tính hợp lệ của URL
-    if (urlRegex.test(inputText)) {
-        setIsValid(true);
-        setErrorMessage('');
-    } else {
-        setIsValid(false);
-        setErrorMessage('Text không hợp lệ. Vui lòng nhập lại.');
-    }
-};
+//     // Kiểm tra tính hợp lệ của URL
+//     if (urlRegex.test(inputText)) {
+//         setIsValid(true);
+//         setErrorMessage('');
+//     } else {
+//         setIsValid(false);
+//         setErrorMessage('Text không hợp lệ. Vui lòng nhập lại.');
+//     }
+// };
 
 
   const qrRef = useRef(null);
@@ -334,11 +334,11 @@ const Text = () => {
                         type="text" 
                         placeholder="ví dụ: Buổi hòa nhạc sẽ diễn ra lúc 9 giờ tối ngày 12 tháng 10." 
                         value={text}
-                        // onChange={(e) => setText(e.target.value)}
-                        onChange={handleInputChange}
+                        onChange={(e) => setText(e.target.value)}
+                        // onChange={handleInputChange}
                       />
                         <button className="hidden"  onClick={() => setText('') }>Xóa</button>
-                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                        {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
                            
                     </div>
                   </div>
@@ -563,7 +563,7 @@ const Text = () => {
                 <div className="template-preview-content">
                   <div className="template-preview-content-header"> 
                     <div className="template-preview-content-wrapper">
-                      {text && isValid && (
+                      {text && (
                         <div>
                         <div  className='qr_Code' ref={qrRef} />
                         <div className="downloadQRCode">
