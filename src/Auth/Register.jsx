@@ -135,7 +135,7 @@ function Register() {
 
               {/* Image */}
               <Flex flex={1}>
-                <img src="/src/assets/Image/Register/register.png" className='auth-image' />
+                <img src="//assets/Image/Register/register.png" className='auth-image' />
               </Flex>
               </Flex>
             </Card>

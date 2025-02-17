@@ -14,7 +14,7 @@ const Login = () => {
               <Flex gap="large" align='center'> 
                   {/* Image */}
               <Flex flex={1}>
-                <img src="/src/assets/Image/Login/login.png" className='auth-image' />
+                <img src="//assets/Image/Login/login.png" className='auth-image' />
               </Flex>
 
                 {/* Form */}
