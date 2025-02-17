@@ -5,7 +5,7 @@ import './Home.css'
 import Header from "../Header/Header";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import purify from "dompurify";
+// import purify from "dompurify";
 
 
 const Home = () => {
@@ -321,7 +321,7 @@ const Home = () => {
                                     }
                             >
                               <div className="template-selector__item-container-logo">
-                              <img src="/assets/Image/Icons/Wifi.png" alt="" />
+                              <img src="/public/assets/Image/Icons/wifi.png" alt="" />
                               </div>
                               <div className="template-selector__item-container-text" to = 'Wifi'>
                                 <p className="template-selector__item-container-text-title">
