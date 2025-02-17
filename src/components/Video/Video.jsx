@@ -190,7 +190,7 @@ const Video = () => {
                             className={`dotType-button ${dotType === type ? 'selected' : ''}`} 
                             onClick={() => setDotType(type)}
                           >
-                          <img src={`/assets/Image/BgDotColor/${type}.png`} alt={type} className="dotType-image" /> 
+                          <img src={`assets/Image/BgDotColor/${type}.png`} alt={type} className="dotType-image" /> 
                           </button>
                         ))}
                       </div> 
@@ -253,7 +253,7 @@ const Video = () => {
                                                   className={`cornerSquareType-button ${cornerSquareType === type ? 'selected' : ''}`} 
                                                   onClick={() => setCornerSquareType(type)}
                                                 >
-                                                <img src={`/assets/Image/cornerSquareType/${type}.png`} alt={type} className="cornerSquareType-image" /> 
+                                                <img src={`assets/Image/cornerSquareType/${type}.png`} alt={type} className="cornerSquareType-image" /> 
                                               </button>
                                           ))}
                                       </div>
@@ -270,7 +270,7 @@ const Video = () => {
                                             className={`cornerSquareType-button ${cornerDotType === type ? 'selected' : ''}`} 
                                             onClick={() => setCornerDotType(type)}
                                           >
-                                          <img src={`/assets/Image/Alo/${type}.png`} alt={type} className="cornerSquareType-image" /> 
+                                          <img src={`assets/Image/Alo/${type}.png`} alt={type} className="cornerSquareType-image" /> 
                                         </button>
                                     ))}
                                 </div>
@@ -339,9 +339,9 @@ const Video = () => {
                                 <button 
                                   key={type} 
                                   className={`LogoType-button ${logo === type ? 'selected' : ''}`} 
-                                  onClick={() => setLogo(`/assets/Image/LogoType/${type}.svg`)}
+                                  onClick={() => setLogo(`assets/Image/LogoType/${type}.svg`)}
                                 >
-                                <img src={`/assets/Image/LogoType/${type}.svg`} alt={type} className="LogoType-image" /> 
+                                <img src={`assets/Image/LogoType/${type}.svg`} alt={type} className="LogoType-image" /> 
                                 </button>
                               ))}
                         </div>

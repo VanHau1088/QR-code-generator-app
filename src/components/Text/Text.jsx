@@ -28,7 +28,7 @@ const Text = () => {
   const [bgDotType, setBgDotType] = useState('#00000')
 
   const LogoTypes = ['Facebook', 'Gmail', 'Instagram', 'Linkedin', 'Netflix', 'Outlook', 'Pinterest', 'TikTok', 'Twitter', 'Whatsapp', 'Youtube', 'Apple']; 
-  // const [logo, setLogo] = useState(`/assets/Image/LogoType/${LogoTypes[0]}.svg`);
+  // const [logo, setLogo] = useState(`assets/Image/LogoType/${LogoTypes[0]}.svg`);
   const [logo, setLogo] = useState(null);
   // Download
   const [download, setDownload] = useState('png');
@@ -358,7 +358,7 @@ const Text = () => {
                             className={`dotType-button ${dotType === type ? 'selected' : ''}`} 
                             onClick={() => setDotType(type)}
                           >
-                          <img src={`/assets/Image/BgDotColor/${type}.png`} alt={type} className="dotType-image" /> 
+                          <img src={`assets/Image/BgDotColor/${type}.png`} alt={type} className="dotType-image" /> 
                           </button>
                         ))}
                       </div> 
@@ -444,7 +444,7 @@ const Text = () => {
                                                   className={`cornerSquareType-button ${cornerSquareType === type ? 'selected' : ''}`} 
                                                   onClick={() => setCornerSquareType(type)}
                                                 >
-                                                <img src={`/assets/Image/cornerSquareType/${type}.png`} alt={type} className="cornerSquareType-image" /> 
+                                                <img src={`assets/Image/cornerSquareType/${type}.png`} alt={type} className="cornerSquareType-image" /> 
                                               </button>
                                           ))}
                                       </div>
@@ -461,7 +461,7 @@ const Text = () => {
                                             className={`cornerSquareType-button ${cornerDotType === type ? 'selected' : ''}`} 
                                             onClick={() => setCornerDotType(type)}
                                           >
-                                          <img src={`/assets/Image/Alo/${type}.png`} alt={type} className="cornerSquareType-image" /> 
+                                          <img src={`assets/Image/Alo/${type}.png`} alt={type} className="cornerSquareType-image" /> 
                                         </button>
                                     ))}
                                 </div>
@@ -535,9 +535,9 @@ const Text = () => {
                                 <button 
                                   key={type} 
                                   className={`LogoType-button ${logo === type ? 'selected' : ''}`} 
-                                  onClick={() => setLogo(`/assets/Image/LogoType/${type}.svg`)}
+                                  onClick={() => setLogo(`assets/Image/LogoType/${type}.svg`)}
                                 >
-                                <img src={`/assets/Image/LogoType/${type}.svg`} alt={type} className="LogoType-image" /> 
+                                <img src={`assets/Image/LogoType/${type}.svg`} alt={type} className="LogoType-image" /> 
                                 </button>
                               ))}
                         </div>

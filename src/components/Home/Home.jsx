@@ -12,7 +12,7 @@ const Home = () => {
 
   // ImageHover
     const [imageSrc, setImageSrc] = useState(
-      '//assets/Image/ImageHover/QR.jpg'
+      '/assets/Image/ImageHover/QR.jpg'
     );
     const {t} = useTranslation();
     // const [language, setLanguage] = useState("");
@@ -42,12 +42,12 @@ const Home = () => {
                     <NavLink to= 'URL'> 
                         <button className='template-selector__item-container' to = 'URL'  onMouseEnter={() =>
                                       setImageSrc(
-                                            '//assets/Image/ImageHover/url.jpg'
+                                            '/assets/Image/ImageHover/url.jpg'
                                       )
                                     }
                           >
                             <div className="template-selector__item-container-logo">
-                              <img src="//assets/Image/Icons/url.png" alt="" />
+                              <img src="/assets/Image/Icons/url.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'URL'>
                               <p className="template-selector__item-container-text-title">
@@ -72,11 +72,11 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Card'
                         onMouseEnter={() =>
                           setImageSrc(
-                            '//assets/Image/ImageHover/vcard.jpg'
+                            '/assets/Image/ImageHover/vcard.jpg'
                           )
                         }>
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/card.png" alt="" />
+                            <img src="/assets/Image/Icons/card.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Card'>
                               <p className="template-selector__item-container-text-title">
@@ -97,12 +97,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Email'
                         onMouseEnter={() =>
                           setImageSrc(
-                            '//assets/Image/ImageHover/Email.png'
+                            '/assets/Image/ImageHover/Email.png'
                           )
                         }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/image.png" alt="" />
+                            <img src="/assets/Image/Icons/image.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Email'>
                               <p className="template-selector__item-container-text-title">
@@ -125,12 +125,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'IMG'
                         onMouseEnter={() =>
                           setImageSrc(
-                            '//assets/Image/ImageHover/image.jpg'
+                            '/assets/Image/ImageHover/image.jpg'
                           )
                         }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/image.png" alt="" />
+                            <img src="/assets/Image/Icons/image.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'IMG'>
                               <p className="template-selector__item-container-text-title">
@@ -150,12 +150,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Video'
                             onMouseEnter={() =>
                               setImageSrc(
-                                '//assets/Image/ImageHover/video.jpg'
+                                '/assets/Image/ImageHover/video.jpg'
                               )
                             }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/video-camera.png" alt="" />
+                            <img src="/assets/Image/Icons/video-camera.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Video'>
                               <p className="template-selector__item-container-text-title">
@@ -175,12 +175,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Text'
                               onMouseEnter={() =>
                                 setImageSrc(
-                                  '//assets/Image/ImageHover/text.jpg'
+                                  '/assets/Image/ImageHover/text.jpg'
                                 )
                               }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/font.png" alt="" />
+                            <img src="/assets/Image/Icons/font.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Text'>
                               <p className="template-selector__item-container-text-title">
@@ -202,12 +202,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'SMS'
                              onMouseEnter={() =>
                               setImageSrc(
-                                '//assets/Image/ImageHover/sms.png'
+                                '/assets/Image/ImageHover/sms.png'
                               )
                             }
                         >
                             <div className="template-selector__item-container-logo">
-                                <img src="//assets/Image/Icons/menu.png" alt="" />
+                                <img src="/assets/Image/Icons/menu.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'SMS'>
                               <p className="template-selector__item-container-text-title">
@@ -228,12 +228,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Event'
                            onMouseEnter={() =>
                             setImageSrc(
-                              '//assets/Image/ImageHover/business.jpg'
+                              '/assets/Image/ImageHover/business.jpg'
                             )
                           }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/my-business.png" alt="" />
+                            <img src="/assets/Image/Icons/my-business.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Event'>
                               <p className="template-selector__item-container-text-title">
@@ -258,12 +258,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Map'
                                   onMouseEnter={() =>
                                     setImageSrc(
-                                      '//assets/Image/ImageHover/location.png'
+                                      '/assets/Image/ImageHover/location.png'
                                     )
                                   }
                           >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/geo.png" alt="" />
+                            <img src="/assets/Image/Icons/geo.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Map'>
                               <p className="template-selector__item-container-text-title">
@@ -287,12 +287,12 @@ const Home = () => {
                               <button className='template-selector__item-container' to = 'Payment'
                                         onMouseEnter={() =>
                                           setImageSrc(
-                                            '//assets/Image/ImageHover/payment.jpg'
+                                            '/assets/Image/ImageHover/payment.jpg'
                                           )
                                         }
                                 >
                                   <div className="template-selector__item-container-logo">
-                                  <img src="//assets/Image/Icons/payment.png" alt="" />
+                                  <img src="/assets/Image/Icons/payment.png" alt="" />
                                   </div>
                                   <div className="template-selector__item-container-text" to = 'Payment'>
                                     <p className="template-selector__item-container-text-title">
@@ -316,12 +316,12 @@ const Home = () => {
                           <button className='template-selector__item-container' to = 'Wifi'
                                     onMouseEnter={() =>
                                       setImageSrc(
-                                        '//assets/Image/ImageHover/wifi.jpg'
+                                        '/assets/Image/ImageHover/wifi.jpg'
                                       )
                                     }
                             >
                               <div className="template-selector__item-container-logo">
-                              <img src="//assets/Image/Icons/Wifi.png" alt="" />
+                              <img src="/assets/Image/Icons/Wifi.png" alt="" />
                               </div>
                               <div className="template-selector__item-container-text" to = 'Wifi'>
                                 <p className="template-selector__item-container-text-title">
@@ -340,12 +340,12 @@ const Home = () => {
                           <button className='template-selector__item-container' to = 'BulkQR'
                                     onMouseEnter={() =>
                                       setImageSrc(
-                                        '//assets/Image/ImageHover/BULK QR.png'
+                                        '/assets/Image/ImageHover/BULK QR.png'
                                       )
                                     }
                             >
                               <div className="template-selector__item-container-logo">
-                              <img src="//assets/Image/Icons/bulkqr.png" alt="" />
+                              <img src="/assets/Image/Icons/bulkqr.png" alt="" />
                               </div>
                               <div className="template-selector__item-container-text" to = 'BulkQR'>
                                 <p className="template-selector__item-container-text-title">
@@ -366,12 +366,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'PDF'
                          onMouseEnter={() =>
                           setImageSrc(
-                            '//assets/Image/ImageHover/pdf.jpg'
+                            '/assets/Image/ImageHover/pdf.jpg'
                           )
                         }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/file.png" alt="" />
+                            <img src="/assets/Image/Icons/file.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'PDF'>
                               <p className="template-selector__item-container-text-title">
@@ -391,12 +391,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Social_media'
                             onMouseEnter={() =>
                               setImageSrc(
-                                '//assets/Image/ImageHover/social.jpg'
+                                '/assets/Image/ImageHover/social.jpg'
                               )
                             }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/social-media.png" alt="" />
+                            <img src="/assets/Image/Icons/social-media.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Social_media'>
                               <p className="template-selector__item-container-text-title">
@@ -416,12 +416,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Facebook'
                              onMouseEnter={() =>
                               setImageSrc(
-                                '//assets/Image/ImageHover/fb.jpg'
+                                '/assets/Image/ImageHover/fb.jpg'
                               )
                             }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/facebook.png" alt="" />
+                            <img src="/assets/Image/Icons/facebook.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Facebook'>
                               <p className="template-selector__item-container-text-title">
@@ -442,12 +442,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Business'
                            onMouseEnter={() =>
                             setImageSrc(
-                              '//assets/Image/ImageHover/business.jpg'
+                              '/assets/Image/ImageHover/business.jpg'
                             )
                           }
                         >
                             <div className="template-selector__item-container-logo">
-                            <img src="//assets/Image/Icons/my-business.png" alt="" />
+                            <img src="/assets/Image/Icons/my-business.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Business'>
                               <p className="template-selector__item-container-text-title">
@@ -467,12 +467,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'apps'
                            onMouseEnter={() =>
                             setImageSrc(
-                              '//assets/Image/ImageHover/application.jpg'
+                              '/assets/Image/ImageHover/application.jpg'
                             )
                           }
                         >
                             <div className="template-selector__item-container-logo">
-                                <img src="//assets/Image/Icons/smartphone.png" alt="" />
+                                <img src="/assets/Image/Icons/smartphone.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'apps'>
                               <p className="template-selector__item-container-text-title">
@@ -492,12 +492,12 @@ const Home = () => {
                         <button className='template-selector__item-container' to = 'Menu'
                              onMouseEnter={() =>
                               setImageSrc(
-                                '//assets/Image/ImageHover/menu.jpg'
+                                '/assets/Image/ImageHover/menu.jpg'
                               )
                             }
                         >
                             <div className="template-selector__item-container-logo">
-                                <img src="//assets/Image/Icons/menu.png" alt="" />
+                                <img src="/assets/Image/Icons/menu.png" alt="" />
                             </div>
                             <div className="template-selector__item-container-text" to = 'Menu'>
                               <p className="template-selector__item-container-text-title">
