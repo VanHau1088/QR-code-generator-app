@@ -19,7 +19,12 @@ Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) 
 ### Đi vào thư mục backend của project và chạy server bằng lệnh sau:
 *node server.js*
 
-# Bước 6: Sau khi chạy backend 
+# Bước 6: Chạy local
+### Sau khi chạy backend: noder server.js
+*chạy local: yarn dev*
+
+# Bước 7: Chạy trên netwword
+### Sau khi chạy backend: node server.js
 ### Link Website được deploy trên vercel:
 *(https://vercel.com/titi27748-gmailcoms-projects/qr-code-generator-app/9QgZXnpQdH3vt9kMn6S8J64uwTGc)*
 
