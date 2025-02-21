@@ -3,9 +3,12 @@ Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) 
 
 # Bước 2: Cài đặt các package cần thiết
 ### Sau khi đã cài đặt Node.js, mở terminal và điều hướng đến thư mục của project. Chạy lệnh sau để cài đặt các package cần thiết:
+### Cài đặt node_module ở file C:\Users\Van Hau\OneDrive\Máy tính\QR-code-generator-app:
 *npm install*
-
+### Cài đặt node_module ở file C:\Users\Van Hau\OneDrive\Máy tính\QR-code-generator-app\backend:
+*npm install*
 # Bước 3: Cài đặt Yarn
+
 ### Yarn là một công cụ quản lý gói tốt hơn npm trong một số trường hợp. Để cài đặt Yarn, bạn có thể sử dụng npm:
 *npm install -g yarn*
 ### Kiểm tra phiên bản Yarn đã cài bằng lệnh:
