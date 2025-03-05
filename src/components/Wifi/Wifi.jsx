@@ -41,7 +41,6 @@ const Wifi = () => {
   // Download
   const [download, setDownload] = useState('png');
 
-
   const [shortUrl, setShortUrl] = useState(''); 
   const [isCreatingQRCode, setIsCreatingQRCode] = useState(false);
 
