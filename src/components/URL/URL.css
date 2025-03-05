@@ -267,7 +267,7 @@ hr{
  input.bgColor{
     /* position: absolute; */
     width: 11%;
-    border-radius: 100%;
+    border-radius: 33%;
     height: 60px;
     left: 210%;
     top: 4px;
@@ -283,7 +283,7 @@ hr{
     width: 11%;
     height: 60px;
     left: 200%;
-    border-radius: 50%;
+    border-radius: 33%;
     top: 4px;
     z-index: 1;
     overflow: hidden;
