@@ -253,7 +253,7 @@ hr{
  input.dotColor{
     /* position: absolute; */
     width: 11%;
-    border-radius: 100%;
+    border-radius: 33%;
     height: 60px;
     left: 192%;
     top: 4px;
