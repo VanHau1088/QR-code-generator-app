@@ -3,12 +3,9 @@ Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) 
 
 # Bước 2: Cài đặt các package cần thiết
 ### Sau khi đã cài đặt Node.js, mở terminal và điều hướng đến thư mục của project. Chạy lệnh sau để cài đặt các package cần thiết:
-### Cài đặt node_module phía Fontend C:\Users\Van Hau\OneDrive\Máy tính\QR-code-generator-app:
 *npm install*
-### Phía Backend e C:\Users\Van Hau\OneDrive\Máy tính\QR-code-generator-app\backend:
-*npm install*
-# Bước 3: Cài đặt Yarn
 
+# Bước 3: Cài đặt Yarn
 ### Yarn là một công cụ quản lý gói tốt hơn npm trong một số trường hợp. Để cài đặt Yarn, bạn có thể sử dụng npm:
 *npm install -g yarn*
 ### Kiểm tra phiên bản Yarn đã cài bằng lệnh:
@@ -22,12 +19,7 @@ Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) 
 ### Đi vào thư mục backend của project và chạy server bằng lệnh sau:
 *node server.js*
 
-# Bước 6: Chạy local
-### Sau khi chạy backend: noder server.js
-*chạy local: yarn dev*
-
-# Bước 7: Chạy trên netwword
-### Sau khi chạy backend: node server.js
+# Bước 6: Sau khi chạy backend 
 ### Link Website được deploy trên vercel:
 *(https://vercel.com/titi27748-gmailcoms-projects/qr-code-generator-app/9QgZXnpQdH3vt9kMn6S8J64uwTGc)*
 
