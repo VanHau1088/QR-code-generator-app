@@ -30,7 +30,7 @@ Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) 
 
 # Nếu chạy trên Internet
 ### Link Website được deploy trên vercel:
-*[(https://vercel.com/titi27748-gmailcoms-projects/qr-code-generator-app/9QgZXnpQdH3vt9kMn6S8J64uwTGc)](https://qr-code-generator-app-lovat.vercel.app/)*
+*https://qr-code-generator-app-lovat.vercel.app/*
 * đợi 1 khoảng thời gian tầm 1-2 phút để website được ổn định
 
 
