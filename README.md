@@ -1,3 +1,5 @@
+
+# Nếu chạy Local
 # Bước 1: Cài đặt Node.js và npm
 Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) được cài sẵn cùng với Node.js. Bạn có thể tải Node.js từ trang chính thức nodejs.org và làm theo hướng dẫn cài đặt cho hệ điều hành của bạn.
 
@@ -26,9 +28,9 @@ Trước tiên, bạn cần cài đặt Node.js, vì npm (Node Package Manager) 
 ### Sau khi chạy backend: noder server.js
 *chạy local: yarn dev*
 
-# Bước 7: Chạy trên netwword
-### Sau khi chạy backend: node server.js
+# Nếu chạy trên Internet
 ### Link Website được deploy trên vercel:
-*(https://vercel.com/titi27748-gmailcoms-projects/qr-code-generator-app/9QgZXnpQdH3vt9kMn6S8J64uwTGc)*
+*[(https://vercel.com/titi27748-gmailcoms-projects/qr-code-generator-app/9QgZXnpQdH3vt9kMn6S8J64uwTGc)](https://qr-code-generator-app-lovat.vercel.app/)*
+* đợi 1 khoảng thời gian tầm 1-2 phút để website được ổn định
 
 
